@@ -26,3 +26,8 @@ form div {
   margin: 20px;
   padding: 20px;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
