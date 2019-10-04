@@ -5,8 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>BOILERMAKER</h1>
+  <div id="header">
     <nav>
       {isLoggedIn ? (
         <div className="navbar">
@@ -22,19 +21,20 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       ) : (
         <div className="navbar">
           {/* The navbar will show these links before you log in */}
+          <Link to="/" id="logo">
+            <img src="/images/sitelite-logo.png" />
+          </Link>
+
           <div>
-            <Link to="/home">Home</Link>
-            <Link to="/about">About</Link>
-          </div>
-          <Link to="/editor">Go to editor</Link>
-          <div>
+            <Link to="/editor" id="nav-editor">
+              Go to Editor <i className="fas fa-angle-right" />
+            </Link>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
         </div>
       )}
     </nav>
-    <hr />
   </div>
 )
 

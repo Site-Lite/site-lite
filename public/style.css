@@ -1,9 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap');
+
 body {
-  font-family: sans-serif;
+  font-family: 'PT Sans', sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
 }
 
 a {
   text-decoration: none;
+  transition: color 0.4s ease;
 }
 
 label {
@@ -11,13 +16,53 @@ label {
 }
 
 nav a {
-  display: inline-block;
-  margin: 1em;
+  margin: 0.5em 1em;
 }
 
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+#logo {
+  width: 10%;
+}
+
+#logo img {
+  width: 100%;
+}
+
+#header {
+  background-color: #282e31;
+  box-shadow: 0 0px 2px rgba(0, 0, 0, 0.3);
+  padding: 1%;
+}
+
+.navbar div {
+  display: flex;
+  flex-direction: row;
+}
+
+#header a {
+  color: #f5f5f5;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+#header a:hover {
+  color: #4cbb1b;
+}
+
+#nav-editor i {
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+#nav-editor:hover i {
+  opacity: 1;
+  color: #f5f5f5;
+  transform: translateX(5px);
 }
 
 #renderer,
