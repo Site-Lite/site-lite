@@ -183,8 +183,7 @@ form label {
 }
 
 #editor-panel.edit-mode #renderer {
-  background-image: url(/images/dots-bg.png);
-  background-size: 40px;
+  background: url(/images/dots-bg.png) center/40px repeat;
   position: relative;
   padding-top: 15px;
   height: calc(100% - 66px);
@@ -235,15 +234,18 @@ form label {
 }
 
 #renderer {
+  background: transparent center;
   overflow-y: auto;
   width: 100%;
   height: calc(100% - 51px);
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.05);
   direction: rtl;
+  transition: all 0.4s ease;
 }
 
 #renderer div {
   direction: ltr;
+  transition: all 0.4s ease;
 }
 #renderer div.edit-mode {
   border: 1px solid rgba(0, 0, 0, 0.1);
