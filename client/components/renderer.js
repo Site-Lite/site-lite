@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createElement, updateStyle} from '../store/renderer'
+import {toggleBar} from '../store/styler'
 import {Div, StyleBar} from '../components'
 
 class Renderer extends Component {
@@ -18,37 +19,59 @@ class Renderer extends Component {
     }, 0)
   }
 
+  toggleEditMode() {
+    this.props.toggleStyler()
+    setTimeout(() => {
+      console.log(this.props.styler)
+    }, 0)
+  }
+
   render() {
     return (
       <div id="editor">
-        <div id="renderer" style={this.props.html.main.style}>
-          <button
-            type="button"
-            onClick={() => {
-              this.handleAdd('main')
-            }}
-          >
-            Add
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              this.update('main', 'background', 'wheat')
-            }}
-          >
-            Change style
-          </button>
-          {this.props.html.main.children.map(child => {
-            return (
-              <Div
-                id={child}
-                key={child}
-                html={this.props.html}
-                createElement={this.props.createElement}
-                updateStyle={this.props.updateStyle}
-              />
-            )
-          })}
+        <div
+          id="editor-panel"
+          className={this.props.styler.enabled ? 'edit-mode ' : ''}
+        >
+          <div id="settings-bar">
+            <button
+              type="button"
+              onClick={() => {
+                this.toggleEditMode()
+              }}
+            >
+              Edit Mode
+            </button>
+          </div>
+          <div id="renderer" style={this.props.html.main.style}>
+            <button
+              type="button"
+              onClick={() => {
+                this.handleAdd('main')
+              }}
+            >
+              Add
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                this.update('main', 'background', 'wheat')
+              }}
+            >
+              Change style
+            </button>
+            {this.props.html.main.children.map(child => {
+              return (
+                <Div
+                  id={child}
+                  key={child}
+                  html={this.props.html}
+                  createElement={this.props.createElement}
+                  updateStyle={this.props.updateStyle}
+                />
+              )
+            })}
+          </div>
         </div>
         <StyleBar />
       </div>
@@ -58,7 +81,8 @@ class Renderer extends Component {
 
 const mapState = state => {
   return {
-    html: state.renderer
+    html: state.renderer,
+    styler: state.styler
   }
 }
 
@@ -69,6 +93,9 @@ const mapDispatch = dispatch => {
     },
     updateStyle(id, property, value) {
       dispatch(updateStyle(id, property, value))
+    },
+    toggleStyler() {
+      dispatch(toggleBar())
     }
   }
 }

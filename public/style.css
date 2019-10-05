@@ -103,6 +103,7 @@ form label {
 
 #logo {
   font-size: 33px;
+  user-select: none;
 }
 
 #logo span {
@@ -169,6 +170,16 @@ form label {
 #editor {
   display: flex;
   height: calc(100% - 65px);
+  overflow-x: hidden;
+}
+
+#editor-panel {
+  width: 100%;
+  transition: width 0.4s ease;
+}
+
+#editor-panel.edit-mode {
+  width: calc(100% - 25vw);
 }
 
 #nav-user {
@@ -177,12 +188,14 @@ form label {
   position: relative;
   align-items: center;
   margin: 0 30px;
+  height: 100%;
   cursor: pointer;
 }
 
 #nav-user-menu {
   display: flex;
   flex-direction: column;
+  align-items: initial;
   position: absolute;
   font-family: 'PT Sans', sans-serif;
   background-color: #f7f7f7;
@@ -215,7 +228,8 @@ form label {
 
 #renderer {
   overflow-y: auto;
-  width: calc(100% - 25vw);
+  width: 100%;
+  height: calc(100% - 51px);
   direction: rtl;
 }
 
@@ -237,10 +251,14 @@ form label {
 }
 
 #style-bar {
-  width: 25vw;
+  width: 0;
   background-color: #e2e2e2;
-  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.03);
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+  transition: width 0.4s ease;
+}
+
+#style-bar.edit-mode {
+  width: 25vw;
 }
 
 #auth-form {
@@ -270,6 +288,12 @@ form label {
 
 #auth-form hr {
   margin: 2% 5%;
+}
+
+#settings-bar {
+  height: 50px;
+  background-color: #e2e2e2;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .navbar {
