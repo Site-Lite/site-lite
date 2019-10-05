@@ -18,6 +18,7 @@ class Div extends Component {
     if (this.props.html[this.props.id]) {
       return (
         <div id={this.props.id} style={this.props.html[this.props.id].style}>
+          <span>div</span>
           <button
             type="button"
             onClick={() => {

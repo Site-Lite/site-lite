@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createElement, updateStyle} from '../store/renderer'
-import {Div} from '../components'
+import {Div, StyleBar} from '../components'
 
 class Renderer extends Component {
   handleAdd(id) {
@@ -20,34 +20,37 @@ class Renderer extends Component {
 
   render() {
     return (
-      <div id="renderer" style={this.props.html.main.style}>
-        <button
-          type="button"
-          onClick={() => {
-            this.handleAdd('main')
-          }}
-        >
-          Add
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            this.update('main', 'background', 'wheat')
-          }}
-        >
-          Change style
-        </button>
-        {this.props.html.main.children.map(child => {
-          return (
-            <Div
-              id={child}
-              key={child}
-              html={this.props.html}
-              createElement={this.props.createElement}
-              updateStyle={this.props.updateStyle}
-            />
-          )
-        })}
+      <div id="editor">
+        <div id="renderer" style={this.props.html.main.style}>
+          <button
+            type="button"
+            onClick={() => {
+              this.handleAdd('main')
+            }}
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              this.update('main', 'background', 'wheat')
+            }}
+          >
+            Change style
+          </button>
+          {this.props.html.main.children.map(child => {
+            return (
+              <Div
+                id={child}
+                key={child}
+                html={this.props.html}
+                createElement={this.props.createElement}
+                updateStyle={this.props.updateStyle}
+              />
+            )
+          })}
+        </div>
+        <StyleBar />
       </div>
     )
   }

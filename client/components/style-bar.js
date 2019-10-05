@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 class StyleBar extends Component {
   render() {
-    return <div />
+    return <div id="style-bar">STYLEBAR</div>
   }
 }
 

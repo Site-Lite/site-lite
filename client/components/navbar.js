@@ -22,15 +22,19 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <div className="navbar">
           {/* The navbar will show these links before you log in */}
           <Link to="/" id="logo">
-            <img src="/images/sitelite-logo.png" />
+            site<span>lite</span>
           </Link>
 
           <div>
             <Link to="/editor" id="nav-editor">
               Go to Editor <i className="fas fa-angle-right" />
             </Link>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <div className="fas fa-user-circle" id="nav-user">
+              <div id="nav-user-menu">
+                <Link to="/login">Login</Link>
+                <Link to="/signup">Sign Up</Link>
+              </div>
+            </div>
           </div>
         </div>
       )}

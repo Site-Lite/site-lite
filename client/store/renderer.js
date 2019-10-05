@@ -1,9 +1,10 @@
-const CREATE_ELEMENT = 'CREATE_ELEMEN'
+const CREATE_ELEMENT = 'CREATE_ELEMENT'
 const UPDATE_STYLE = 'UPDATE_STYLE'
 
 const initialState = {
   counter: 1,
-  main: {style: {color: 'red', background: 'rgba(0, 0, 0, 0.1)'}, children: []}
+  styleEnabled: true,
+  main: {style: {color: 'red'}, children: []}
 }
 
 export const createElement = id => ({type: CREATE_ELEMENT, id})
