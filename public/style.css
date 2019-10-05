@@ -182,6 +182,11 @@ form label {
   width: calc(100% - 25vw);
 }
 
+#editor-panel.edit-mode #renderer {
+  position: relative;
+  padding-top: 15px;
+}
+
 #nav-user {
   color: #f5f5f5;
   font-size: 30px;
@@ -230,13 +235,16 @@ form label {
   overflow-y: auto;
   width: 100%;
   height: calc(100% - 51px);
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.05);
   direction: rtl;
 }
 
 #renderer div {
   direction: ltr;
+}
+#renderer div.edit-mode {
   border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
   position: relative;
   margin: 20px;
   padding: 20px;
@@ -307,4 +315,11 @@ form label {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.edit-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 5px;
 }

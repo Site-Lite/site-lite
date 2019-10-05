@@ -44,22 +44,28 @@ class Renderer extends Component {
             </button>
           </div>
           <div id="renderer" style={this.props.html.main.style}>
-            <button
-              type="button"
-              onClick={() => {
-                this.handleAdd('main')
-              }}
-            >
-              Add
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                this.update('main', 'background', 'wheat')
-              }}
-            >
-              Change style
-            </button>
+            {this.props.styler.enabled ? (
+              <div className="edit-buttons">
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.handleAdd('main')
+                  }}
+                >
+                  +
+                </button>{' '}
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.update('main', 'background-color', 'wheat')
+                  }}
+                >
+                  style
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
             {this.props.html.main.children.map(child => {
               return (
                 <Div

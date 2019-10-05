@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
           children: [...state[action.id].children, state.counter]
         },
         [state.counter]: {
-          style: {background: '#f5f5f5'},
+          style: {},
           children: []
         }
       }

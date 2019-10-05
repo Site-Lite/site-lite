@@ -17,29 +17,31 @@ class Div extends Component {
   render() {
     if (this.props.html[this.props.id]) {
       return (
-        <div id={this.props.id} style={this.props.html[this.props.id].style}>
+        <div
+          id={this.props.id}
+          style={this.props.html[this.props.id].style}
+          className={this.props.styler.enabled ? 'edit-mode' : ''}
+        >
           {this.props.styler.enabled ? <span>div</span> : ''}
           {this.props.styler.enabled ? (
-            <button
-              type="button"
-              onClick={() => {
-                this.handleAdd(this.props.id)
-              }}
-            >
-              Add
-            </button>
-          ) : (
-            ''
-          )}
-          {this.props.styler.enabled ? (
-            <button
-              type="button"
-              onClick={() => {
-                this.update(this.props.id, 'background', 'wheat')
-              }}
-            >
-              Change style
-            </button>
+            <div className="edit-buttons">
+              <button
+                type="button"
+                onClick={() => {
+                  this.handleAdd(this.props.id)
+                }}
+              >
+                +
+              </button>{' '}
+              <button
+                type="button"
+                onClick={() => {
+                  this.update(this.props.id, 'background-color', 'wheat')
+                }}
+              >
+                style
+              </button>
+            </div>
           ) : (
             ''
           )}
