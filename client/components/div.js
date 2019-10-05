@@ -1,17 +1,18 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createElement, updateStyle} from '../store/renderer'
+import {createElement, removeElement, updateStyle} from '../store/renderer'
 
 class Div extends Component {
   handleAdd(id) {
     this.props.createElement(id)
   }
 
+  handleRemove(parentId, id) {
+    this.props.removeElement(parentId, id)
+  }
+
   update(id, property, value) {
     this.props.updateStyle(id, property, value)
-    setTimeout(() => {
-      console.log(this.props.html)
-    }, 0)
   }
 
   render() {
@@ -32,7 +33,15 @@ class Div extends Component {
                 }}
               >
                 +
-              </button>{' '}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  this.handleRemove(this.props.parentId, this.props.id)
+                }}
+              >
+                ×
+              </button>
               <button
                 type="button"
                 onClick={() => {
@@ -48,11 +57,13 @@ class Div extends Component {
           {this.props.html[this.props.id].children.map(child => {
             return (
               <Div
+                parentId={this.props.id}
                 id={child}
                 key={child}
                 html={this.props.html}
                 styler={this.props.styler}
                 createElement={this.props.createElement}
+                removeElement={this.props.removeElement}
                 updateStyle={this.props.updateStyle}
               />
             )
@@ -79,6 +90,9 @@ const mapDispatch = dispatch => {
     },
     updateStyle(id, property, value) {
       dispatch(updateStyle(id, property, value))
+    },
+    removeElement(id, elementId) {
+      dispatch(removeElement(id, elementId))
     }
   }
 }

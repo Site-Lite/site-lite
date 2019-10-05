@@ -1,4 +1,5 @@
 const CREATE_ELEMENT = 'CREATE_ELEMENT'
+const REMOVE_ELEMENT = 'REMOVE_ELEMENT'
 const UPDATE_STYLE = 'UPDATE_STYLE'
 
 const initialState = {
@@ -8,6 +9,11 @@ const initialState = {
 }
 
 export const createElement = id => ({type: CREATE_ELEMENT, id})
+export const removeElement = (id, elementId) => ({
+  type: REMOVE_ELEMENT,
+  id,
+  elementId
+})
 export const updateStyle = (id, property, value) => ({
   type: UPDATE_STYLE,
   id,
@@ -28,6 +34,17 @@ export default function(state = initialState, action) {
         [state.counter]: {
           style: {},
           children: []
+        }
+      }
+    case REMOVE_ELEMENT:
+      delete state[action.elementId]
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          children: state[action.id].children.filter(child => {
+            return child !== action.elementId
+          })
         }
       }
     case UPDATE_STYLE:

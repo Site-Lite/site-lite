@@ -183,8 +183,11 @@ form label {
 }
 
 #editor-panel.edit-mode #renderer {
+  background-image: url(/images/dots-bg.png);
+  background-size: 40px;
   position: relative;
   padding-top: 15px;
+  height: calc(100% - 66px);
 }
 
 #nav-user {

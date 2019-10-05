@@ -7,23 +7,14 @@ import {Div, StyleBar} from '../components'
 class Renderer extends Component {
   handleAdd(id) {
     this.props.createElement(id)
-    setTimeout(() => {
-      console.log(this.props.html)
-    }, 0)
   }
 
   update(id, property, value) {
     this.props.updateStyle(id, property, value)
-    setTimeout(() => {
-      console.log(this.props.html)
-    }, 0)
   }
 
   toggleEditMode() {
     this.props.toggleStyler()
-    setTimeout(() => {
-      console.log(this.props.styler)
-    }, 0)
   }
 
   render() {
@@ -69,6 +60,7 @@ class Renderer extends Component {
             {this.props.html.main.children.map(child => {
               return (
                 <Div
+                  parentId="main"
                   id={child}
                   key={child}
                   html={this.props.html}
