@@ -4,7 +4,7 @@ const UPDATE_STYLE = 'UPDATE_STYLE'
 const initialState = {
   counter: 1,
   styleEnabled: true,
-  main: {style: {color: 'red'}, children: []}
+  main: {style: {color: '#282e31'}, children: []}
 }
 
 export const createElement = id => ({type: CREATE_ELEMENT, id})
@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
           children: [...state[action.id].children, state.counter]
         },
         [state.counter]: {
-          style: {background: 'lightgrey'},
+          style: {background: '#f5f5f5'},
           children: []
         }
       }

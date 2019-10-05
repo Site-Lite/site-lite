@@ -18,29 +18,38 @@ class Div extends Component {
     if (this.props.html[this.props.id]) {
       return (
         <div id={this.props.id} style={this.props.html[this.props.id].style}>
-          <span>div</span>
-          <button
-            type="button"
-            onClick={() => {
-              this.handleAdd(this.props.id)
-            }}
-          >
-            Add
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              this.update(this.props.id, 'background', 'wheat')
-            }}
-          >
-            Change style
-          </button>
+          {this.props.styler.enabled ? <span>div</span> : ''}
+          {this.props.styler.enabled ? (
+            <button
+              type="button"
+              onClick={() => {
+                this.handleAdd(this.props.id)
+              }}
+            >
+              Add
+            </button>
+          ) : (
+            ''
+          )}
+          {this.props.styler.enabled ? (
+            <button
+              type="button"
+              onClick={() => {
+                this.update(this.props.id, 'background', 'wheat')
+              }}
+            >
+              Change style
+            </button>
+          ) : (
+            ''
+          )}
           {this.props.html[this.props.id].children.map(child => {
             return (
               <Div
                 id={child}
                 key={child}
                 html={this.props.html}
+                styler={this.props.styler}
                 createElement={this.props.createElement}
                 updateStyle={this.props.updateStyle}
               />
@@ -56,7 +65,8 @@ class Div extends Component {
 
 const mapState = state => {
   return {
-    html: state.renderer
+    html: state.renderer,
+    styler: state.styler
   }
 }
 
