@@ -44,7 +44,7 @@ class Renderer extends Component {
                   }}
                 >
                   +
-                </button>{' '}
+                </button>
                 <button
                   type="button"
                   onClick={() => {

@@ -37,6 +37,9 @@ export default function(state = initialState, action) {
         }
       }
     case REMOVE_ELEMENT:
+      state[action.elementId].children.forEach(child => {
+        delete state[child]
+      })
       delete state[action.elementId]
       return {
         ...state,
