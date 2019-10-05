@@ -1,13 +1,15 @@
+const SELECT_TYPE = 'SELECT_TYPE'
 const CREATE_ELEMENT = 'CREATE_ELEMENT'
 const REMOVE_ELEMENT = 'REMOVE_ELEMENT'
 const UPDATE_STYLE = 'UPDATE_STYLE'
 
 const initialState = {
   counter: 1,
-  styleEnabled: true,
+  selectedType: 'div',
   main: {style: {color: '#282e31'}, children: []}
 }
 
+export const selectType = elementType => ({type: SELECT_TYPE, elementType})
 export const createElement = id => ({type: CREATE_ELEMENT, id})
 export const removeElement = (id, elementId) => ({
   type: REMOVE_ELEMENT,
@@ -23,6 +25,11 @@ export const updateStyle = (id, property, value) => ({
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case SELECT_TYPE:
+      return {
+        ...state,
+        selectedType: action.elementType
+      }
     case CREATE_ELEMENT:
       return {
         ...state,
@@ -32,6 +39,7 @@ export default function(state = initialState, action) {
           children: [...state[action.id].children, state.counter]
         },
         [state.counter]: {
+          type: state.selectedType,
           style: {},
           children: []
         }

@@ -7,9 +7,8 @@ import {
   updateStyle
 } from '../store/renderer'
 import {selectElement} from '../store/styler'
-import {P} from '../components'
 
-class Div extends Component {
+class P extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
@@ -40,13 +39,13 @@ class Div extends Component {
   render() {
     if (this.props.html[this.props.id]) {
       return (
-        <div
+        <p
           id={this.props.id}
           style={this.props.html[this.props.id].style}
           className={this.props.styler.enabled ? 'edit-mode' : ''}
           onClick={this.handleClick}
         >
-          {this.props.styler.enabled ? <span>div</span> : ''}
+          {this.props.styler.enabled ? <span>p</span> : ''}
           {this.props.styler.enabled ? (
             <div className="edit-buttons">
               <select name="elementType" onChange={this.handleSelect}>
@@ -82,42 +81,7 @@ class Div extends Component {
           ) : (
             ''
           )}
-          {this.props.html[this.props.id].children.map(child => {
-            switch (this.props.html[child].type) {
-              case 'div':
-                return (
-                  <Div
-                    parentId={this.props.id}
-                    id={child}
-                    key={child}
-                    html={this.props.html}
-                    styler={this.props.styler}
-                    selectType={this.props.selectType}
-                    createElement={this.props.createElement}
-                    removeElement={this.props.removeElement}
-                    updateStyle={this.props.updateStyle}
-                    selectElement={this.props.selectElement}
-                  />
-                )
-              case 'p':
-                return (
-                  <P
-                    parentId={this.props.id}
-                    id={child}
-                    key={child}
-                    html={this.props.html}
-                    styler={this.props.styler}
-                    selectType={this.props.selectType}
-                    createElement={this.props.createElement}
-                    removeElement={this.props.removeElement}
-                    updateStyle={this.props.updateStyle}
-                    selectElement={this.props.selectElement}
-                  />
-                )
-              default:
-            }
-          })}
-        </div>
+        </p>
       )
     } else {
       return <p>Hello</p>
@@ -152,4 +116,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Div)
+export default connect(mapState, mapDispatch)(P)
