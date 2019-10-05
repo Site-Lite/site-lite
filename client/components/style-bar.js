@@ -8,11 +8,18 @@ class StyleBar extends Component {
         id="style-bar"
         className={this.props.styler.enabled ? 'edit-mode ' : ''}
       >
-        <p>Selected Element: {this.props.styler.selectedElement}</p>
-        <p>
-          Element Type:
-          {this.props.html[this.props.styler.selectedElement].type}
-        </p>
+        <div id="style-bar-header">
+          <span>
+            Styles <i className="fas fa-palette" />
+          </span>
+        </div>
+        <div id="style-bar-content">
+          {/* <p>Selected Element: {this.props.styler.selectedElement}</p>
+          <p>
+            Element Type:
+            {this.props.html[this.props.styler.selectedElement].type}
+          </p> */}
+        </div>
       </div>
     )
   }

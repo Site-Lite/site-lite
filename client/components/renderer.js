@@ -40,14 +40,16 @@ class Renderer extends Component {
           className={this.props.styler.enabled ? 'edit-mode ' : ''}
         >
           <div id="settings-bar">
-            <button
-              type="button"
+            <span>Edit Mode</span>
+            <div
+              className="switch"
               onClick={() => {
                 this.toggleEditMode()
               }}
             >
-              Edit Mode
-            </button>
+              <input type="checkbox" checked={this.props.styler.enabled} />
+              <div className="slider" />
+            </div>
           </div>
           <div
             id="main"

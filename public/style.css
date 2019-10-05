@@ -278,12 +278,41 @@ form label {
 #style-bar {
   width: 0;
   background-color: #f5f5f5;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
   transition: width 0.4s ease;
 }
 
 #style-bar.edit-mode {
   width: 25vw;
+}
+
+#style-bar-header {
+  height: 50px;
+  align-items: center;
+  display: flex;
+  border-left: 1px solid rgba(0, 0, 0, 0.025);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0 10px;
+  background-color: #ffffff;
+}
+
+#style-bar span {
+  color: #dadada;
+  margin-right: 10px;
+  font-weight: 700;
+  font-size: 10px;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+#style-bar.edit-mode span {
+  font-size: 30px;
+  opacity: 1;
+}
+
+#style-bar-content {
+  height: calc(100% - 51px);
+  display: flex;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #auth-form {
@@ -317,8 +346,17 @@ form label {
 
 #settings-bar {
   height: 50px;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+#settings-bar span {
+  color: #798084;
+  margin-right: 10px;
+  font-weight: 700;
 }
 
 .navbar {
@@ -337,4 +375,48 @@ form label {
   top: 0;
   left: 0;
   margin: 5px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 54px;
+  height: 28px;
+  outline: none;
+}
+
+.switch input {
+  opacity: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #dedede;
+  transition: background-color 0.4s ease;
+  border-radius: 25px;
+}
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #f5f5f5;
+  transition: transform 0.4s ease;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #4cbb19;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #4cbb19;
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
 }

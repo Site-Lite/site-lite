@@ -48,27 +48,6 @@ class P extends Component {
           {this.props.styler.enabled ? <span>p</span> : ''}
           {this.props.styler.enabled ? (
             <div className="edit-buttons">
-              <select name="elementType" onChange={this.handleSelect}>
-                <option value="div">div</option>
-                <option value="p">p</option>
-                <option value="p">img</option>
-              </select>
-              <button
-                type="button"
-                onClick={() => {
-                  this.handleAdd(this.props.id)
-                }}
-              >
-                +
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  this.handleRemove(this.props.parentId, this.props.id)
-                }}
-              >
-                ×
-              </button>
               <button
                 type="button"
                 onClick={() => {
