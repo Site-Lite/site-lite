@@ -42,7 +42,9 @@ class P extends Component {
         <p
           id={this.props.id}
           style={this.props.html[this.props.id].style}
-          className={this.props.styler.enabled ? 'edit-mode' : ''}
+          className={`${this.props.styler.enabled ? 'edit-mode' : ''} ${
+            this.props.styler.selectedElement == this.props.id ? 'selected' : ''
+          }`}
           onClick={this.handleClick}
         >
           {this.props.styler.enabled ? <span>p</span> : ''}

@@ -260,7 +260,9 @@ form label {
 }
 
 #main div.edit-mode:hover,
-#main p.edit-mode:hover {
+#main p.edit-mode:hover,
+#main div.edit-mode.selected,
+#main p.edit-mode.selected {
   transform: scale(1.01);
   filter: drop-shadow(-3px 0px 0 #4cbb1a)
     drop-shadow(0 0px 3px rgba(0, 0, 0, 0.05));
