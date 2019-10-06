@@ -15,6 +15,7 @@ class EditMenu extends Component {
     super()
     this.handleRemove = this.handleRemove.bind(this)
   }
+
   handleAdd(event, element) {
     if (event.srcElement.tagName === 'DIV') {
       this.props.createElement(
@@ -39,7 +40,11 @@ class EditMenu extends Component {
   render() {
     return (
       <Menu id="menu_id">
-        <Submenu label="Add" arrow={<i className="fas fa-caret-right" />}>
+        <Submenu
+          label="Add"
+          arrow={<i className="fas fa-caret-right" />}
+          disabled={({event}) => event.srcElement.localName !== 'div'}
+        >
           <Item
             onClick={({event}) => {
               this.handleAdd(event, 'div')
@@ -62,7 +67,12 @@ class EditMenu extends Component {
             img
           </Item>
         </Submenu>
-        <Item onClick={this.handleRemove}>Delete</Item>
+        <Item
+          onClick={this.handleRemove}
+          disabled={({event}) => event.srcElement.id === 'main'}
+        >
+          Delete
+        </Item>
         <Separator />
         <Item onClick={this.onClick}>Copy Style</Item>
       </Menu>
