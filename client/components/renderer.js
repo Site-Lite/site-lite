@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {updateStyle} from '../store/renderer'
+import {Link} from 'react-router-dom'
 import {selectElement, toggleBar} from '../store/styler'
 import {Div, P, StyleBar, EditMenu} from '../components'
 import {MenuProvider} from 'react-contexify'
@@ -32,15 +33,21 @@ class Renderer extends Component {
           className={this.props.styler.enabled ? 'edit-mode ' : ''}
         >
           <div id="settings-bar">
-            <span>Edit Mode</span>
-            <div
-              className="switch"
-              onClick={() => {
-                this.toggleEditMode()
-              }}
-            >
-              <input type="checkbox" checked={this.props.styler.enabled} />
-              <div className="slider" />
+            <div>
+              <span>Edit Mode</span>
+              <div
+                className="switch"
+                onClick={() => {
+                  this.toggleEditMode()
+                }}
+              >
+                <input type="checkbox" checked={this.props.styler.enabled} />
+                <div className="slider" />
+              </div>
+            </div>
+            <div>
+              <Link>Save Template</Link>
+              <Link>Download</Link>
             </div>
           </div>
           <MenuProvider id="menu_id">

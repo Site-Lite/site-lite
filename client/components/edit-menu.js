@@ -1,14 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Menu, Item, Separator, Submenu} from 'react-contexify'
+import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
 import {
   selectType,
   createElement,
   removeElement,
   updateStyle
 } from '../store/renderer'
-
-// const onClick = () => console.log('event, props')
 
 class EditMenu extends Component {
   constructor() {
@@ -26,9 +24,6 @@ class EditMenu extends Component {
   }
 
   handleRemove({event}) {
-    // console.log('EVENT: ', event)
-    // console.log('PARENT: ', event.path[1].id)
-    // console.log('ID: ', event.srcElement.id)
     if (event.srcElement.id !== 'main') {
       this.props.removeElement(
         event.path[1].id === 'main' ? 'main' : Number(event.path[1].id),
@@ -39,7 +34,7 @@ class EditMenu extends Component {
 
   render() {
     return (
-      <Menu id="menu_id">
+      <Menu id="menu_id" animation={animation.fade}>
         <Submenu
           label="Add"
           arrow={<i className="fas fa-caret-right" />}

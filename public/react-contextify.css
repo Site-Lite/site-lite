@@ -270,13 +270,13 @@
 }
 
 .react-contexify__will-enter--fade {
-  -webkit-animation: react-contexify__fadeIn 0.3s ease;
-  animation: react-contexify__fadeIn 0.3s ease;
+  -webkit-animation: react-contexify__fadeIn 0.2s ease;
+  animation: react-contexify__fadeIn 0.2s ease;
 }
 
 .react-contexify__will-leave--fade {
-  -webkit-animation: react-contexify__fadeOut 0.3s ease;
-  animation: react-contexify__fadeOut 0.3s ease;
+  -webkit-animation: react-contexify__fadeOut 0.2s ease;
+  animation: react-contexify__fadeOut 0.2s ease;
 }
 
 @-webkit-keyframes react-contexify__flipInX {
