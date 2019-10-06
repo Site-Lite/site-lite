@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {selectType, createElement, updateStyle} from '../store/renderer'
+import {updateStyle} from '../store/renderer'
 import {selectElement, toggleBar} from '../store/styler'
 import {Div, P, StyleBar, EditMenu} from '../components'
 import {MenuProvider} from 'react-contexify'
@@ -9,12 +9,7 @@ class Renderer extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
-    this.handleSelect = this.handleSelect.bind(this)
   }
-  handleAdd(id) {
-    this.props.createElement(id)
-  }
-
   update(id, property, value) {
     this.props.updateStyle(id, property, value)
   }
@@ -27,10 +22,6 @@ class Renderer extends Component {
     if (event.target.id.length) {
       this.props.selectElement(event.target.id)
     }
-  }
-
-  handleSelect(event) {
-    this.props.selectType(event.target.value)
   }
 
   render() {
@@ -58,33 +49,6 @@ class Renderer extends Component {
               style={this.props.html.main.style}
               onClick={this.handleClick}
             >
-              {this.props.styler.enabled ? (
-                <div className="edit-buttons">
-                  <select name="elementType" onChange={this.handleSelect}>
-                    <option value="div">div</option>
-                    <option value="p">p</option>
-                    <option value="p">img</option>
-                  </select>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      this.handleAdd('main')
-                    }}
-                  >
-                    +
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      this.update('main', 'background-color', 'wheat')
-                    }}
-                  >
-                    style
-                  </button>
-                </div>
-              ) : (
-                ''
-              )}
               {this.props.html.main.children.map(child => {
                 switch (this.props.html[child].type) {
                   case 'div':
@@ -113,12 +77,6 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    selectType(type) {
-      dispatch(selectType(type))
-    },
-    createElement(id) {
-      dispatch(createElement(id))
-    },
     updateStyle(id, property, value) {
       dispatch(updateStyle(id, property, value))
     },

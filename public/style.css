@@ -185,11 +185,9 @@ form label {
 #editor-panel.edit-mode #main {
   background: url(/images/dots-bg.png) center/40px repeat;
   position: relative;
-  padding-top: 15px;
 }
 
 #editor-panel.edit-mode #settings-bar + div {
-  height: calc(100% - 66px);
   pointer-events: auto;
 }
 
@@ -379,13 +377,6 @@ form label {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.edit-buttons {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 5px;
 }
 
 .switch {

@@ -1,11 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {
-  selectType,
-  createElement,
-  removeElement,
-  updateStyle
-} from '../store/renderer'
+import {updateStyle} from '../store/renderer'
 import {selectElement} from '../store/styler'
 import {P} from '../components'
 
@@ -13,14 +8,6 @@ class Div extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
-    this.handleSelect = this.handleSelect.bind(this)
-  }
-  handleAdd(id) {
-    this.props.createElement(id)
-  }
-
-  handleRemove(parentId, id) {
-    this.props.removeElement(parentId, id)
   }
 
   update(id, property, value) {
@@ -31,10 +18,6 @@ class Div extends Component {
     if (event.target.id.length) {
       this.props.selectElement(Number(event.target.id))
     }
-  }
-
-  handleSelect(event) {
-    this.props.selectType(event.target.value)
   }
 
   render() {
@@ -49,41 +32,6 @@ class Div extends Component {
           onClick={this.handleClick}
         >
           {this.props.styler.enabled ? <span>div</span> : ''}
-          {this.props.styler.enabled ? (
-            <div className="edit-buttons">
-              <select name="elementType" onChange={this.handleSelect}>
-                <option value="div">div</option>
-                <option value="p">p</option>
-                <option value="p">img</option>
-              </select>
-              <button
-                type="button"
-                onClick={() => {
-                  this.handleAdd(this.props.id)
-                }}
-              >
-                +
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  this.handleRemove(this.props.parentId, this.props.id)
-                }}
-              >
-                ×
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  this.update(this.props.id, 'background-color', 'wheat')
-                }}
-              >
-                style
-              </button>
-            </div>
-          ) : (
-            ''
-          )}
           {this.props.html[this.props.id].children.map(child => {
             switch (this.props.html[child].type) {
               case 'div':
@@ -94,9 +42,6 @@ class Div extends Component {
                     key={child}
                     html={this.props.html}
                     styler={this.props.styler}
-                    selectType={this.props.selectType}
-                    createElement={this.props.createElement}
-                    removeElement={this.props.removeElement}
                     updateStyle={this.props.updateStyle}
                     selectElement={this.props.selectElement}
                   />
@@ -109,9 +54,6 @@ class Div extends Component {
                     key={child}
                     html={this.props.html}
                     styler={this.props.styler}
-                    selectType={this.props.selectType}
-                    createElement={this.props.createElement}
-                    removeElement={this.props.removeElement}
                     updateStyle={this.props.updateStyle}
                     selectElement={this.props.selectElement}
                   />
@@ -122,7 +64,7 @@ class Div extends Component {
         </div>
       )
     } else {
-      return <p>Hello</p>
+      return <div />
     }
   }
 }
@@ -136,17 +78,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    selectType(type) {
-      dispatch(selectType(type))
-    },
-    createElement(id) {
-      dispatch(createElement(id))
-    },
     updateStyle(id, property, value) {
       dispatch(updateStyle(id, property, value))
-    },
-    removeElement(id, elementId) {
-      dispatch(removeElement(id, elementId))
     },
     selectElement(id) {
       dispatch(selectElement(id))
