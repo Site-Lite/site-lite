@@ -4,6 +4,11 @@
   outline: none;
 }
 
+*::selection {
+  color: #ffffff;
+  background-color: rgba(76, 187, 26, 0.3);
+}
+
 html,
 body,
 #app,
@@ -29,7 +34,9 @@ button {
 }
 
 button,
-input:checked + .slider {
+input:checked + .slider,
+.react-contexify__item:not(.react-contexify__item--disabled):hover
+  > .react-contexify__item__content {
   background-color: #4cbb1a;
 }
 
@@ -283,10 +290,23 @@ form label {
 #main div.edit-mode:hover,
 #main p.edit-mode:hover,
 #main div.edit-mode.selected,
-#main p.edit-mode.selected {
+#main p.edit-mode.selected,
+#main div.edit-mode.selected > div:hover,
+#main p.edit-mode.selected > div:hover {
   transform: scale(1.01);
   filter: drop-shadow(-3px 0px 0 #4cbb1a)
     drop-shadow(0 0px 3px rgba(0, 0, 0, 0.05));
+}
+
+#main div.edit-mode.selected,
+#main p.edit-mode.selected {
+  filter: drop-shadow(-3px 0px 0 #4cbb1a)
+    drop-shadow(0 0px 3px rgba(0, 0, 0, 0.05)) brightness(105%);
+}
+
+#main div.edit-mode.selected > div,
+#main p.edit-mode.selected > div {
+  filter: brightness(95%);
 }
 
 #main span {
