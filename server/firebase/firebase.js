@@ -34,6 +34,22 @@ export class FirebaseWrapper {
     return this._firebaseWrapperInstance
   }
 
+  async addTemplate(state) {
+    try {
+      await this._firestore
+        .collection('/Users/z5IkB6nkL04Vk0aEgzbF/Templates/')
+        .doc()
+        .set({
+          html: state
+        })
+      // .then(function(docRef) {
+      // console.log("Document written with ID: ", docRef.id);
+      // })
+    } catch (error) {
+      console.log('something went wrong in database for addTemplate ', error)
+    }
+  }
+
   async getTemplate() {
     try {
       let state = []

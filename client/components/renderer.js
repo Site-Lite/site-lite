@@ -19,6 +19,9 @@ class Renderer extends Component {
     this.props.setState(state[0])
   }
 
+  async addTemplate(state) {
+    await FirebaseWrapper.GetInstance().addTemplate(state)
+  }
   update(id, property, value) {
     this.props.updateStyle(id, property, value)
   }
@@ -54,7 +57,9 @@ class Renderer extends Component {
               </div>
             </div>
             <div>
-              <Link>Save Template</Link>
+              <Link onClick={() => this.addTemplate(this.props.html)}>
+                Save Template
+              </Link>
               <Link>Download</Link>
             </div>
           </div>
