@@ -5,12 +5,18 @@ import {Link} from 'react-router-dom'
 import {selectElement, toggleBar} from '../store/styler'
 import {Div, P, StyleBar, EditMenu} from '../components'
 import {MenuProvider} from 'react-contexify'
+import {FirebaseWrapper} from '../../server/firebase/firebase'
 
 class Renderer extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
   }
+
+  async componentDidMount() {
+    await FirebaseWrapper.GetInstance().getTemplate()
+  }
+
   update(id, property, value) {
     this.props.updateStyle(id, property, value)
   }
