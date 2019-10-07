@@ -2,8 +2,38 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createElement, updateStyle} from '../store/renderer'
 import {Div} from '../components'
+import ClickMenu from './clickMenu'
 
 class Renderer extends Component {
+  constructor(props) {
+    super(props)
+
+    // this.state = {
+    //   menu: [
+    //     {label: 'Add a div', callback: this.divCallback},
+    //     {label: 'Add a paragraph', callback: this.pCallback},
+    //     {label: 'Add an image', callback: this.imgCallback},
+    //     {label: 'Delete', callback: this.delCallback}
+    //   ]
+    // }
+  }
+
+  // divCallback() {
+  //   console.log('clicked on add a div')
+  // }
+
+  // pCallback() {
+  //   console.log('clicked on add a paragraph')
+  // }
+
+  // imgCallback() {
+  //   console.log('clicked on add an iamge')
+  // }
+
+  // delCallback() {
+  //   console.log('clicked on delete')
+  // }
+
   handleAdd(id) {
     this.props.createElement(id)
     setTimeout(() => {
@@ -21,6 +51,7 @@ class Renderer extends Component {
   render() {
     return (
       <div id="renderer" style={this.props.html.main.style}>
+        {/* <div><ClickMenu items={this.state.menu}></ClickMenu></div> */}
         <button
           type="button"
           onClick={() => {

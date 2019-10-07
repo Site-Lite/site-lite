@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createElement, updateStyle} from '../store/renderer'
+import {ClickMenu} from './clickMenu'
 
 class Div extends Component {
   handleAdd(id) {
