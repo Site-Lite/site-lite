@@ -1,15 +1,26 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateStyle} from '../store/renderer'
+import {updateStyle, setState} from '../store/renderer'
 import {Link} from 'react-router-dom'
 import {selectElement, toggleBar} from '../store/styler'
 import {Div, P, StyleBar, EditMenu} from '../components'
 import {MenuProvider} from 'react-contexify'
+import {FirebaseWrapper} from '../../server/firebase/firebase'
 
 class Renderer extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
+  }
+
+  async componentDidMount() {
+    const state = await FirebaseWrapper.GetInstance().getTemplate()
+    console.log(state[0])
+    this.props.setState(state[0])
+  }
+
+  async addTemplate(state) {
+    await FirebaseWrapper.GetInstance().addTemplate(state)
   }
   update(id, property, value) {
     this.props.updateStyle(id, property, value)
@@ -46,7 +57,9 @@ class Renderer extends Component {
               </div>
             </div>
             <div>
-              <Link>Save Template</Link>
+              <Link onClick={() => this.addTemplate(this.props.html)}>
+                Save Template
+              </Link>
               <Link>Download</Link>
             </div>
           </div>
@@ -92,6 +105,9 @@ const mapDispatch = dispatch => {
     },
     selectElement(id) {
       dispatch(selectElement(id))
+    },
+    setState(state) {
+      dispatch(setState(state))
     }
   }
 }
