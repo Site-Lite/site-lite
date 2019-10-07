@@ -4,7 +4,7 @@ import {Navbar} from './components'
 import Routes from './routes'
 import {FirebaseWrapper} from '../server/firebase/firebase'
 
-class App extends React {
+class App extends React.Component {
   constructor() {
     super()
     //initialize to firebase

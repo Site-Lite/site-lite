@@ -36,12 +36,16 @@ export class FirebaseWrapper {
 
   async getTemplate() {
     try {
+      console.log('here')
       await this._firestore
-        .collection('Templates')
+        .collectionGroup('Templates')
         .get()
         .then(function(snapshot) {
+          console.log(snapshot)
           snapshot.forEach(function(doc) {
-            console.log(doc.data)
+            console.log(doc.data().html)
+            const state = doc.data().html
+            return state
           })
         })
     } catch (error) {

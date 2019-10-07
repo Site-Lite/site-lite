@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateStyle} from '../store/renderer'
+import {updateStyle, setState} from '../store/renderer'
 import {Link} from 'react-router-dom'
 import {selectElement, toggleBar} from '../store/styler'
 import {Div, P, StyleBar, EditMenu} from '../components'
@@ -14,7 +14,9 @@ class Renderer extends Component {
   }
 
   async componentDidMount() {
-    await FirebaseWrapper.GetInstance().getTemplate()
+    const state = await FirebaseWrapper.GetInstance().getTemplate()
+    console.log(state)
+    this.props.setState(state)
   }
 
   update(id, property, value) {
@@ -98,6 +100,9 @@ const mapDispatch = dispatch => {
     },
     selectElement(id) {
       dispatch(selectElement(id))
+    },
+    setState(state) {
+      dispatch(setState(state))
     }
   }
 }
