@@ -15,8 +15,8 @@ class Renderer extends Component {
 
   async componentDidMount() {
     const state = await FirebaseWrapper.GetInstance().getTemplate()
-    console.log(state)
-    this.props.setState(state)
+    console.log(state[0])
+    this.props.setState(state[0])
   }
 
   update(id, property, value) {

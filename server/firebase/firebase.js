@@ -36,6 +36,7 @@ export class FirebaseWrapper {
 
   async getTemplate() {
     try {
+      let state = []
       console.log('here')
       await this._firestore
         .collectionGroup('Templates')
@@ -44,10 +45,10 @@ export class FirebaseWrapper {
           console.log(snapshot)
           snapshot.forEach(function(doc) {
             console.log(doc.data().html)
-            const state = doc.data().html
-            return state
+            state.push(doc.data().html)
           })
         })
+      return state
     } catch (error) {
       console.log('something went wrong in database for getTemplate ', error)
     }
