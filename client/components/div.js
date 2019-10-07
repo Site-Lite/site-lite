@@ -3,6 +3,12 @@ import {connect} from 'react-redux'
 import {updateStyle} from '../store/renderer'
 import {selectElement} from '../store/styler'
 import {P} from '../components'
+import styled from 'styled-components'
+
+const StyledDiv = styled.div`
+  background: blue;
+  color: green;
+`
 
 class Div extends Component {
   constructor() {
@@ -23,7 +29,7 @@ class Div extends Component {
   render() {
     if (this.props.html[this.props.id]) {
       return (
-        <div
+        <StyledDiv
           id={this.props.id}
           style={this.props.html[this.props.id].style}
           className={`${this.props.styler.enabled ? 'edit-mode' : ''} ${
@@ -61,7 +67,7 @@ class Div extends Component {
               default:
             }
           })}
-        </div>
+        </StyledDiv>
       )
     } else {
       return <div />
