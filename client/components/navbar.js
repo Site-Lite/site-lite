@@ -26,11 +26,11 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </Link>
 
           <div>
-            <div id="nav-editor-button">
+            <button type="button" id="nav-editor-button">
               <Link to="/editor" id="nav-editor">
                 Go to Editor <i className="fas fa-angle-right" />
               </Link>
-            </div>
+            </button>
             <div className="fas fa-user-circle" id="nav-user">
               <div id="nav-user-menu">
                 <Link to="/login">Login</Link>

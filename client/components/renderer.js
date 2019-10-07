@@ -1,19 +1,16 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {selectType, createElement, updateStyle} from '../store/renderer'
+import {updateStyle} from '../store/renderer'
+import {Link} from 'react-router-dom'
 import {selectElement, toggleBar} from '../store/styler'
-import {Div, P, StyleBar} from '../components'
+import {Div, P, StyleBar, EditMenu} from '../components'
+import {MenuProvider} from 'react-contexify'
 
 class Renderer extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
-    this.handleSelect = this.handleSelect.bind(this)
   }
-  handleAdd(id) {
-    this.props.createElement(id)
-  }
-
   update(id, property, value) {
     this.props.updateStyle(id, property, value)
   }
@@ -28,10 +25,6 @@ class Renderer extends Component {
     }
   }
 
-  handleSelect(event) {
-    this.props.selectType(event.target.value)
-  }
-
   render() {
     return (
       <div id="editor">
@@ -40,59 +33,41 @@ class Renderer extends Component {
           className={this.props.styler.enabled ? 'edit-mode ' : ''}
         >
           <div id="settings-bar">
-            <span>Edit Mode</span>
-            <div
-              className="switch"
-              onClick={() => {
-                this.toggleEditMode()
-              }}
-            >
-              <input type="checkbox" checked={this.props.styler.enabled} />
-              <div className="slider" />
+            <div>
+              <span>Edit Mode</span>
+              <div
+                className="switch"
+                onClick={() => {
+                  this.toggleEditMode()
+                }}
+              >
+                <input type="checkbox" checked={this.props.styler.enabled} />
+                <div className="slider" />
+              </div>
+            </div>
+            <div>
+              <Link>Save Template</Link>
+              <Link>Download</Link>
             </div>
           </div>
-          <div
-            id="main"
-            style={this.props.html.main.style}
-            onClick={this.handleClick}
-          >
-            {this.props.styler.enabled ? (
-              <div className="edit-buttons">
-                <select name="elementType" onChange={this.handleSelect}>
-                  <option value="div">div</option>
-                  <option value="p">p</option>
-                  <option value="p">img</option>
-                </select>
-                <button
-                  type="button"
-                  onClick={() => {
-                    this.handleAdd('main')
-                  }}
-                >
-                  +
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    this.update('main', 'background-color', 'wheat')
-                  }}
-                >
-                  style
-                </button>
-              </div>
-            ) : (
-              ''
-            )}
-            {this.props.html.main.children.map(child => {
-              switch (this.props.html[child].type) {
-                case 'div':
-                  return <Div parentId="main" id={child} key={child} />
-                case 'p':
-                  return <P parentId="main" id={child} key={child} />
-                default:
-              }
-            })}
-          </div>
+          <MenuProvider id="menu_id">
+            <div
+              id="main"
+              style={this.props.html.main.style}
+              onClick={this.handleClick}
+            >
+              {this.props.html.main.children.map(child => {
+                switch (this.props.html[child].type) {
+                  case 'div':
+                    return <Div parentId="main" id={child} key={child} />
+                  case 'p':
+                    return <P parentId="main" id={child} key={child} />
+                  default:
+                }
+              })}
+            </div>
+          </MenuProvider>
+          <EditMenu />
         </div>
         <StyleBar />
       </div>
@@ -109,12 +84,6 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    selectType(type) {
-      dispatch(selectType(type))
-    },
-    createElement(id) {
-      dispatch(createElement(id))
-    },
     updateStyle(id, property, value) {
       dispatch(updateStyle(id, property, value))
     },
