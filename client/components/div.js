@@ -1,72 +1,88 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createElement, updateStyle} from '../store/renderer'
-import {ClickMenu} from './clickMenu'
+import {updateStyle} from '../store/renderer'
+import {selectElement} from '../store/styler'
+import {P} from '../components'
 
 class Div extends Component {
-  handleAdd(id) {
-    this.props.createElement(id)
+  constructor() {
+    super()
+    this.handleClick = this.handleClick.bind(this)
   }
 
   update(id, property, value) {
     this.props.updateStyle(id, property, value)
-    setTimeout(() => {
-      console.log(this.props.html)
-    }, 0)
+  }
+
+  handleClick(event) {
+    if (event.target.id.length) {
+      this.props.selectElement(Number(event.target.id))
+    }
   }
 
   render() {
     if (this.props.html[this.props.id]) {
       return (
-        <div id={this.props.id} style={this.props.html[this.props.id].style}>
-          <button
-            type="button"
-            onClick={() => {
-              this.handleAdd(this.props.id)
-            }}
-          >
-            Add
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              this.update(this.props.id, 'background', 'wheat')
-            }}
-          >
-            Change style
-          </button>
+        <div
+          id={this.props.id}
+          style={this.props.html[this.props.id].style}
+          className={`${this.props.styler.enabled ? 'edit-mode' : ''} ${
+            this.props.styler.selectedElement == this.props.id ? 'selected' : ''
+          }`}
+          onClick={this.handleClick}
+        >
+          {this.props.styler.enabled ? <span>div</span> : ''}
           {this.props.html[this.props.id].children.map(child => {
-            return (
-              <Div
-                id={child}
-                key={child}
-                html={this.props.html}
-                createElement={this.props.createElement}
-                updateStyle={this.props.updateStyle}
-              />
-            )
+            switch (this.props.html[child].type) {
+              case 'div':
+                return (
+                  <Div
+                    parentId={this.props.id}
+                    id={child}
+                    key={child}
+                    html={this.props.html}
+                    styler={this.props.styler}
+                    updateStyle={this.props.updateStyle}
+                    selectElement={this.props.selectElement}
+                  />
+                )
+              case 'p':
+                return (
+                  <P
+                    parentId={this.props.id}
+                    id={child}
+                    key={child}
+                    html={this.props.html}
+                    styler={this.props.styler}
+                    updateStyle={this.props.updateStyle}
+                    selectElement={this.props.selectElement}
+                  />
+                )
+              default:
+            }
           })}
         </div>
       )
     } else {
-      return <p>Hello</p>
+      return <div />
     }
   }
 }
 
 const mapState = state => {
   return {
-    html: state.renderer
+    html: state.renderer,
+    styler: state.styler
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    createElement(id) {
-      dispatch(createElement(id))
-    },
     updateStyle(id, property, value) {
       dispatch(updateStyle(id, property, value))
+    },
+    selectElement(id) {
+      dispatch(selectElement(id))
     }
   }
 }
