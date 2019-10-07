@@ -2,6 +2,7 @@ const SELECT_TYPE = 'SELECT_TYPE'
 const CREATE_ELEMENT = 'CREATE_ELEMENT'
 const REMOVE_ELEMENT = 'REMOVE_ELEMENT'
 const UPDATE_STYLE = 'UPDATE_STYLE'
+const SET_STATE = 'SET_STATE'
 
 const initialState = {
   counter: 1,
@@ -22,6 +23,10 @@ export const updateStyle = (id, property, value) => ({
   id,
   property,
   value
+})
+export const setState = state => ({
+  type: SET_STATE,
+  state
 })
 
 export default function(state = initialState, action) {
@@ -62,6 +67,8 @@ export default function(state = initialState, action) {
           style: {...state[action.id].style, [action.property]: action.value}
         }
       }
+    case SET_STATE:
+      return action.state
     default:
       return state
   }
