@@ -26,6 +26,7 @@ class Div extends Component {
       return (
         <div
           id={this.props.id}
+          style={this.props.html[this.props.id].style}
           className={`${this.props.styler.enabled ? 'edit-mode' : ''} ${
             this.props.styler.selectedElement == this.props.id ? 'selected' : ''
           }`}
