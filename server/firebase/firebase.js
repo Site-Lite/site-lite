@@ -93,6 +93,16 @@ export class FirebaseWrapper {
         .set({
           html: state
         })
+      console.log('this is the uid: ', uid)
+      await this._firestore
+        .collection(`/Users`)
+        // .add({
+        //   templates: [state]
+        // })
+        .doc(uid)
+        .update({
+          templates: ['hi --->'] // this is where you want to include the template id
+        })
     } catch (error) {
       console.log('something went wrong in database for addTemplate ', error)
     }

@@ -25,6 +25,7 @@ class Renderer extends Component {
     await FirebaseWrapper.GetInstance().addTemplate(state, uid)
     // console.log(this.props.user)
   }
+
   update(id, property, value) {
     this.props.updateStyle(id, property, value)
   }
