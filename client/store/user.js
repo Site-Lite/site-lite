@@ -15,7 +15,7 @@ const defaultUser = {}
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({type: GET_USER, user})
+const getUser = (user, uid) => ({type: GET_USER, user, uid})
 const removeUser = () => ({type: REMOVE_USER})
 
 /**
@@ -38,7 +38,7 @@ export const auth = (email, password, method) => {
         password,
         method
       )
-      dispatch(getUser(result))
+      dispatch(getUser(result.user, result.id))
     } catch (err) {
       console.err(err)
     }
@@ -62,7 +62,7 @@ export const logout = () => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
-      return action.user
+      return {email: action.user, id: action.uid}
     case REMOVE_USER:
       return defaultUser
     default:

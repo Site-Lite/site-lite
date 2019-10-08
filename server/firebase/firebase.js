@@ -40,7 +40,9 @@ export class FirebaseWrapper {
     try {
       const ref = this._firestore.collection('Users').doc()
 
-      return await ref.set({email: email, id: ref.id, templates: []})
+      await ref.set({email: email, id: ref.id, templates: []})
+
+      return ref.id
     } catch (err) {
       console.error(err)
     }
@@ -63,8 +65,11 @@ export class FirebaseWrapper {
           email,
           password
         )
-        this.createUser(email)
-        return results.user.email
+
+        if (results) {
+          const uid = await this.createUser(email)
+          return {user: results.user.email, id: uid}
+        }
       } catch (err) {
         console.error(err)
       }
@@ -75,10 +80,10 @@ export class FirebaseWrapper {
     this.auth.signOut()
   }
 
-  async addTemplate(state) {
+  async addTemplate(state, uid) {
     try {
       await this._firestore
-        .collection('/Users/z5IkB6nkL04Vk0aEgzbF/Templates/')
+        .collection(`/Users/z5IkB6nkL04Vk0aEgzbF/Templates/`)
         .doc()
         .set({
           html: state
