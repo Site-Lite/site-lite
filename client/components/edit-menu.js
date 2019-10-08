@@ -1,12 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
-import {
-  selectType,
-  createElement,
-  removeElement,
-  updateStyle
-} from '../store/renderer'
+import {createElement, removeElement, updateStyle} from '../store/renderer'
 
 class EditMenu extends Component {
   constructor() {
@@ -84,9 +79,6 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    selectType(type) {
-      dispatch(selectType(type))
-    },
     createElement(id, type) {
       dispatch(createElement(id, type))
     },
