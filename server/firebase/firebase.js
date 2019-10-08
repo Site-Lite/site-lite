@@ -56,7 +56,6 @@ export class FirebaseWrapper {
           email,
           password
         )
-        console.log('login', results)
         return {user: results.user.email, id: results.user.uid}
       } catch (err) {
         console.error(err)
@@ -67,7 +66,6 @@ export class FirebaseWrapper {
           email,
           password
         )
-        console.log('sign up', results)
         if (results) {
           const uid = await this.createUser(email, results.user.uid)
           return {user: results.user.email, id: uid}
