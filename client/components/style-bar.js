@@ -1,7 +1,28 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+
+import Collapse from '@kunukn/react-collapse'
 
 class StyleBar extends Component {
+  constructor() {
+    super()
+    this.state = {
+      content: false,
+      spacing: false,
+      background: false
+    }
+  }
+
+  toggleCollapse(section) {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        [section]: !prevState[section]
+      }
+    })
+  }
+
   render() {
     return (
       <div
@@ -19,6 +40,44 @@ class StyleBar extends Component {
             Element Type:
             {this.props.html[this.props.styler.selectedElement].type}
           </p> */}
+          <Link
+            // type="button"
+            onClick={() => {
+              this.toggleCollapse('content')
+            }}
+            className="style-section"
+          >
+            content
+          </Link>
+          <Collapse isOpen={this.state.content}>
+            <h1>content</h1>
+          </Collapse>
+
+          <Link
+            // type="button"
+            onClick={() => {
+              this.toggleCollapse('spacing')
+            }}
+            className="style-section"
+          >
+            spacing
+          </Link>
+          <Collapse isOpen={this.state.spacing}>
+            <h1>spacing</h1>
+          </Collapse>
+
+          <Link
+            // type="button"
+            onClick={() => {
+              this.toggleCollapse('background')
+            }}
+            className="style-section"
+          >
+            background
+          </Link>
+          <Collapse isOpen={this.state.background}>
+            <h1>background</h1>
+          </Collapse>
         </div>
       </div>
     )
