@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
 import firebaseConfig from '../../secrets'
+import 'firebase/auth'
 
 export class FirebaseWrapper {
   constructor() {
@@ -18,6 +19,7 @@ export class FirebaseWrapper {
       )
       this._firestore = firebase.firestore()
       this.initialized = true
+      this.auth = firebase.auth()
       console.log('It worked! :D')
     } else {
       console.log('already initialized!')
@@ -34,6 +36,45 @@ export class FirebaseWrapper {
     return this._firebaseWrapperInstance
   }
 
+  async createUser(email) {
+    try {
+      const ref = this._firestore.collection('Users').doc()
+
+      return await ref.set({email: email, id: ref.id, templates: []})
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  async userAuth(email, password, method) {
+    if (method === 'login') {
+      try {
+        const results = await this.auth.signInWithEmailAndPassword(
+          email,
+          password
+        )
+        return results.user.email
+      } catch (err) {
+        console.error(err)
+      }
+    } else {
+      try {
+        const results = await this.auth.createUserWithEmailAndPassword(
+          email,
+          password
+        )
+        this.createUser(email)
+        return results.user.email
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  }
+
+  signOut = () => {
+    this.auth.signOut()
+  }
+
   async addTemplate(state) {
     try {
       await this._firestore
@@ -42,9 +83,6 @@ export class FirebaseWrapper {
         .set({
           html: state
         })
-      // .then(function(docRef) {
-      // console.log("Document written with ID: ", docRef.id);
-      // })
     } catch (error) {
       console.log('something went wrong in database for addTemplate ', error)
     }
@@ -53,14 +91,11 @@ export class FirebaseWrapper {
   async getTemplate() {
     try {
       let state = []
-      console.log('here')
       await this._firestore
         .collectionGroup('Templates')
         .get()
         .then(function(snapshot) {
-          console.log(snapshot)
           snapshot.forEach(function(doc) {
-            console.log(doc.data().html)
             state.push(doc.data().html)
           })
         })
