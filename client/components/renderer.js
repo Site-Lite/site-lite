@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateStyle, setState} from '../store/renderer'
 import {Link} from 'react-router-dom'
+import {MenuProvider} from 'react-contexify'
+
+import {updateStyle, setState} from '../store/renderer'
 import {selectElement, toggleBar} from '../store/styler'
 import {Div, P, StyleBar, EditMenu} from '../components'
-import {MenuProvider} from 'react-contexify'
+
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 
 class Renderer extends Component {
@@ -15,12 +17,13 @@ class Renderer extends Component {
 
   async componentDidMount() {
     const state = await FirebaseWrapper.GetInstance().getTemplate()
-    console.log(state[0])
+    // console.log(state[0])
     this.props.setState(state[0])
   }
 
-  async addTemplate(state) {
-    await FirebaseWrapper.GetInstance().addTemplate(state)
+  async addTemplate(state, uid) {
+    await FirebaseWrapper.GetInstance().addTemplate(state, uid)
+    // console.log(this.props.user)
   }
   update(id, property, value) {
     this.props.updateStyle(id, property, value)
@@ -57,7 +60,11 @@ class Renderer extends Component {
               </div>
             </div>
             <div>
-              <Link onClick={() => this.addTemplate(this.props.html)}>
+              <Link
+                onClick={() =>
+                  this.addTemplate(this.props.html, this.props.user.id)
+                }
+              >
                 Save Template
               </Link>
               <Link>Download</Link>
@@ -91,7 +98,8 @@ class Renderer extends Component {
 const mapState = state => {
   return {
     html: state.renderer,
-    styler: state.styler
+    styler: state.styler,
+    user: state.user
   }
 }
 

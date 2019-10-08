@@ -56,7 +56,12 @@ export class FirebaseWrapper {
           email,
           password
         )
-        return {user: results.user.email, id: results.user.uid}
+        // console.log(results.user)
+        return {
+          user: results.user.email,
+          id: results.user.uid
+          // ,templates: results.users.templates
+        }
       } catch (err) {
         console.error(err)
       }
@@ -83,7 +88,7 @@ export class FirebaseWrapper {
   async addTemplate(state, uid) {
     try {
       await this._firestore
-        .collection(`/Users/z5IkB6nkL04Vk0aEgzbF/Templates/`)
+        .collection(`/Users/${uid}/Templates`)
         .doc()
         .set({
           html: state
