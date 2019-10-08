@@ -5,11 +5,6 @@ import {selectElement} from '../store/styler'
 import {P} from '../components'
 import styled from 'styled-components'
 
-const StyledDiv = styled.div`
-  background: blue;
-  color: green;
-`
-
 class Div extends Component {
   constructor() {
     super()
@@ -27,11 +22,20 @@ class Div extends Component {
   }
 
   render() {
+    const styles = Object.keys(this.props.html[this.props.id].style)
+      .map(property => {
+        return `${property}: ${this.props.html[this.props.id].style[property]}`
+      })
+      .join(';')
+    console.log(styles)
+    const StyledDiv = styled.div`
+      ${styles};
+    `
+
     if (this.props.html[this.props.id]) {
       return (
         <StyledDiv
           id={this.props.id}
-          style={this.props.html[this.props.id].style}
           className={`${this.props.styler.enabled ? 'edit-mode' : ''} ${
             this.props.styler.selectedElement == this.props.id ? 'selected' : ''
           }`}
