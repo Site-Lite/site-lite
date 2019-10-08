@@ -1,15 +1,16 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-
 import Collapse from '@kunukn/react-collapse'
 
 class StyleBar extends Component {
   constructor() {
     super()
     this.state = {
-      content: false,
+      size: false,
+      text: false,
+      border: false,
       spacing: false,
+      formatting: false,
       background: false
     }
   }
@@ -40,44 +41,73 @@ class StyleBar extends Component {
             Element Type:
             {this.props.html[this.props.styler.selectedElement].type}
           </p> */}
-          <Link
-            // type="button"
+          <span
             onClick={() => {
-              this.toggleCollapse('content')
+              this.toggleCollapse('size')
             }}
             className="style-section"
           >
-            content
-          </Link>
-          <Collapse isOpen={this.state.content}>
-            <h1>content</h1>
+            Size
+          </span>
+          <Collapse isOpen={this.state.size}>
+            <div>Test</div>
           </Collapse>
-
-          <Link
-            // type="button"
+          <span
+            onClick={() => {
+              this.toggleCollapse('text')
+            }}
+            className="style-section"
+          >
+            Text
+          </span>
+          <Collapse isOpen={this.state.text}>
+            <div>Test</div>
+          </Collapse>
+          <span
+            onClick={() => {
+              this.toggleCollapse('border')
+            }}
+            className="style-section"
+          >
+            Border
+          </span>
+          <Collapse isOpen={this.state.border}>
+            <div>Test</div>
+          </Collapse>
+          <span
             onClick={() => {
               this.toggleCollapse('spacing')
             }}
             className="style-section"
           >
-            spacing
-          </Link>
+            Spacing
+          </span>
           <Collapse isOpen={this.state.spacing}>
-            <h1>spacing</h1>
+            <div>Test</div>
           </Collapse>
-
-          <Link
-            // type="button"
+          <span
+            onClick={() => {
+              this.toggleCollapse('formatting')
+            }}
+            className="style-section"
+          >
+            Formatting
+          </span>
+          <Collapse isOpen={this.state.formatting}>
+            <div>Test</div>
+          </Collapse>
+          <span
             onClick={() => {
               this.toggleCollapse('background')
             }}
             className="style-section"
           >
-            background
-          </Link>
+            Background
+          </span>
           <Collapse isOpen={this.state.background}>
-            <h1>background</h1>
+            <div>Test</div>
           </Collapse>
+          <span className="style-section" />
         </div>
       </div>
     )

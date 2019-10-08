@@ -333,12 +333,11 @@ form label {
   align-items: center;
   display: flex;
   border-left: 1px solid rgba(0, 0, 0, 0.025);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 0 10px;
+  padding: 0 20px;
   background-color: #ffffff;
 }
 
-#style-bar span {
+#style-bar #style-bar-header span {
   color: #dadada;
   margin-right: 10px;
   font-weight: 700;
@@ -347,7 +346,7 @@ form label {
   transition: all 0.3s ease;
 }
 
-#style-bar.edit-mode span {
+#style-bar.edit-mode #style-bar-header span {
   font-size: 30px;
   opacity: 1;
 }
@@ -492,8 +491,29 @@ input:checked + .slider:before {
 }
 
 .style-section {
-  font-size: 30px;
-  text-align: center;
-  padding: 10px;
-  border: 1px solid #7a8185;
+  font-size: 20px;
+  padding: 0 20px;
+  border-top: 1px solid #f5f5f5;
+  cursor: pointer;
+  background-color: #ffffff;
+  color: #dadada;
+  font-weight: 700;
+  min-height: 45px;
+  align-items: center;
+  display: flex;
+}
+
+.style-section:last-child {
+  flex: 1;
+  min-height: 0;
+}
+
+.style-section + div {
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.04);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: -1px;
+}
+
+.style-section + div > div {
+  padding: 20px;
 }

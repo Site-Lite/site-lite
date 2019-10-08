@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {updateStyle} from '../store/renderer'
 import {selectElement} from '../store/styler'
 import {P} from '../components'
-import styled from 'styled-components'
 
 class Div extends Component {
   constructor() {
@@ -23,19 +22,9 @@ class Div extends Component {
   }
 
   render() {
-    const styles = Object.keys(this.props.html[this.props.id].style)
-      .map(property => {
-        return `${property}: ${this.props.html[this.props.id].style[property]}`
-      })
-      .join(';')
-    console.log(styles)
-    const StyledDiv = styled.div`
-      ${styles};
-    `
-
     if (this.props.html[this.props.id]) {
       return (
-        <StyledDiv
+        <div
           id={this.props.id}
           className={`${this.props.styler.enabled ? 'edit-mode' : ''} ${
             this.props.styler.selectedElement == this.props.id ? 'selected' : ''
@@ -72,7 +61,7 @@ class Div extends Component {
               default:
             }
           })}
-        </StyledDiv>
+        </div>
       )
     } else {
       return <div />
