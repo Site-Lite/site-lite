@@ -63,7 +63,10 @@ export default function(state = initialState, action) {
         ...state,
         [action.id]: {
           ...state[action.id],
-          style: {...state[action.id].style, [action.property]: action.value}
+          style: {
+            ...state[action.id].style,
+            [action.property]: action.value
+          }
         }
       }
     case SET_STATE:

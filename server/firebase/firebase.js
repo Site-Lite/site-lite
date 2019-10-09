@@ -93,22 +93,36 @@ export class FirebaseWrapper {
         .set({
           html: state
         })
-      console.log('this is the uid: ', uid)
+
+      const templates = []
+
       await this._firestore
-        .collection(`/Users`)
-        // .add({
-        //   templates: [state]
-        // })
-        .doc(uid)
-        .update({
-          templates: ['hi --->'] // this is where you want to include the template id
+        .collection(`/Users/${uid}/Templates`)
+        .get()
+        .then(function(snapshot) {
+          snapshot.forEach(function(doc) {
+            // const newTemp = {...doc.data(), doc.id}
+            templates.push(doc.id)
+          })
         })
+
+      console.log('this is the uid: ', uid)
+      console.log('this is the templates', templates)
+
+      await this._firestore
+        .collection(`/Users/${uid}`)
+        .doc()
+        .set(
+          templates // this is where you want to include the template id
+        )
+
+      // return the new template ID. and then save it to the store in the component that it is being called from
     } catch (error) {
       console.log('something went wrong in database for addTemplate ', error)
     }
   }
 
-  async getTemplate() {
+  async getTemplate(uid) {
     try {
       let state = []
       await this._firestore
@@ -119,6 +133,7 @@ export class FirebaseWrapper {
             state.push(doc.data().html)
           })
         })
+      console.log('this is the state: ', state)
       return state
     } catch (error) {
       console.log('something went wrong in database for getTemplate ', error)
