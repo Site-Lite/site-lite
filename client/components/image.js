@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {updateStyle} from '../store/renderer'
 import {selectElement} from '../store/editor'
 
-class P extends Component {
+class Img extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
@@ -21,19 +21,19 @@ class P extends Component {
   render() {
     if (this.props.html[this.props.id]) {
       return (
-        <p
+        <img
           id={this.props.id}
           style={this.props.html[this.props.id].style}
           className={`${this.props.editor.editModeEnabled ? 'edit-mode' : ''} ${
             this.props.editor.selectedElement == this.props.id ? 'selected' : ''
           }`}
           onClick={this.handleClick}
-        >
-          {this.props.html[this.props.id].content
-            ? this.props.html[this.props.id].content
-            : ''}
-          {this.props.editor.editModeEnabled ? <span>p</span> : ''}
-        </p>
+          src={
+            this.props.html[this.props.id].content
+              ? this.props.html[this.props.id].content
+              : 'https://d36tnp772eyphs.cloudfront.net/blogs/1/2011/05/New-York-City-skyline-cityscape-destinations-300x200.jpg'
+          }
+        />
       )
     } else {
       return <div />
@@ -59,4 +59,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(P)
+export default connect(mapState, mapDispatch)(Img)

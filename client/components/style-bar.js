@@ -28,7 +28,7 @@ class StyleBar extends Component {
     return (
       <div
         id="style-bar"
-        className={this.props.styler.enabled ? 'edit-mode ' : ''}
+        className={this.props.editor.editModeEnabled ? 'edit-mode ' : ''}
       >
         <div id="style-bar-header">
           <span>
@@ -135,7 +135,7 @@ class StyleBar extends Component {
 const mapState = state => {
   return {
     html: state.renderer,
-    styler: state.styler
+    editor: state.editor
   }
 }
 

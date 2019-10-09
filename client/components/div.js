@@ -2,8 +2,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {updateStyle} from '../store/renderer'
-import {selectElement} from '../store/styler'
-import {P} from '../components'
+import {selectElement} from '../store/editor'
+import {P, Img} from '../components'
 
 class Div extends Component {
   constructor() {
@@ -27,12 +27,12 @@ class Div extends Component {
         <div
           id={this.props.id}
           style={this.props.html[this.props.id].style}
-          className={`${this.props.styler.enabled ? 'edit-mode' : ''} ${
-            this.props.styler.selectedElement == this.props.id ? 'selected' : ''
+          className={`${this.props.editor.editModeEnabled ? 'edit-mode' : ''} ${
+            this.props.editor.selectedElement == this.props.id ? 'selected' : ''
           }`}
           onClick={this.handleClick}
         >
-          {this.props.styler.enabled ? <span>div</span> : ''}
+          {this.props.editor.editModeEnabled ? <span>div</span> : ''}
           {this.props.html[this.props.id].children.map(child => {
             switch (this.props.html[child].type) {
               case 'div':
@@ -42,7 +42,7 @@ class Div extends Component {
                     id={child}
                     key={child}
                     html={this.props.html}
-                    styler={this.props.styler}
+                    editor={this.props.editor}
                     updateStyle={this.props.updateStyle}
                     selectElement={this.props.selectElement}
                   />
@@ -54,7 +54,19 @@ class Div extends Component {
                     id={child}
                     key={child}
                     html={this.props.html}
-                    styler={this.props.styler}
+                    editor={this.props.editor}
+                    updateStyle={this.props.updateStyle}
+                    selectElement={this.props.selectElement}
+                  />
+                )
+              case 'img':
+                return (
+                  <Img
+                    parentId={this.props.id}
+                    id={child}
+                    key={child}
+                    html={this.props.html}
+                    editor={this.props.editor}
                     updateStyle={this.props.updateStyle}
                     selectElement={this.props.selectElement}
                   />
@@ -73,7 +85,7 @@ class Div extends Component {
 const mapState = state => {
   return {
     html: state.renderer,
-    styler: state.styler
+    editor: state.editor
   }
 }
 

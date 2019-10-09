@@ -4,6 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, Renderer} from './components'
 import {me} from './store'
+import {FirebaseWrapper} from '../server/firebase/firebase'
 
 /**
  * COMPONENT

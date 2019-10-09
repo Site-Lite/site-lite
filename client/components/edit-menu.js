@@ -2,13 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
 import {createElement, removeElement, updateStyle} from '../store/renderer'
+import {togglePopUp} from '../store/editor'
 
 class EditMenu extends Component {
-  constructor() {
-    super()
-    this.handleRemove = this.handleRemove.bind(this)
-  }
-
   handleAdd(event, element) {
     if (event.srcElement.tagName === 'DIV') {
       this.props.createElement(
@@ -18,13 +14,17 @@ class EditMenu extends Component {
     }
   }
 
-  handleRemove({event}) {
+  handleRemove(event) {
     if (event.srcElement.id !== 'main') {
       this.props.removeElement(
         event.path[1].id === 'main' ? 'main' : Number(event.path[1].id),
         Number(event.srcElement.id)
       )
     }
+  }
+
+  handleEditContent(event) {
+    this.props.togglePopUp(event.srcElement.id)
   }
 
   render() {
@@ -58,10 +58,20 @@ class EditMenu extends Component {
           </Item>
         </Submenu>
         <Item
-          onClick={this.handleRemove}
+          onClick={({event}) => {
+            this.handleRemove(event)
+          }}
           disabled={({event}) => event.srcElement.id === 'main'}
         >
           Delete
+        </Item>
+        <Separator />
+        <Item
+          onClick={({event}) => {
+            this.handleEditContent(event)
+          }}
+        >
+          Edit Content
         </Item>
         <Separator />
         <Item onClick={this.onClick}>Copy Style</Item>
@@ -73,7 +83,7 @@ class EditMenu extends Component {
 const mapState = state => {
   return {
     html: state.renderer,
-    styler: state.styler
+    editor: state.editor
   }
 }
 
@@ -87,6 +97,9 @@ const mapDispatch = dispatch => {
     },
     updateStyle(id, property, value) {
       dispatch(updateStyle(id, property, value))
+    },
+    togglePopUp(id) {
+      dispatch(togglePopUp(id))
     }
   }
 }

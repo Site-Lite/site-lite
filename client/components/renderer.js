@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {updateStyle, setState} from '../store/renderer'
 import {Link} from 'react-router-dom'
-import {selectElement, toggleBar} from '../store/styler'
-import {Div, P, StyleBar, EditMenu} from '../components'
+import {selectElement, toggleEditMode} from '../store/editor'
+import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 import {MenuProvider} from 'react-contexify'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 
@@ -15,7 +15,7 @@ class Renderer extends Component {
 
   async componentDidMount() {
     const state = await FirebaseWrapper.GetInstance().getTemplate()
-    console.log(state[0])
+    // console.log(state[0])
     this.props.setState(state[0])
   }
 
@@ -41,7 +41,7 @@ class Renderer extends Component {
       <div id="editor">
         <div
           id="editor-panel"
-          className={this.props.styler.enabled ? 'edit-mode ' : ''}
+          className={this.props.editor.editModeEnabled ? 'edit-mode ' : ''}
         >
           <div id="settings-bar">
             <div>
@@ -52,7 +52,10 @@ class Renderer extends Component {
                   this.toggleEditMode()
                 }}
               >
-                <input type="checkbox" checked={this.props.styler.enabled} />
+                <input
+                  type="checkbox"
+                  checked={this.props.editor.editModeEnabled}
+                />
                 <div className="slider" />
               </div>
             </div>
@@ -75,12 +78,15 @@ class Renderer extends Component {
                     return <Div parentId="main" id={child} key={child} />
                   case 'p':
                     return <P parentId="main" id={child} key={child} />
+                  case 'img':
+                    return <Img parentId="main" id={child} key={child} />
                   default:
                 }
               })}
             </div>
           </MenuProvider>
           <EditMenu />
+          <PopUp />
         </div>
         <StyleBar />
       </div>
@@ -91,7 +97,7 @@ class Renderer extends Component {
 const mapState = state => {
   return {
     html: state.renderer,
-    styler: state.styler
+    editor: state.editor
   }
 }
 
@@ -101,7 +107,7 @@ const mapDispatch = dispatch => {
       dispatch(updateStyle(id, property, value))
     },
     toggleStyler() {
-      dispatch(toggleBar())
+      dispatch(toggleEditMode())
     },
     selectElement(id) {
       dispatch(selectElement(id))
