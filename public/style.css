@@ -333,12 +333,11 @@ form label {
   align-items: center;
   display: flex;
   border-left: 1px solid rgba(0, 0, 0, 0.025);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 0 10px;
+  padding: 0 20px;
   background-color: #ffffff;
 }
 
-#style-bar span {
+#style-bar #style-bar-header span {
   color: #dadada;
   margin-right: 10px;
   font-weight: 700;
@@ -347,7 +346,7 @@ form label {
   transition: all 0.3s ease;
 }
 
-#style-bar.edit-mode span {
+#style-bar.edit-mode #style-bar-header span {
   font-size: 30px;
   opacity: 1;
 }
@@ -355,6 +354,7 @@ form label {
 #style-bar-content {
   height: calc(100% - 51px);
   display: flex;
+  flex-direction: column;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -486,6 +486,44 @@ input:checked + .slider:before {
 .error-warning.active {
   opacity: 1;
 }
+.collapse-css-transition {
+  transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.style-section {
+  font-size: 20px;
+  padding: 0 20px;
+  border-top: 1px solid #f5f5f5;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  background-color: #ffffff;
+  color: #dadada;
+  font-weight: 700;
+  min-height: 45px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  transition: all 0.4s ease;
+}
+
+.style-section.active {
+  color: rgba(76, 187, 25, 0.5);
+  border-left: 4px solid #4cbb19;
+}
+
+.style-section:last-child {
+  flex: 1;
+  min-height: 0;
+}
+
+.style-section + div {
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.04);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: -1px;
+}
+
+.style-section + div > div {
+  padding: 20px;
 
 .popup {
   opacity: 0;
@@ -495,4 +533,5 @@ input:checked + .slider:before {
 
 .popup.active {
   opacity: 1;
+
 }
