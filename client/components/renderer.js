@@ -16,7 +16,7 @@ class Renderer extends Component {
   async componentDidMount() {
     const state = await FirebaseWrapper.GetInstance().getTemplate()
     // console.log(state[0])
-    this.props.setState(state[0])
+    this.props.setState(state[0]) //For Testing
   }
 
   async addTemplate(state, uid) {
@@ -105,7 +105,6 @@ const mapState = state => {
     html: state.renderer,
     user: state.user,
     editor: state.editor
-
   }
 }
 
