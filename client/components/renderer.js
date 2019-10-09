@@ -16,9 +16,9 @@ class Renderer extends Component {
   }
 
   async componentDidMount() {
-    const state = await FirebaseWrapper.GetInstance().getTemplate()
+    // const state = await FirebaseWrapper.GetInstance().getTemplate()
     // console.log(state[0])
-    this.props.setState(state[0])
+    // this.props.setState(state[0]) //For Testing
   }
 
   async addTemplate(state, uid) {
@@ -45,6 +45,7 @@ class Renderer extends Component {
   }
 
   render() {
+    console.log('this is the this.props', this.props)
     return (
       <div id="editor">
         <div
@@ -70,7 +71,13 @@ class Renderer extends Component {
             <div>
               <Link
                 onClick={() =>
-                  this.addTemplate(this.props.html, this.props.user.id)
+                  this.props.html.id
+                    ? this.updateTemplate(
+                        this.props.user.id,
+                        this.props.html.id,
+                        this.props.html
+                      )
+                    : this.addTemplate(this.props.html, this.props.user.id)
                 }
               >
                 Save Template

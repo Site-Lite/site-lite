@@ -3,6 +3,7 @@ const REMOVE_ELEMENT = 'REMOVE_ELEMENT'
 const UPDATE_STYLE = 'UPDATE_STYLE'
 const SET_STATE = 'SET_STATE'
 const SET_CONTENT = 'SET_CONTENT'
+const SET_TEMPLATE_ID = 'SET_TEMPLATE_ID'
 
 const initialState = {
   counter: 1,
@@ -32,6 +33,10 @@ export const setContent = (id, content) => ({
   type: SET_CONTENT,
   id,
   content
+})
+export const setTemplateId = tid => ({
+  type: SET_TEMPLATE_ID,
+  tid
 })
 
 export default function(state = initialState, action) {
@@ -85,6 +90,11 @@ export default function(state = initialState, action) {
           ...state[action.id],
           content: action.content
         }
+      }
+    case SET_TEMPLATE_ID:
+      return {
+        ...state,
+        templateID: action.tid
       }
     default:
       return state

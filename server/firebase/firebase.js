@@ -148,21 +148,36 @@ export class FirebaseWrapper {
     }
   }
 
-  async getTemplate(uid) {
+  async getTemplate(uid = 'nimBjUzPVyeWT2qXcgnpqxXhdY62') {
     try {
       let state = []
       await this._firestore
-        .collectionGroup('Templates')
+        .collection(`Users/${uid}/Templates`)
         .get()
         .then(function(snapshot) {
           snapshot.forEach(function(doc) {
             state.push(doc.data().html)
           })
         })
-      console.log('this is the state: ', state)
       return state
     } catch (error) {
       console.log('something went wrong in database for getTemplate ', error)
+    }
+  }
+
+  async templateListener(uid, cb) {
+    try {
+      await this._firestore
+        .collection(`Users/${uid}/Templates`)
+        .onSnapshot(querySnapshot => {
+          let container = []
+          querySnapshot.forEach(doc => {
+            container.push(doc.data())
+          })
+          return cb(container)
+        })
+    } catch (err) {
+      console.error(err)
     }
   }
 }
