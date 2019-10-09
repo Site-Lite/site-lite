@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
-import {createElement, removeElement, updateStyle} from '../store/renderer'
+import {createElement, removeElement} from '../store/renderer'
 import {togglePopUp} from '../store/editor'
 
 class EditMenu extends Component {
@@ -24,7 +24,10 @@ class EditMenu extends Component {
   }
 
   handleEditContent(event) {
-    this.props.togglePopUp(event.srcElement.id)
+    this.props.togglePopUp(
+      event.srcElement.id,
+      this.props.html[event.srcElement.id].style
+    )
   }
 
   render() {
@@ -70,6 +73,7 @@ class EditMenu extends Component {
           onClick={({event}) => {
             this.handleEditContent(event)
           }}
+          disabled={({event}) => event.srcElement.localName === 'div'}
         >
           Edit Content
         </Item>
@@ -95,11 +99,8 @@ const mapDispatch = dispatch => {
     removeElement(id, elementId) {
       dispatch(removeElement(id, elementId))
     },
-    updateStyle(id, property, value) {
-      dispatch(updateStyle(id, property, value))
-    },
-    togglePopUp(id) {
-      dispatch(togglePopUp(id))
+    togglePopUp(id, style) {
+      dispatch(togglePopUp(id, style))
     }
   }
 }

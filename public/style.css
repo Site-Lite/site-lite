@@ -287,19 +287,9 @@ form label {
   border-radius: 3px;
 }
 
-#main div.edit-mode:hover,
-#main p.edit-mode:hover,
-#main div.edit-mode.selected,
-#main p.edit-mode.selected,
-#main div.edit-mode.selected > div:hover,
-#main p.edit-mode.selected > div:hover {
-  transform: scale(1.01);
-  filter: drop-shadow(-3px 0px 0 #4cbb1a)
-    drop-shadow(0 0px 3px rgba(0, 0, 0, 0.05));
-}
-
 #main div.edit-mode.selected,
 #main p.edit-mode.selected {
+  transform: scale(1.01);
   filter: drop-shadow(-3px 0px 0 #4cbb1a)
     drop-shadow(0 0px 3px rgba(0, 0, 0, 0.05)) brightness(105%);
 }
@@ -406,7 +396,7 @@ form label {
 
 #settings-bar + div {
   height: calc(100% - 51px);
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 #settings-bar a,
@@ -494,7 +484,7 @@ input:checked + .slider:before {
   font-size: 20px;
   padding: 0 20px;
   border-top: 1px solid #f5f5f5;
-  border-left: 3px solid transparent;
+  border-left: 4px solid transparent;
   cursor: pointer;
   background-color: #ffffff;
   color: #dadada;
@@ -511,9 +501,14 @@ input:checked + .slider:before {
   border-left: 4px solid #4cbb19;
 }
 
+.style-section.hidden {
+  display: none;
+}
+
 .style-section:last-child {
   flex: 1;
   min-height: 0;
+  cursor: default;
 }
 
 .style-section + div {
@@ -524,6 +519,7 @@ input:checked + .slider:before {
 
 .style-section + div > div {
   padding: 20px;
+}
 
 .popup {
   opacity: 0;
@@ -533,5 +529,4 @@ input:checked + .slider:before {
 
 .popup.active {
   opacity: 1;
-
 }

@@ -1,15 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateStyle} from '../store/renderer'
 import {selectElement} from '../store/editor'
 
 class Img extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
-  }
-  update(id, property, value) {
-    this.props.updateStyle(id, property, value)
   }
 
   handleClick(event) {
@@ -50,9 +46,6 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    updateStyle(id, property, value) {
-      dispatch(updateStyle(id, property, value))
-    },
     selectElement(id) {
       dispatch(selectElement(id))
     }

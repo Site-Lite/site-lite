@@ -1,12 +1,12 @@
 const CREATE_ELEMENT = 'CREATE_ELEMENT'
 const REMOVE_ELEMENT = 'REMOVE_ELEMENT'
-const UPDATE_STYLE = 'UPDATE_STYLE'
+const APPLY_STYLE = 'APPLY_STYLE'
 const SET_STATE = 'SET_STATE'
 const SET_CONTENT = 'SET_CONTENT'
 
 const initialState = {
   counter: 1,
-  main: {style: {color: '#282e31'}, children: []}
+  main: {style: {display: 'flex', flex: 1}, children: []}
 }
 export const createElement = (id, elementType) => ({
   type: CREATE_ELEMENT,
@@ -18,11 +18,10 @@ export const removeElement = (id, elementId) => ({
   id,
   elementId
 })
-export const updateStyle = (id, property, value) => ({
-  type: UPDATE_STYLE,
+export const applyStyle = (id, style) => ({
+  type: APPLY_STYLE,
   id,
-  property,
-  value
+  style
 })
 export const setState = state => ({
   type: SET_STATE,
@@ -47,7 +46,7 @@ export default function(state = initialState, action) {
         [state.counter]: {
           type: action.elementType,
           content: '',
-          style: {},
+          style: {display: 'flex', flex: 1},
           children: []
         }
       }
@@ -65,15 +64,12 @@ export default function(state = initialState, action) {
           })
         }
       }
-    case UPDATE_STYLE:
+    case APPLY_STYLE:
       return {
         ...state,
         [action.id]: {
           ...state[action.id],
-          style: {
-            ...state[action.id].style,
-            [action.property]: action.value
-          }
+          style: action.style
         }
       }
     case SET_STATE:

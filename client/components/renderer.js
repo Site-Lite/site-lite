@@ -1,11 +1,18 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {updateStyle, setState} from '../store/renderer'
+import {setState} from '../store/renderer'
 import {selectElement, toggleEditMode} from '../store/editor'
 import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 import {MenuProvider} from 'react-contexify'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
+
+const ConditionalWrapper = ({condition, children}) =>
+  condition ? (
+    <MenuProvider id="menu_id">{children}</MenuProvider>
+  ) : (
+    <div>{children}</div>
+  )
 
 class Renderer extends Component {
   constructor() {
@@ -24,17 +31,16 @@ class Renderer extends Component {
     // console.log(this.props.user)
   }
 
-  update(id, property, value) {
-    this.props.updateStyle(id, property, value)
-  }
-
   toggleEditMode() {
     this.props.toggleStyler()
   }
 
   handleClick(event) {
     if (event.target.id.length) {
-      this.props.selectElement(event.target.id)
+      this.props.selectElement(
+        event.target.id,
+        this.props.html[event.target.id].style
+      )
     }
   }
 
@@ -105,20 +111,16 @@ const mapState = state => {
     html: state.renderer,
     user: state.user,
     editor: state.editor
-
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    updateStyle(id, property, value) {
-      dispatch(updateStyle(id, property, value))
-    },
     toggleStyler() {
       dispatch(toggleEditMode())
     },
-    selectElement(id) {
-      dispatch(selectElement(id))
+    selectElement(id, style) {
+      dispatch(selectElement(id, style))
     },
     setState(state) {
       dispatch(setState(state))
