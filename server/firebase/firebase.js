@@ -110,10 +110,10 @@ export class FirebaseWrapper {
       console.log('this is the templates', templates)
 
       await this._firestore
-        .collection(`/Users/${uid}`)
-        .doc()
-        .set(
-          templates // this is where you want to include the template id
+        .collection(`/Users`)
+        .doc(uid)
+        .update(
+          {templates: templates} // this is where you want to include the template id
         )
 
       // return the new template ID. and then save it to the store in the component that it is being called from
