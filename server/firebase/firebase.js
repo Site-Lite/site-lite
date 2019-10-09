@@ -76,6 +76,18 @@ export class FirebaseWrapper {
     }
   }
 
+  async isLoggedIn() {
+    try {
+      return await this.auth.onAuthStateChanged(user => {
+        if (user) {
+          return {user: user.email, id: user.uid}
+        }
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   signOut = () => {
     this.auth.signOut()
   }

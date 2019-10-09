@@ -21,12 +21,25 @@ const removeUser = () => ({type: REMOVE_USER})
 /**
  * THUNK CREATORS
  */
-export const me = () => async dispatch => {
-  try {
-    const res = await axios.get('/auth/me')
-    dispatch(getUser(res.data || defaultUser))
-  } catch (err) {
-    console.error(err)
+// export const me = () => async dispatch => {
+//   try {
+//     const res = await axios.get('/auth/me')
+//     dispatch(getUser(res.data || defaultUser))
+//   } catch (err) {
+//     console.error(err)
+//   }
+// }
+
+export const me = () => {
+  return dispatch => {
+    try {
+      // const result = await FirebaseWrapper.GetInstance().isLoggedIn()
+      FirebaseWrapper.GetInstance().auth.onAuthStateChanged(user => {
+        dispatch(getUser(user.email, user.uid))
+      })
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
