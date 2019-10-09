@@ -4,9 +4,9 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import renderer from './renderer'
-import styler from './styler'
+import editor from './editor'
 
-const reducer = combineReducers({user, renderer, styler})
+const reducer = combineReducers({user, renderer, editor})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

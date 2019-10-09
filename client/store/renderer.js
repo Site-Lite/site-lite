@@ -2,6 +2,7 @@ const CREATE_ELEMENT = 'CREATE_ELEMENT'
 const REMOVE_ELEMENT = 'REMOVE_ELEMENT'
 const UPDATE_STYLE = 'UPDATE_STYLE'
 const SET_STATE = 'SET_STATE'
+const SET_CONTENT = 'SET_CONTENT'
 
 const initialState = {
   counter: 1,
@@ -27,6 +28,11 @@ export const setState = state => ({
   type: SET_STATE,
   state
 })
+export const setContent = (id, content) => ({
+  type: SET_CONTENT,
+  id,
+  content
+})
 
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -40,6 +46,7 @@ export default function(state = initialState, action) {
         },
         [state.counter]: {
           type: action.elementType,
+          content: '',
           style: {},
           children: []
         }
@@ -71,6 +78,14 @@ export default function(state = initialState, action) {
       }
     case SET_STATE:
       return action.state
+    case SET_CONTENT:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          content: action.content
+        }
+      }
     default:
       return state
   }

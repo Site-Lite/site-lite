@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom'
 import {MenuProvider} from 'react-contexify'
 
 import {updateStyle, setState} from '../store/renderer'
-import {selectElement, toggleBar} from '../store/styler'
-import {Div, P, StyleBar, EditMenu} from '../components'
+import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
+import {selectElement, toggleEditMode} from '../store/editor'
 
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 
@@ -45,7 +45,7 @@ class Renderer extends Component {
       <div id="editor">
         <div
           id="editor-panel"
-          className={this.props.styler.enabled ? 'edit-mode ' : ''}
+          className={this.props.editor.editModeEnabled ? 'edit-mode ' : ''}
         >
           <div id="settings-bar">
             <div>
@@ -56,7 +56,10 @@ class Renderer extends Component {
                   this.toggleEditMode()
                 }}
               >
-                <input type="checkbox" checked={this.props.styler.enabled} />
+                <input
+                  type="checkbox"
+                  checked={this.props.editor.editModeEnabled}
+                />
                 <div className="slider" />
               </div>
             </div>
@@ -83,12 +86,15 @@ class Renderer extends Component {
                     return <Div parentId="main" id={child} key={child} />
                   case 'p':
                     return <P parentId="main" id={child} key={child} />
+                  case 'img':
+                    return <Img parentId="main" id={child} key={child} />
                   default:
                 }
               })}
             </div>
           </MenuProvider>
           <EditMenu />
+          <PopUp />
         </div>
         <StyleBar />
       </div>
@@ -99,8 +105,8 @@ class Renderer extends Component {
 const mapState = state => {
   return {
     html: state.renderer,
-    styler: state.styler,
-    user: state.user
+    user: state.user,
+    editor: state.editor
   }
 }
 
@@ -110,7 +116,7 @@ const mapDispatch = dispatch => {
       dispatch(updateStyle(id, property, value))
     },
     toggleStyler() {
-      dispatch(toggleBar())
+      dispatch(toggleEditMode())
     },
     selectElement(id) {
       dispatch(selectElement(id))
