@@ -486,3 +486,13 @@ input:checked + .slider:before {
 .error-warning.active {
   opacity: 1;
 }
+
+.popup {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+}
+
+.popup.active {
+  opacity: 1;
+}
