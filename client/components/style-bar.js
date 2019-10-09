@@ -41,69 +41,87 @@ class StyleBar extends Component {
             Element Type:
             {this.props.html[this.props.styler.selectedElement].type}
           </p> */}
-          <span
+          <div
             onClick={() => {
               this.toggleCollapse('size')
             }}
-            className="style-section"
+            className={
+              this.state.size ? 'style-section active' : 'style-section'
+            }
           >
-            Size
-          </span>
+            <span>Size</span>
+            <i className="fas fa-ruler-combined" />
+          </div>
           <Collapse isOpen={this.state.size}>
             <div>Test</div>
           </Collapse>
-          <span
+          <div
             onClick={() => {
               this.toggleCollapse('text')
             }}
-            className="style-section"
+            className={
+              this.state.text ? 'style-section active' : 'style-section'
+            }
           >
-            Text
-          </span>
+            <span>Text</span>
+            <i className="fas fa-font" />
+          </div>
           <Collapse isOpen={this.state.text}>
             <div>Test</div>
           </Collapse>
-          <span
+          <div
             onClick={() => {
               this.toggleCollapse('border')
             }}
-            className="style-section"
+            className={
+              this.state.border ? 'style-section active' : 'style-section'
+            }
           >
-            Border
-          </span>
+            <span>Border</span>
+            <i className="far fa-square" />
+          </div>
           <Collapse isOpen={this.state.border}>
             <div>Test</div>
           </Collapse>
-          <span
+          <div
             onClick={() => {
               this.toggleCollapse('spacing')
             }}
-            className="style-section"
+            className={
+              this.state.spacing ? 'style-section active' : 'style-section'
+            }
           >
-            Spacing
-          </span>
+            <span>Spacing</span>
+            <i className="fas fa-arrows-alt-h" />
+          </div>
           <Collapse isOpen={this.state.spacing}>
             <div>Test</div>
           </Collapse>
-          <span
+          <div
             onClick={() => {
               this.toggleCollapse('formatting')
             }}
-            className="style-section"
+            className={
+              this.state.formatting ? 'style-section active' : 'style-section'
+            }
           >
-            Formatting
-          </span>
+            <span>Formatting</span>
+            <i className="fas fa-table" />
+          </div>
           <Collapse isOpen={this.state.formatting}>
             <div>Test</div>
           </Collapse>
-          <span
+          <div
             onClick={() => {
               this.toggleCollapse('background')
             }}
-            className="style-section"
+            className={
+              this.state.background ? 'style-section active' : 'style-section'
+            }
           >
-            Background
-          </span>
+            <span>Background</span>
+            <i className="fas fa-images" />
+          </div>
           <Collapse isOpen={this.state.background}>
             <div>Test</div>
           </Collapse>
