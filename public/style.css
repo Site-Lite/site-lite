@@ -524,6 +524,7 @@ input:checked + .slider:before {
 
 .style-section + div > div {
   padding: 20px;
+}
 
 .popup {
   opacity: 0;
@@ -533,5 +534,4 @@ input:checked + .slider:before {
 
 .popup.active {
   opacity: 1;
-
 }
