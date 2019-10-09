@@ -2,7 +2,6 @@ import * as firebase from 'firebase/app'
 import 'firebase/firestore'
 import firebaseConfig from '../../secrets'
 import 'firebase/auth'
-import {callbackify} from 'util'
 
 export class FirebaseWrapper {
   constructor() {
