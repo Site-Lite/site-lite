@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom'
 import {MenuProvider} from 'react-contexify'
 
 import {updateStyle, setState} from '../store/renderer'
-import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 import {selectElement, toggleEditMode} from '../store/editor'
+import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 
@@ -24,6 +24,10 @@ class Renderer extends Component {
   async addTemplate(state, uid) {
     await FirebaseWrapper.GetInstance().addTemplate(state, uid)
     // console.log(this.props.user)
+  }
+
+  async updateTemplate(uid, tid, state) {
+    await FirebaseWrapper.GetInstance().updateTemplate(uid, tid, state)
   }
 
   update(id, property, value) {

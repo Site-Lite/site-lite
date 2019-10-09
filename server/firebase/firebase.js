@@ -41,7 +41,11 @@ export class FirebaseWrapper {
       await this._firestore
         .collection('Users')
         .doc(uid)
-        .set({email: email, id: uid, templates: []})
+        .set({
+          email: email,
+          id: uid,
+          templates: []
+        })
 
       return uid
     } catch (err) {
@@ -59,8 +63,8 @@ export class FirebaseWrapper {
         // console.log(results.user)
         return {
           user: results.user.email,
-          id: results.user.uid
-          // ,templates: results.users.templates
+          id: results.user.uid,
+          templates: results.user.templates
         }
       } catch (err) {
         console.error(err)
@@ -99,38 +103,48 @@ export class FirebaseWrapper {
 
   async addTemplate(state, uid) {
     try {
-      await this._firestore
+      const ref = await this._firestore
         .collection(`/Users/${uid}/Templates`)
         .doc()
-        .set({
-          html: state
-        })
+
+      await ref.set({
+        html: state,
+        id: ref.id
+      })
 
       const templates = []
-
       await this._firestore
         .collection(`/Users/${uid}/Templates`)
         .get()
         .then(function(snapshot) {
           snapshot.forEach(function(doc) {
-            // const newTemp = {...doc.data(), doc.id}
             templates.push(doc.id)
           })
         })
 
-      console.log('this is the uid: ', uid)
-      console.log('this is the templates', templates)
+      // console.log('this is the uid: ', uid)
+      // console.log('this is the templates', templates)
 
       await this._firestore
         .collection(`/Users`)
         .doc(uid)
-        .update(
-          {templates: templates} // this is where you want to include the template id
-        )
-
-      // return the new template ID. and then save it to the store in the component that it is being called from
+        .update({templates: templates})
     } catch (error) {
       console.log('something went wrong in database for addTemplate ', error)
+    }
+  }
+
+  // tid is needed to be gotten from state.
+  async updateTemplate(uid, tid, state) {
+    try {
+      await this.firestore
+        .collection(`/Users/${uid}/Templates`)
+        .doc(tid)
+        .update({
+          html: state
+        })
+    } catch (error) {
+      console.log('something went wrong in database for updateTemplate ', error)
     }
   }
 

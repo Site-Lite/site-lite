@@ -1,6 +1,5 @@
-import axios from 'axios'
-import history from '../history'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
+
 /**
  * ACTION TYPES
  */
