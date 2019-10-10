@@ -50,7 +50,10 @@ export default function(state = initialState, action) {
         [state.counter]: {
           type: action.elementType,
           content: '',
-          style: {display: 'flex', flex: 1},
+          style:
+            action.elementType === 'div'
+              ? {display: 'flex', flex: 1}
+              : {flex: 1},
           children: []
         }
       }

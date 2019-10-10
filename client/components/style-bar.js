@@ -4,7 +4,18 @@ import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
 import {updateStyle} from '../store/editor'
 import {applyStyle} from '../store/renderer'
-import {fontSizes, fontFamilies} from './select-options'
+import {
+  fontSizes,
+  fontFamilies,
+  spacing,
+  backgroundRepeat,
+  backgroundSize,
+  borderWidth,
+  borderStyle,
+  textAlign,
+  size,
+  flexRatio
+} from './select-options'
 
 class StyleBar extends Component {
   constructor() {
@@ -94,7 +105,67 @@ class StyleBar extends Component {
             <i className="fas fa-ruler-combined" />
           </div>
           <Collapse isOpen={this.state.accordion.size}>
-            <div>Test</div>
+            <div>
+              <div>
+                <span>Flex Ratio</span>
+                <select
+                  value={this.state.selectedStyle.flex}
+                  onChange={event => {
+                    this.handleSelect('flex', event.target.value)
+                  }}
+                >
+                  {flexRatio.map(flex => {
+                    return (
+                      <option value={flex} key={flex}>
+                        {flex}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div>
+                <span>Width</span>
+                <select
+                  value={this.state.selectedStyle.width}
+                  onChange={event => {
+                    this.handleSelect('width', event.target.value)
+                  }}
+                >
+                  {size.map(width => {
+                    return (
+                      <option value={width} key={width}>
+                        {width}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div>
+                <span>Height</span>
+                <select
+                  value={this.state.selectedStyle.height}
+                  onChange={event => {
+                    this.handleSelect('height', event.target.value)
+                  }}
+                >
+                  {size.map(height => {
+                    return (
+                      <option value={height} key={height}>
+                        {height}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  this.applyStyle()
+                }}
+              >
+                Apply
+              </button>
+            </div>
           </Collapse>
           <div
             onClick={() => {
@@ -155,10 +226,49 @@ class StyleBar extends Component {
                 </select>
               </div>
               <div>
+                <span>Align</span>
+                <select
+                  value={this.state.selectedStyle['text-align']}
+                  onChange={event => {
+                    this.handleSelect('text-align', event.target.value)
+                  }}
+                >
+                  {textAlign.map(align => {
+                    return (
+                      <option value={align} key={align}>
+                        {align}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div>
+                <div>
+                  <span>Bold</span>
+                  <input
+                    type="checkbox"
+                    onClick={event => {
+                      event.target.checked
+                        ? this.handleSelect('font-weight', 'bold')
+                        : this.handleSelect('font-weight', 'normal')
+                    }}
+                  />
+                </div>
+                <div>
+                  <span>Italic</span>
+                  <input
+                    type="checkbox"
+                    onClick={event => {
+                      event.target.checked
+                        ? this.handleSelect('font-style', 'italic')
+                        : this.handleSelect('font-style', 'normal')
+                    }}
+                  />
+                </div>
                 <span>Color</span>
                 <input
                   type="color"
-                  value={this.state.selectedStyle.color}
+                  value={this.state.selectedStyle.color || '#ffffff'}
                   onChange={event => {
                     this.handleSelect('color', event.target.value)
                   }}
@@ -189,7 +299,61 @@ class StyleBar extends Component {
             <i className="far fa-square" />
           </div>
           <Collapse isOpen={this.state.accordion.border}>
-            <div>Test</div>
+            <div>
+              <div>
+                <span>Width</span>
+                <select
+                  value={this.state.selectedStyle['border-width']}
+                  onChange={event => {
+                    this.handleSelect('border-width', event.target.value)
+                  }}
+                >
+                  {borderWidth.map(width => {
+                    return (
+                      <option value={`${width}px`} key={width}>
+                        {width}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div>
+                <span>Style</span>
+                <select
+                  value={this.state.selectedStyle['border-style']}
+                  onChange={event => {
+                    this.handleSelect('border-style', event.target.value)
+                  }}
+                >
+                  {borderStyle.map(style => {
+                    return (
+                      <option value={style} key={style}>
+                        {style}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div>
+                <span>Color</span>
+                <input
+                  type="color"
+                  value={this.state.selectedStyle['border-color'] || '#ffffff'}
+                  onChange={event => {
+                    this.handleSelect('border-color', event.target.value)
+                  }}
+                />
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  this.applyStyle()
+                }}
+              >
+                Apply
+              </button>
+            </div>
           </Collapse>
           <div
             onClick={() => {
@@ -205,7 +369,50 @@ class StyleBar extends Component {
             <i className="fas fa-arrows-alt-h" />
           </div>
           <Collapse isOpen={this.state.accordion.spacing}>
-            <div>Test</div>
+            <div>
+              <div>
+                <span>Margin</span>
+                <select
+                  value={this.state.selectedStyle.margin}
+                  onChange={event => {
+                    this.handleSelect('margin', event.target.value)
+                  }}
+                >
+                  {spacing.map(size => {
+                    return (
+                      <option value={`${size}px`} key={size}>
+                        {size}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div>
+                <span>Padding</span>
+                <select
+                  value={this.state.selectedStyle.padding}
+                  onChange={event => {
+                    this.handleSelect('padding', event.target.value)
+                  }}
+                >
+                  {spacing.map(size => {
+                    return (
+                      <option value={`${size}px`} key={size}>
+                        {size}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  this.applyStyle()
+                }}
+              >
+                Apply
+              </button>
+            </div>
           </Collapse>
           <div
             onClick={() => {
@@ -265,7 +472,83 @@ class StyleBar extends Component {
             <i className="fas fa-images" />
           </div>
           <Collapse isOpen={this.state.accordion.background}>
-            <div>Test</div>
+            <div>
+              <div>
+                <span>Color</span>
+                <input
+                  type="color"
+                  value={
+                    this.state.selectedStyle['background-color'] || '#ffffff'
+                  }
+                  onChange={event => {
+                    this.handleSelect('background-color', event.target.value)
+                  }}
+                />
+              </div>
+              <div>
+                <span>Image Source</span>
+                <input
+                  type="text"
+                  value={
+                    this.state.selectedStyle['background-image']
+                      ? this.state.selectedStyle['background-image'].slice(
+                          4,
+                          -1
+                        )
+                      : ''
+                  }
+                  onChange={event => {
+                    console.log('test')
+                    this.handleSelect(
+                      'background-image',
+                      `url(${event.target.value})`
+                    )
+                  }}
+                />
+              </div>
+              <div>
+                <span>Image Repeat</span>
+                <select
+                  value={this.state.selectedStyle['background-repeat']}
+                  onChange={event => {
+                    this.handleSelect('background-repeat', event.target.value)
+                  }}
+                >
+                  {backgroundRepeat.map(option => {
+                    return (
+                      <option value={option} key={option}>
+                        {option}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div>
+                <span>Image Size</span>
+                <select
+                  value={this.state.selectedStyle['background-size']}
+                  onChange={event => {
+                    this.handleSelect('background-size', event.target.value)
+                  }}
+                >
+                  {backgroundSize.map(option => {
+                    return (
+                      <option value={option} key={option}>
+                        {option}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  this.applyStyle()
+                }}
+              >
+                Apply
+              </button>
+            </div>
           </Collapse>
           <span className="style-section" />
         </div>
