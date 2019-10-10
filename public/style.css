@@ -299,7 +299,9 @@ form label {
     drop-shadow(0 0px 3px rgba(0, 0, 0, 0.05)) brightness(105%);
 }
 
-#main div.edit-mode.selected > div {
+#main div.edit-mode.selected > div,
+#main div.edit-mode.selected > p,
+#main div.edit-mode.selected > img {
   filter: brightness(95%);
 }
 
