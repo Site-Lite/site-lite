@@ -1,7 +1,8 @@
+/* eslint-disable no-alert */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
-import {createElement, removeElement} from '../store/renderer'
+import {createElement, removeElement, clear} from '../store/renderer'
 import {togglePopUp} from '../store/editor'
 
 class EditMenu extends Component {
@@ -79,6 +80,23 @@ class EditMenu extends Component {
         </Item>
         <Separator />
         <Item onClick={this.onClick}>Copy Style</Item>
+        <Item onClick={this.onClick}>Paste Style</Item>
+        <Separator />
+        <Item
+          onClick={() => {
+            if (
+              window.confirm(
+                'This will clear your current template. Are you sure you want to continue?'
+              )
+            ) {
+              this.props.clear()
+            } else {
+              this.onCancel()
+            }
+          }}
+        >
+          Clear Template
+        </Item>
       </Menu>
     )
   }
@@ -101,6 +119,9 @@ const mapDispatch = dispatch => {
     },
     togglePopUp(id, style) {
       dispatch(togglePopUp(id, style))
+    },
+    clear() {
+      dispatch(clear())
     }
   }
 }

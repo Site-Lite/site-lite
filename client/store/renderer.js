@@ -3,10 +3,11 @@ const REMOVE_ELEMENT = 'REMOVE_ELEMENT'
 const APPLY_STYLE = 'APPLY_STYLE'
 const SET_STATE = 'SET_STATE'
 const SET_CONTENT = 'SET_CONTENT'
+const CLEAR = 'CLEAR'
 
 const initialState = {
   counter: 1,
-  main: {style: {display: 'flex', flex: 1}, children: []}
+  main: {style: {}, children: []}
 }
 export const createElement = (id, elementType) => ({
   type: CREATE_ELEMENT,
@@ -31,6 +32,9 @@ export const setContent = (id, content) => ({
   type: SET_CONTENT,
   id,
   content
+})
+export const clear = () => ({
+  type: CLEAR
 })
 
 export default function(state = initialState, action) {
@@ -82,6 +86,8 @@ export default function(state = initialState, action) {
           content: action.content
         }
       }
+    case CLEAR:
+      return initialState
     default:
       return state
   }
