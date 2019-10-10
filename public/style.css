@@ -525,7 +525,6 @@ input:checked + .slider:before {
 .style-section + div > div {
   padding: 20px;
 }
-
 .popup {
   opacity: 0;
   position: absolute;

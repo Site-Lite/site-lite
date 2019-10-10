@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {MenuProvider} from 'react-contexify'
+
 import {updateStyle, setState} from '../store/renderer'
 import {selectElement, toggleEditMode} from '../store/editor'
 import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
-import {MenuProvider} from 'react-contexify'
+
 import {FirebaseWrapper} from '../../server/firebase/firebase'
+import {addedTemplate} from '../store/template'
 
 class Renderer extends Component {
   constructor() {
@@ -14,14 +17,17 @@ class Renderer extends Component {
   }
 
   async componentDidMount() {
-    const state = await FirebaseWrapper.GetInstance().getTemplate()
-    // console.log(state[0])
+    const state = await FirebaseWrapper.GetInstance().getTemplate() //For testing
     this.props.setState(state[0]) //For Testing
   }
 
   async addTemplate(state, uid) {
     await FirebaseWrapper.GetInstance().addTemplate(state, uid)
     // console.log(this.props.user)
+  }
+
+  async updateTemplate(uid, tid, state) {
+    await FirebaseWrapper.GetInstance().updateTemplate(uid, tid, state)
   }
 
   update(id, property, value) {
@@ -64,7 +70,16 @@ class Renderer extends Component {
             <div>
               <Link
                 onClick={() =>
-                  this.addTemplate(this.props.html, this.props.user.id)
+                  this.props.templateID
+                    ? this.updateTemplate(
+                        this.props.user.id,
+                        this.props.templateID,
+                        this.props.html
+                      )
+                    : this.props.addNewTemplateId(
+                        this.props.html,
+                        this.props.user.id
+                      )
                 }
               >
                 Save Template
@@ -104,7 +119,8 @@ const mapState = state => {
   return {
     html: state.renderer,
     user: state.user,
-    editor: state.editor
+    editor: state.editor,
+    templateID: state.template.templateID
   }
 }
 
@@ -121,6 +137,9 @@ const mapDispatch = dispatch => {
     },
     setState(state) {
       dispatch(setState(state))
+    },
+    addNewTemplateId(html, uid) {
+      dispatch(addedTemplate(html, uid))
     }
   }
 }
