@@ -8,6 +8,7 @@ import {selectElement, toggleEditMode} from '../store/editor'
 import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 
 import {FirebaseWrapper} from '../../server/firebase/firebase'
+import {addedTemplate} from '../store/template'
 
 class Renderer extends Component {
   constructor() {
@@ -16,9 +17,8 @@ class Renderer extends Component {
   }
 
   async componentDidMount() {
-    // const state = await FirebaseWrapper.GetInstance().getTemplate()
-    // console.log(state[0])
-    // this.props.setState(state[0]) //For Testing
+    const state = await FirebaseWrapper.GetInstance().getTemplate() //For testing
+    this.props.setState(state[0]) //For Testing
   }
 
   async addTemplate(state, uid) {
@@ -45,7 +45,6 @@ class Renderer extends Component {
   }
 
   render() {
-    console.log('this is the this.props', this.props)
     return (
       <div id="editor">
         <div
@@ -71,13 +70,16 @@ class Renderer extends Component {
             <div>
               <Link
                 onClick={() =>
-                  this.props.html.id
+                  this.props.templateID
                     ? this.updateTemplate(
                         this.props.user.id,
-                        this.props.html.id,
+                        this.props.templateID,
                         this.props.html
                       )
-                    : this.addTemplate(this.props.html, this.props.user.id)
+                    : this.props.addNewTemplateId(
+                        this.props.html,
+                        this.props.user.id
+                      )
                 }
               >
                 Save Template
@@ -117,7 +119,8 @@ const mapState = state => {
   return {
     html: state.renderer,
     user: state.user,
-    editor: state.editor
+    editor: state.editor,
+    templateID: state.template.templateID
   }
 }
 
@@ -134,6 +137,9 @@ const mapDispatch = dispatch => {
     },
     setState(state) {
       dispatch(setState(state))
+    },
+    addNewTemplateId(html, uid) {
+      dispatch(addedTemplate(html, uid))
     }
   }
 }

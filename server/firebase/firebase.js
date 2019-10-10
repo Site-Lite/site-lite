@@ -122,13 +122,12 @@ export class FirebaseWrapper {
           })
         })
 
-      // console.log('this is the uid: ', uid)
-      // console.log('this is the templates', templates)
-
       await this._firestore
         .collection(`/Users`)
         .doc(uid)
         .update({templates: templates})
+
+      return ref.id
     } catch (error) {
       console.log('something went wrong in database for addTemplate ', error)
     }
@@ -137,7 +136,7 @@ export class FirebaseWrapper {
   // tid is needed to be gotten from state.
   async updateTemplate(uid, tid, state) {
     try {
-      await this.firestore
+      await this._firestore
         .collection(`/Users/${uid}/Templates`)
         .doc(tid)
         .update({
@@ -148,7 +147,8 @@ export class FirebaseWrapper {
     }
   }
 
-  async getTemplate(uid = 'nimBjUzPVyeWT2qXcgnpqxXhdY62') {
+  //for testing only
+  async getTemplate(uid = 'z5IkB6nkL04Vk0aEgzbF') {
     try {
       let state = []
       await this._firestore
@@ -165,17 +165,15 @@ export class FirebaseWrapper {
     }
   }
 
-  async templateListener(uid, cb) {
+  async getAllTemplates(uid, cb) {
     try {
-      await this._firestore
-        .collection(`Users/${uid}/Templates`)
-        .onSnapshot(querySnapshot => {
-          let container = []
-          querySnapshot.forEach(doc => {
-            container.push(doc.data())
-          })
-          return cb(container)
-        })
+      let tempRef = this._firestore.collection(`Users/${uid}/Templates`)
+      let activeRef = await tempRef.get()
+      let container = []
+      for (activeRef of activeRef.docs) {
+        container.push(activeRef.data())
+      }
+      return cb(container)
     } catch (err) {
       console.error(err)
     }

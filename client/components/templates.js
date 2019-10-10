@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
-import {setTemplateId} from '../store/renderer'
+import {setTemplateId} from '../store/template'
 
 class Templates extends Component {
   constructor() {
@@ -14,7 +14,7 @@ class Templates extends Component {
 
   async componentDidMount() {
     const uid = this.props.user.id
-    await FirebaseWrapper.GetInstance().templateListener(uid, templates =>
+    await FirebaseWrapper.GetInstance().getAllTemplates(uid, templates =>
       this.setState({templates})
     )
   }
@@ -44,7 +44,8 @@ class Templates extends Component {
 }
 
 const mapState = state => ({
-  user: state.user
+  user: state.user,
+  templateID: state.templateID
 })
 const mapDispatch = dispatch => ({
   setTemplateId(tid) {
