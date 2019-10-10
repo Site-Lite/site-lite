@@ -47,6 +47,21 @@ class Renderer extends Component {
     }
   }
 
+  download() {
+    const top = '<html><head></head><body><div id="main"'
+    const test = document.getElementById('main').innerHTML
+    const bottom = '</div></body></html>'
+    const full = top + test + bottom
+    const link = document.createElement('a')
+
+    link.setAttribute('download', 'fileName.html')
+    link.setAttribute(
+      'href',
+      'data:text/html;charset=utf-8,' + encodeURIComponent(full)
+    )
+    link.click()
+  }
+
   render() {
     return (
       <div id="editor">
@@ -87,7 +102,7 @@ class Renderer extends Component {
               >
                 Save Template
               </Link>
-              <Link>Download</Link>
+              <Link onClick={() => this.download()}>Download</Link>
             </div>
           </div>
           <MenuProvider id="menu_id">
