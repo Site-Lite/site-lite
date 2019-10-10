@@ -14,7 +14,6 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </Link>
           {/* The navbar will show these links after you log in */}
 
-          <Link to="/about">About</Link>
           {/* <Link to="/editor">Go to editor</Link> */}
           <div>
             <button type="button" id="nav-editor-button">
@@ -25,6 +24,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             <div className="fas fa-user-circle" id="nav-user">
               <div id="nav-user-menu">
                 <Link to="/profile">Profile</Link>
+                <Link to="/templates">Templates</Link>
                 <a href="#" onClick={handleClick}>
                   Logout
                 </a>
