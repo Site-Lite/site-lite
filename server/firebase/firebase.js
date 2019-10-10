@@ -101,15 +101,16 @@ export class FirebaseWrapper {
     this.auth.signOut()
   }
 
-  async addTemplate(state, uid) {
+  async addTemplate(state, uid, name) {
     try {
       const ref = await this._firestore
         .collection(`/Users/${uid}/Templates`)
         .doc()
-
+      console.log('fb', name)
       await ref.set({
         html: state,
-        id: ref.id
+        id: ref.id,
+        name: name
       })
 
       const templates = []
