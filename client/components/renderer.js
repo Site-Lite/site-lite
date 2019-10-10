@@ -1,12 +1,13 @@
+/* eslint-disable no-alert */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {setState} from '../store/renderer'
+import {setState, clear} from '../store/renderer'
 import {selectElement, toggleEditMode} from '../store/editor'
 import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 import {MenuProvider} from 'react-contexify'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
-import {addedTemplate} from '../store/template'
+import {addedTemplate, resetTemplateId} from '../store/template'
 
 const ConditionalWrapper = ({condition, children}) =>
   condition ? (
@@ -22,8 +23,13 @@ class Renderer extends Component {
   }
 
   async componentDidMount() {
-    const state = await FirebaseWrapper.GetInstance().getTemplate() //For testing
-    this.props.setState(state[0]) //For Testing
+    if (this.props.templateID) {
+      const state = await FirebaseWrapper.GetInstance().getTemplate(
+        this.props.user.id,
+        this.props.templateID
+      )
+      this.props.setState(state)
+    }
   }
 
   async addTemplate(state, uid) {
@@ -86,6 +92,21 @@ class Renderer extends Component {
               </div>
             </div>
             <div>
+              <Link
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      'You will lose your current template. Are you sure you want to start a new template?'
+                    )
+                  ) {
+                    this.props.newTemplate()
+                  } else {
+                    this.onCancel()
+                  }
+                }}
+              >
+                New Template
+              </Link>
               <Link
                 onClick={() =>
                   this.props.templateID
@@ -155,6 +176,10 @@ const mapDispatch = dispatch => {
     },
     addNewTemplateId(html, uid) {
       dispatch(addedTemplate(html, uid))
+    },
+    newTemplate() {
+      dispatch(clear())
+      dispatch(resetTemplateId())
     }
   }
 }

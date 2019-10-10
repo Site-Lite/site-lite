@@ -148,18 +148,14 @@ export class FirebaseWrapper {
   }
 
   //for testing only
-  async getTemplate(uid = 'z5IkB6nkL04Vk0aEgzbF') {
+  async getTemplate(uid, tid) {
     try {
-      let state = []
-      await this._firestore
+      const template = await this._firestore
         .collection(`Users/${uid}/Templates`)
+        .doc(tid)
         .get()
-        .then(function(snapshot) {
-          snapshot.forEach(function(doc) {
-            state.push(doc.data().html)
-          })
-        })
-      return state
+
+      return template.data().html
     } catch (error) {
       console.log('something went wrong in database for getTemplate ', error)
     }
