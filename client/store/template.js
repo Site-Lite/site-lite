@@ -18,14 +18,14 @@ export const resetTemplateId = () => ({
   type: RESET_TEMPLATE_ID
 })
 
-export const addedTemplate = (html, uid) => {
+export const addedTemplate = (html, uid, name) => {
   return async dispatch => {
-    const id = await FirebaseWrapper.GetInstance().addTemplate(html, uid)
+    const id = await FirebaseWrapper.GetInstance().addTemplate(html, uid, name)
     dispatch(setNewTemplateId(id))
   }
 }
 
-const initialState = {templateID: ''}
+const initialState = {}
 
 export default function(state = initialState, action) {
   switch (action.type) {

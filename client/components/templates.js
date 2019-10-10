@@ -20,6 +20,7 @@ class Templates extends Component {
   }
 
   render() {
+    console.log(this.props)
     console.log(this.state)
     return (
       <div>
@@ -33,7 +34,7 @@ class Templates extends Component {
                     this.props.setTemplateId(template.id)
                   }}
                 >
-                  Template, {template.id}
+                  {template.name}
                 </Link>
               </div>
             )
@@ -45,7 +46,7 @@ class Templates extends Component {
 
 const mapState = state => ({
   user: state.user,
-  templateID: state.templateID
+  template: state.template
 })
 const mapDispatch = dispatch => ({
   setTemplateId(tid) {

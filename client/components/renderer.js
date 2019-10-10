@@ -55,9 +55,9 @@ class Renderer extends Component {
 
   download() {
     const top = '<html><head></head><body><div id="main"'
-    const test = document.getElementById('main').innerHTML
+    const middle = document.getElementById('main').innerHTML
     const bottom = '</div></body></html>'
-    const full = top + test + bottom
+    const full = top + middle + bottom
     const link = document.createElement('a')
 
     link.setAttribute('download', 'fileName.html')
@@ -66,6 +66,24 @@ class Renderer extends Component {
       'data:text/html;charset=utf-8,' + encodeURIComponent(full)
     )
     link.click()
+  }
+
+  nameTemplate() {
+    if (this.props.templateID) {
+      this.updateTemplate(
+        this.props.user.id,
+        this.props.templateID,
+        this.props.html
+      )
+    } else {
+      const templateName = prompt('Name your template')
+      console.log('prompt', templateName)
+      this.props.addNewTemplateId(
+        this.props.html,
+        this.props.user.id,
+        templateName
+      )
+    }
   }
 
   render() {
@@ -107,22 +125,7 @@ class Renderer extends Component {
               >
                 New Template
               </Link>
-              <Link
-                onClick={() =>
-                  this.props.templateID
-                    ? this.updateTemplate(
-                        this.props.user.id,
-                        this.props.templateID,
-                        this.props.html
-                      )
-                    : this.props.addNewTemplateId(
-                        this.props.html,
-                        this.props.user.id
-                      )
-                }
-              >
-                Save Template
-              </Link>
+              <Link onClick={() => this.nameTemplate()}>Save Template</Link>
               <Link onClick={() => this.download()}>Download</Link>
             </div>
           </div>
@@ -174,8 +177,8 @@ const mapDispatch = dispatch => {
     setState(state) {
       dispatch(setState(state))
     },
-    addNewTemplateId(html, uid) {
-      dispatch(addedTemplate(html, uid))
+    addNewTemplateId(html, uid, name) {
+      dispatch(addedTemplate(html, uid, name))
     },
     newTemplate() {
       dispatch(clear())
