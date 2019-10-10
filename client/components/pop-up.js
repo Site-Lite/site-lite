@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {setContent} from '../store/renderer'
+import {togglePopUpOff} from '../store/editor'
 
 class PopUp extends Component {
   constructor() {
@@ -26,23 +27,29 @@ class PopUp extends Component {
     switch (parameter) {
       case 'img':
         return (
-          <input
-            name="content"
-            value={this.state.content}
-            type="text"
-            placeholder="URL"
-            onChange={this.handleChange}
-          />
+          <div>
+            <span>Edit Image URL</span>
+            <input
+              name="content"
+              value={this.state.content}
+              type="text"
+              placeholder="URL"
+              onChange={this.handleChange}
+            />
+          </div>
         )
       case 'p':
         return (
-          <input
-            name="content"
-            value={this.state.content}
-            type="text"
-            placeholder="Content"
-            onChange={this.handleChange}
-          />
+          <div>
+            <span>Edit Text</span>
+            <textarea
+              name="content"
+              value={this.state.content}
+              type="text"
+              placeholder="Content"
+              onChange={this.handleChange}
+            />
+          </div>
         )
       default:
         return <div />
@@ -52,22 +59,31 @@ class PopUp extends Component {
     return (
       <div
         className={this.props.editor.popUpEnabled ? 'popup active' : 'popup'}
+        id="popup-bg"
+        onClick={event => {
+          if (event.target.id === 'popup-bg') {
+            this.props.togglePopUpOff()
+          }
+        }}
       >
-        {this.renderSwitch(
-          this.props.html[this.props.editor.selectedElement].type
-        )}
-        <button
-          type="submit"
-          value="Submit"
-          onClick={() => {
-            this.props.setContent(
-              this.props.editor.selectedElement,
-              this.state.content
-            )
-          }}
-        >
-          Submit
-        </button>
+        <div>
+          {this.renderSwitch(
+            this.props.html[this.props.editor.selectedElement].type
+          )}
+          <button
+            type="submit"
+            value="Submit"
+            onClick={() => {
+              this.props.setContent(
+                this.props.editor.selectedElement,
+                this.state.content
+              )
+              this.props.togglePopUpOff()
+            }}
+          >
+            Submit
+          </button>
+        </div>
       </div>
     )
   }
@@ -83,6 +99,9 @@ const mapDispatch = dispatch => {
   return {
     setContent(id, content) {
       dispatch(setContent(id, content))
+    },
+    togglePopUpOff() {
+      dispatch(togglePopUpOff())
     }
   }
 }

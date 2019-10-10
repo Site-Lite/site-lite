@@ -1,17 +1,39 @@
+/* eslint-disable complexity */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
+import {updateStyle} from '../store/editor'
+import {applyStyle} from '../store/renderer'
+import {fontSizes, fontFamilies} from './select-options'
 
 class StyleBar extends Component {
   constructor() {
     super()
     this.state = {
-      size: false,
-      text: false,
-      border: false,
-      spacing: false,
-      formatting: false,
-      background: false
+      accordion: {
+        size: false,
+        text: false,
+        border: false,
+        spacing: false,
+        formatting: false,
+        background: false
+      },
+      selectedStyle: {}
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.editor.selectedElementStyle !==
+      prevProps.editor.selectedElementStyle
+    ) {
+      console.log(this.state.selectedStyle)
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          selectedStyle: this.props.editor.selectedElementStyle
+        }
+      })
     }
   }
 
@@ -19,9 +41,33 @@ class StyleBar extends Component {
     this.setState(prevState => {
       return {
         ...prevState,
-        [section]: !prevState[section]
+        accordion: {
+          size: false,
+          text: false,
+          border: false,
+          spacing: false,
+          formatting: false,
+          background: false,
+          [section]: !prevState.accordion[section]
+        }
       }
     })
+  }
+
+  handleSelect(selectType, value) {
+    this.props.updateStyle(selectType, value)
+  }
+
+  applyStyle() {
+    this.props.applyStyle(
+      this.props.editor.selectedElement,
+      this.props.editor.selectedElementStyle
+    )
+  }
+
+  handleChange(event) {
+    this.setState({input: event.target.value})
+    this.props.updateStyle('font-size', event.target.value + 'px')
   }
 
   render() {
@@ -31,56 +77,118 @@ class StyleBar extends Component {
         className={this.props.editor.editModeEnabled ? 'edit-mode ' : ''}
       >
         <div id="style-bar-header">
-          <span>
-            Styles <i className="fas fa-palette" />
-          </span>
+          <span>Styles</span>
         </div>
         <div id="style-bar-content">
-          {/* <p>Selected Element: {this.props.styler.selectedElement}</p>
-          <p>
-            Element Type:
-            {this.props.html[this.props.styler.selectedElement].type}
-          </p> */}
           <div
             onClick={() => {
               this.toggleCollapse('size')
             }}
             className={
-              this.state.size ? 'style-section active' : 'style-section'
+              this.state.accordion.size
+                ? 'style-section active'
+                : 'style-section'
             }
           >
             <span>Size</span>
             <i className="fas fa-ruler-combined" />
           </div>
-          <Collapse isOpen={this.state.size}>
+          <Collapse isOpen={this.state.accordion.size}>
             <div>Test</div>
           </Collapse>
           <div
             onClick={() => {
               this.toggleCollapse('text')
             }}
-            className={
-              this.state.text ? 'style-section active' : 'style-section'
-            }
+            className={`${
+              this.state.accordion.text
+                ? 'style-section active'
+                : 'style-section'
+            } ${
+              this.props.html[this.props.editor.selectedElement].type !== 'p'
+                ? 'hidden'
+                : ''
+            }`}
           >
             <span>Text</span>
             <i className="fas fa-font" />
           </div>
-          <Collapse isOpen={this.state.text}>
-            <div>Test</div>
+          <Collapse
+            isOpen={
+              this.state.accordion.text &&
+              this.props.html[this.props.editor.selectedElement].type === 'p'
+            }
+          >
+            <div>
+              <div>
+                <span>Font</span>
+                <select
+                  value={this.state.selectedStyle['font-family']}
+                  onChange={event => {
+                    this.handleSelect('font-family', event.target.value)
+                  }}
+                >
+                  {fontFamilies.map(font => {
+                    return (
+                      <option value={font} key={font}>
+                        {font}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div>
+                <span>Size</span>
+                <select
+                  value={this.state.selectedStyle['font-size']}
+                  onChange={event => {
+                    this.handleSelect('font-size', event.target.value)
+                  }}
+                >
+                  {fontSizes.map(size => {
+                    return (
+                      <option value={`${size}px`} key={size}>
+                        {size}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div>
+                <span>Color</span>
+                <input
+                  type="color"
+                  value={this.state.selectedStyle.color}
+                  onChange={event => {
+                    this.handleSelect('color', event.target.value)
+                  }}
+                />
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  this.applyStyle()
+                }}
+              >
+                Apply
+              </button>
+            </div>
           </Collapse>
           <div
             onClick={() => {
               this.toggleCollapse('border')
             }}
             className={
-              this.state.border ? 'style-section active' : 'style-section'
+              this.state.accordion.border
+                ? 'style-section active'
+                : 'style-section'
             }
           >
             <span>Border</span>
             <i className="far fa-square" />
           </div>
-          <Collapse isOpen={this.state.border}>
+          <Collapse isOpen={this.state.accordion.border}>
             <div>Test</div>
           </Collapse>
           <div
@@ -88,41 +196,75 @@ class StyleBar extends Component {
               this.toggleCollapse('spacing')
             }}
             className={
-              this.state.spacing ? 'style-section active' : 'style-section'
+              this.state.accordion.spacing
+                ? 'style-section active'
+                : 'style-section'
             }
           >
             <span>Spacing</span>
             <i className="fas fa-arrows-alt-h" />
           </div>
-          <Collapse isOpen={this.state.spacing}>
+          <Collapse isOpen={this.state.accordion.spacing}>
             <div>Test</div>
           </Collapse>
           <div
             onClick={() => {
               this.toggleCollapse('formatting')
             }}
-            className={
-              this.state.formatting ? 'style-section active' : 'style-section'
-            }
+            className={`${
+              this.state.accordion.text
+                ? 'style-section active'
+                : 'style-section'
+            } ${
+              this.props.html[this.props.editor.selectedElement].type !== 'div'
+                ? 'hidden'
+                : ''
+            }`}
           >
             <span>Formatting</span>
             <i className="fas fa-table" />
           </div>
-          <Collapse isOpen={this.state.formatting}>
-            <div>Test</div>
+          <Collapse
+            isOpen={
+              this.state.accordion.formatting &&
+              this.props.html[this.props.editor.selectedElement].type === 'div'
+            }
+          >
+            <div>
+              <span>Column</span>
+              <input
+                type="checkbox"
+                onClick={event => {
+                  event.target.checked
+                    ? this.handleSelect('flex-direction', 'column')
+                    : this.handleSelect('flex-direction', 'row')
+                }}
+              />
+              <span>Row</span>
+              <button
+                type="button"
+                onClick={() => {
+                  this.applyStyle()
+                }}
+              >
+                Apply
+              </button>
+            </div>
           </Collapse>
           <div
             onClick={() => {
               this.toggleCollapse('background')
             }}
             className={
-              this.state.background ? 'style-section active' : 'style-section'
+              this.state.accordion.background
+                ? 'style-section active'
+                : 'style-section'
             }
           >
             <span>Background</span>
             <i className="fas fa-images" />
           </div>
-          <Collapse isOpen={this.state.background}>
+          <Collapse isOpen={this.state.accordion.background}>
             <div>Test</div>
           </Collapse>
           <span className="style-section" />
@@ -141,11 +283,11 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    createElement(id) {
-      dispatch(createElement(id))
+    applyStyle(id, style) {
+      dispatch(applyStyle(id, style))
     },
-    updateStyle(id, property, value) {
-      dispatch(updateStyle(id, property, value))
+    updateStyle(property, value) {
+      dispatch(updateStyle(property, value))
     }
   }
 }

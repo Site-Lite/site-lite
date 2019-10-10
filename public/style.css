@@ -78,7 +78,8 @@ form div {
 }
 
 form input,
-select {
+select,
+textarea {
   color: rgba(60, 60, 60, 0.6);
   font-family: 'PT Sans', sans-serif;
   font-size: 16px;
@@ -206,6 +207,7 @@ form label {
 
 #editor-panel.edit-mode {
   width: calc(100% - 25vw);
+  position: relative;
 }
 
 #editor-panel.edit-mode #main {
@@ -272,12 +274,14 @@ form label {
 }
 
 #main div,
-#main p {
+#main p,
+#main img {
   direction: ltr;
   transition: all 0.4s ease;
 }
 #main div.edit-mode,
-#main p.edit-mode {
+#main p.edit-mode,
+#main img.edit-mode {
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background-color: #f5f5f5;
@@ -287,35 +291,27 @@ form label {
   border-radius: 3px;
 }
 
-#main div.edit-mode:hover,
-#main p.edit-mode:hover,
 #main div.edit-mode.selected,
 #main p.edit-mode.selected,
-#main div.edit-mode.selected > div:hover,
-#main p.edit-mode.selected > div:hover {
+#main img.edit-mode.selected {
   transform: scale(1.01);
-  filter: drop-shadow(-3px 0px 0 #4cbb1a)
-    drop-shadow(0 0px 3px rgba(0, 0, 0, 0.05));
-}
-
-#main div.edit-mode.selected,
-#main p.edit-mode.selected {
   filter: drop-shadow(-3px 0px 0 #4cbb1a)
     drop-shadow(0 0px 3px rgba(0, 0, 0, 0.05)) brightness(105%);
 }
 
-#main div.edit-mode.selected > div,
-#main p.edit-mode.selected > div {
+#main div.edit-mode.selected > div {
   filter: brightness(95%);
 }
 
 #main span {
+  font-family: 'PT Sans', sans-serif;
   position: absolute;
   top: 0;
   right: 0;
   color: rgba(0, 0, 0, 0.2);
   margin: 5px;
   font-size: 15px;
+  pointer-events: none;
 }
 
 #style-bar {
@@ -406,7 +402,7 @@ form label {
 
 #settings-bar + div {
   height: calc(100% - 51px);
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 #settings-bar a,
@@ -494,7 +490,7 @@ input:checked + .slider:before {
   font-size: 20px;
   padding: 0 20px;
   border-top: 1px solid #f5f5f5;
-  border-left: 3px solid transparent;
+  border-left: 4px solid transparent;
   cursor: pointer;
   background-color: #ffffff;
   color: #dadada;
@@ -511,9 +507,14 @@ input:checked + .slider:before {
   border-left: 4px solid #4cbb19;
 }
 
+.style-section.hidden {
+  display: none;
+}
+
 .style-section:last-child {
   flex: 1;
   min-height: 0;
+  cursor: default;
 }
 
 .style-section + div {
@@ -525,12 +526,70 @@ input:checked + .slider:before {
 .style-section + div > div {
   padding: 20px;
 }
+
+.style-section + div > div > div {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 15px;
+}
+
+.style-section + div > div > div > span {
+  font-weight: 700;
+  color: #b7bcbf;
+}
+
 .popup {
   opacity: 0;
+  pointer-events: none;
   position: absolute;
   top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+.popup > div {
+  width: 450px;
+  height: 200px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+.popup > div > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.popup > div span {
+  font-weight: 700;
+  color: #f5f5f5;
+  font-size: 20px;
+  padding: 6px 0 2px 0;
+  width: 100%;
+  border-bottom: 1px solid #f5f5f5;
+  text-align: center;
+  background-color: #282e31;
+  border-radius: 3px 3px 0 0;
+}
+
+.popup textarea {
+  resize: none;
+  padding: 5px;
+  width: 360px;
+  height: 100px;
+  margin: 20px;
 }
 
 .popup.active {
   opacity: 1;
+  pointer-events: auto;
+  background-color: rgba(0, 0, 0, 0.25);
 }
