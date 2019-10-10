@@ -122,6 +122,7 @@ const mapDispatch = dispatch => {
       dispatch(togglePopUp(id, style))
     },
     clear() {
+      dispatch(deselectElement())
       dispatch(clear())
     }
   }

@@ -417,6 +417,10 @@ form label {
   margin-left: 30px;
 }
 
+#settings-bar .download.hidden {
+  display: none;
+}
+
 #settings-bar span {
   margin-right: 10px;
 }

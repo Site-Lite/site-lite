@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {setState, clear} from '../store/renderer'
-import {selectElement, toggleEditMode} from '../store/editor'
+import {selectElement, toggleEditMode, deselectElement} from '../store/editor'
 import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 import {MenuProvider} from 'react-contexify'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
@@ -126,7 +126,16 @@ class Renderer extends Component {
                 New Template
               </Link>
               <Link onClick={() => this.nameTemplate()}>Save Template</Link>
-              <Link onClick={() => this.download()}>Download</Link>
+              <Link
+                onClick={() => this.download()}
+                className={
+                  this.props.editor.editModeEnabled
+                    ? 'download hidden'
+                    : 'download'
+                }
+              >
+                Download
+              </Link>
             </div>
           </div>
           <MenuProvider id="menu_id">
@@ -181,6 +190,7 @@ const mapDispatch = dispatch => {
       dispatch(addedTemplate(html, uid, name))
     },
     newTemplate() {
+      dispatch(deselectElement())
       dispatch(clear())
       dispatch(resetTemplateId())
     }
