@@ -148,7 +148,7 @@ export class FirebaseWrapper {
   }
 
   //for testing only
-  async getTemplate(uid = 'z5IkB6nkL04Vk0aEgzbF', tid) {
+  async getTemplate(uid, tid) {
     try {
       const template = await this._firestore
         .collection(`Users/${uid}/Templates`)
