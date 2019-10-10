@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
 import {createElement, removeElement, clear} from '../store/renderer'
-import {togglePopUp} from '../store/editor'
+import {togglePopUp, deselectElement} from '../store/editor'
 
 class EditMenu extends Component {
   handleAdd(event, element) {
@@ -115,6 +115,7 @@ const mapDispatch = dispatch => {
       dispatch(createElement(id, type))
     },
     removeElement(id, elementId) {
+      dispatch(deselectElement())
       dispatch(removeElement(id, elementId))
     },
     togglePopUp(id, style) {

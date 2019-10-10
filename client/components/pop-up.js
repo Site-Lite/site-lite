@@ -60,7 +60,7 @@ class PopUp extends Component {
       <div
         className={this.props.editor.popUpEnabled ? 'popup active' : 'popup'}
         id="popup-bg"
-        onClick={event => {
+        onMouseDown={event => {
           if (event.target.id === 'popup-bg') {
             this.props.togglePopUpOff()
           }
