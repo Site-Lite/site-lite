@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {setState} from '../store/renderer'
 import {selectElement, toggleEditMode} from '../store/editor'
 import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
-
+import {MenuProvider} from 'react-contexify'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 import {addedTemplate} from '../store/template'
 
