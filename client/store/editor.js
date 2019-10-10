@@ -1,5 +1,6 @@
 const TOGGLE_EDIT_MODE = 'TOGGLE_EDIT_MODE'
 const TOGGLE_POP_UP = 'TOGGLE_POP_UP'
+const TOGGLE_POP_UP_OFF = 'TOGGLE_POP_UP_OFF'
 const SELECT_ELEMENT = 'SELECT_ELEMENT'
 const UPDATE_STYLE = 'UPDATE_STYLE'
 
@@ -12,6 +13,7 @@ const initialState = {
 
 export const toggleEditMode = () => ({type: TOGGLE_EDIT_MODE})
 export const togglePopUp = (id, style) => ({type: TOGGLE_POP_UP, id, style})
+export const togglePopUpOff = () => ({type: TOGGLE_POP_UP_OFF})
 export const selectElement = (id, style) => ({type: SELECT_ELEMENT, id, style})
 export const updateStyle = (property, value) => ({
   type: UPDATE_STYLE,
@@ -31,6 +33,11 @@ export default function(state = initialState, action) {
         ...state,
         selectedElement: action.id,
         selectedElementStyle: action.style,
+        popUpEnabled: !state.popUpEnabled
+      }
+    case TOGGLE_POP_UP_OFF:
+      return {
+        ...state,
         popUpEnabled: !state.popUpEnabled
       }
     case SELECT_ELEMENT:

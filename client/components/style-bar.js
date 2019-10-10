@@ -17,11 +17,24 @@ class StyleBar extends Component {
         formatting: false,
         background: false
       },
-      input: ''
+      selectedStyle: {}
     }
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.editor.selectedElementStyle !==
+      prevProps.editor.selectedElementStyle
+    ) {
+      console.log(this.state.selectedStyle)
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          selectedStyle: this.props.editor.selectedElementStyle
+        }
+      })
+    }
+  }
 
   toggleCollapse(section) {
     this.setState(prevState => {
@@ -40,9 +53,8 @@ class StyleBar extends Component {
     })
   }
 
-  handleSelect(selectType, event) {
-    console.log(event.target.value)
-    this.props.updateStyle(selectType, event.target.value)
+  handleSelect(selectType, value) {
+    this.props.updateStyle(selectType, value)
   }
 
   applyStyle() {
@@ -107,44 +119,51 @@ class StyleBar extends Component {
             }
           >
             <div>
-              <select
-                name="font"
-                onChange={event => {
-                  this.handleSelect('font-family', event)
-                }}
-              >
-                <option
-                  value="Times New Roman"
-                  selected={
-                    this.props.editor.selectedElementStyle['font-family'] ===
-                    'Times New Roman'
-                  }
+              <div>
+                <span>Font</span>
+                <select
+                  value={this.state.selectedStyle['font-family']}
+                  onChange={event => {
+                    this.handleSelect('font-family', event.target.value)
+                  }}
                 >
-                  Times New Roman
-                </option>
-                <option
-                  value="Arial"
-                  selected={
-                    this.props.editor.selectedElementStyle['font-family'] ===
-                    'Arial'
-                  }
+                  <option value="Arial">Arial</option>
+                  <option value="Times New Roman">Times New Roman</option>
+                  <option value="Verdana">Verdana</option>
+                  <option value="Georgia">Georgia</option>
+                  <option value="Palatino">Palatino</option>
+                </select>
+              </div>
+              <div>
+                <span>Size</span>
+                <select
+                  value={this.state.selectedStyle['font-size']}
+                  onChange={event => {
+                    this.handleSelect('font-size', event.target.value)
+                  }}
                 >
-                  Arial
-                </option>
-              </select>
-              <input
-                type="number"
-                onChange={event => {
-                  this.handleChange(event)
-                }}
-              />
-              <input
-                type="color"
-                defaultValue="#ffffff"
-                onChange={event => {
-                  this.handleSelect('color', event)
-                }}
-              />
+                  {[8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 48, 72].map(
+                    size => {
+                      return (
+                        <option value={`${size}px`} key={size}>
+                          {size}
+                        </option>
+                      )
+                    }
+                  )}
+                </select>
+              </div>
+              <div>
+                <span>Color</span>
+                <input
+                  type="color"
+                  value={this.state.selectedStyle.color}
+                  onChange={event => {
+                    this.handleSelect('color', event.target.value)
+                  }}
+                />
+              </div>
+
               <button
                 type="button"
                 onClick={() => {
@@ -191,11 +210,15 @@ class StyleBar extends Component {
             onClick={() => {
               this.toggleCollapse('formatting')
             }}
-            className={
-              this.state.accordion.formatting
+            className={`${
+              this.state.accordion.text
                 ? 'style-section active'
                 : 'style-section'
-            }
+            } ${
+              this.props.html[this.props.editor.selectedElement].type !== 'div'
+                ? 'hidden'
+                : ''
+            }`}
           >
             <span>Formatting</span>
             <i className="fas fa-table" />
