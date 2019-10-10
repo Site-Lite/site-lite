@@ -223,16 +223,31 @@ class StyleBar extends Component {
             <span>Formatting</span>
             <i className="fas fa-table" />
           </div>
-          <Collapse isOpen={this.state.accordion.formatting}>
+          <Collapse
+            isOpen={
+              this.state.accordion.formatting &&
+              this.props.html[this.props.editor.selectedElement].type === 'div'
+            }
+          >
             <div>
               <span>Column</span>
               <input
                 type="checkbox"
                 onClick={event => {
-                  console.log(event.target.checked)
+                  event.target.checked
+                    ? this.handleSelect('flex-direction', 'column')
+                    : this.handleSelect('flex-direction', 'row')
                 }}
               />
               <span>Row</span>
+              <button
+                type="button"
+                onClick={() => {
+                  this.applyStyle()
+                }}
+              >
+                Apply
+              </button>
             </div>
           </Collapse>
           <div
