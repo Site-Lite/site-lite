@@ -570,12 +570,14 @@ input:checked + .slider:before {
 
 .popup > div span {
   font-weight: 700;
-  color: #dadada;
+  color: #f5f5f5;
   font-size: 20px;
   padding: 6px 0 2px 0;
   width: 100%;
   border-bottom: 1px solid #f5f5f5;
   text-align: center;
+  background-color: #282e31;
+  border-radius: 3px 3px 0 0;
 }
 
 .popup textarea {

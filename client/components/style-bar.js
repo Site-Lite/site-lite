@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
 import {updateStyle} from '../store/editor'
 import {applyStyle} from '../store/renderer'
+import {fontSizes, fontFamilies} from './select-options'
 
 class StyleBar extends Component {
   constructor() {
@@ -127,11 +128,13 @@ class StyleBar extends Component {
                     this.handleSelect('font-family', event.target.value)
                   }}
                 >
-                  <option value="Arial">Arial</option>
-                  <option value="Times New Roman">Times New Roman</option>
-                  <option value="Verdana">Verdana</option>
-                  <option value="Georgia">Georgia</option>
-                  <option value="Palatino">Palatino</option>
+                  {fontFamilies.map(font => {
+                    return (
+                      <option value={font} key={font}>
+                        {font}
+                      </option>
+                    )
+                  })}
                 </select>
               </div>
               <div>
@@ -142,15 +145,13 @@ class StyleBar extends Component {
                     this.handleSelect('font-size', event.target.value)
                   }}
                 >
-                  {[8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 48, 72].map(
-                    size => {
-                      return (
-                        <option value={`${size}px`} key={size}>
-                          {size}
-                        </option>
-                      )
-                    }
-                  )}
+                  {fontSizes.map(size => {
+                    return (
+                      <option value={`${size}px`} key={size}>
+                        {size}
+                      </option>
+                    )
+                  })}
                 </select>
               </div>
               <div>
