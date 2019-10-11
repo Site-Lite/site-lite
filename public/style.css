@@ -424,7 +424,9 @@ form label {
   transition: all 0.4s ease;
 }
 
-#settings-bar .download.hidden {
+#settings-bar .download.hidden,
+#settings-bar .new-template.hidden {
+  opacity: 0;
   font-size: 0;
   margin: 0;
   pointer-events: none;
@@ -503,6 +505,7 @@ input:checked + .slider:before {
 
 .style-section {
   font-size: 0;
+  opacity: 0;
   padding: 0 20px;
   border-top: 1px solid #f5f5f5;
   border-left: 4px solid transparent;
@@ -519,6 +522,7 @@ input:checked + .slider:before {
 
 .style-section.edit-mode {
   font-size: 20px;
+  opacity: 1;
 }
 
 .style-section.active {
