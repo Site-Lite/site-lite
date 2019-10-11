@@ -38,12 +38,12 @@ class Renderer extends Component {
 
   async addTemplate(state, uid) {
     await FirebaseWrapper.GetInstance().addTemplate(state, uid)
-    // console.log(this.props.user)
   }
 
   async updateTemplate(uid, tid, state) {
     await FirebaseWrapper.GetInstance().updateTemplate(uid, tid, state)
   }
+
   toggleEditMode() {
     this.props.toggleStyler()
   }
@@ -81,7 +81,7 @@ class Renderer extends Component {
       )
     } else {
       const templateName = prompt('Name your template')
-      console.log('prompt', templateName)
+      // console.log('prompt', templateName)
       this.props.addNewTemplateId(
         this.props.html,
         this.props.user.id,
@@ -193,9 +193,6 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    undo() {
-      dispatch(ActionCreators.undo())
-    },
     toggleStyler() {
       dispatch(toggleEditMode())
     },

@@ -134,7 +134,6 @@ export class FirebaseWrapper {
     }
   }
 
-  // tid is needed to be gotten from state.
   async updateTemplate(uid, tid, state) {
     try {
       await this._firestore
@@ -173,6 +172,17 @@ export class FirebaseWrapper {
       return cb(container)
     } catch (err) {
       console.error(err)
+    }
+  }
+
+  async deleteTemplate(uid, tid) {
+    try {
+      await this._firestore
+        .collection(`Users/${uid}/Templates`)
+        .doc(tid)
+        .delete()
+    } catch (error) {
+      console.log('something went wrong in database for deleteTemplate ', error)
     }
   }
 }
