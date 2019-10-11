@@ -559,7 +559,7 @@ class StyleBar extends Component {
 
 const mapState = state => {
   return {
-    html: state.renderer,
+    html: state.renderer.present,
     editor: state.editor
   }
 }

@@ -2,12 +2,16 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {MenuProvider} from 'react-contexify'
+import {ActionCreators} from 'redux-undo'
+
+import store from '../store/index'
 import {setState, clear} from '../store/renderer'
 import {selectElement, toggleEditMode, deselectElement} from '../store/editor'
-import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
-import {MenuProvider} from 'react-contexify'
-import {FirebaseWrapper} from '../../server/firebase/firebase'
 import {addedTemplate, resetTemplateId} from '../store/template'
+
+import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
+import {FirebaseWrapper} from '../../server/firebase/firebase'
 
 const ConditionalWrapper = ({condition, children}) =>
   condition ? (
@@ -108,6 +112,18 @@ class Renderer extends Component {
                 />
                 <div className="slider" />
               </div>
+              <i
+                className="fas fa-undo-alt"
+                onClick={() => {
+                  store.dispatch(ActionCreators.undo()) // undo the last action
+                }}
+              />
+              <i
+                className="fas fa-redo-alt"
+                onClick={() => {
+                  store.dispatch(ActionCreators.redo()) // redo the last action
+                }}
+              />
             </div>
             <div>
               <Link
@@ -168,7 +184,7 @@ class Renderer extends Component {
 
 const mapState = state => {
   return {
-    html: state.renderer,
+    html: state.renderer.present,
     user: state.user,
     editor: state.editor,
     templateID: state.template.templateID
@@ -177,6 +193,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
+    undo() {
+      dispatch(ActionCreators.undo())
+    },
     toggleStyler() {
       dispatch(toggleEditMode())
     },
