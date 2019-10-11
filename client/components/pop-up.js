@@ -91,7 +91,7 @@ class PopUp extends Component {
 
 const mapState = state => {
   return {
-    html: state.renderer.present,
+    html: state.renderer,
     editor: state.editor
   }
 }

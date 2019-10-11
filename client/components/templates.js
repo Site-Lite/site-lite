@@ -51,13 +51,6 @@ class Templates extends Component {
                   type="submit"
                   onClick={() => {
                     this.deleteTemplate(this.props.user.id, template.id)
-                    // this.setState(prevState =>{
-                    //   const newtemps = this.state.templates.filter(temps=>{temps.html.name !== })
-                    //   return {
-                    //     ...prevState,
-                    //     templates: newtemps
-                    //   }
-                    // })
                   }}
                 >
                   Delete

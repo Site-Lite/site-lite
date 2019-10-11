@@ -4,13 +4,15 @@ import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
 import {createElement, removeElement, clear} from '../store/renderer'
 import {togglePopUp, deselectElement} from '../store/editor'
+import {addToPast} from '../store/undo'
 
 class EditMenu extends Component {
   handleAdd(event, element) {
     if (event.srcElement.tagName === 'DIV') {
       this.props.createElement(
         event.target.id === 'main' ? 'main' : Number(event.target.id),
-        element
+        element,
+        this.props.html
       )
     }
   }
@@ -19,7 +21,8 @@ class EditMenu extends Component {
     if (event.srcElement.id !== 'main') {
       this.props.removeElement(
         event.path[1].id === 'main' ? 'main' : Number(event.path[1].id),
-        Number(event.srcElement.id)
+        Number(event.srcElement.id),
+        this.props.html
       )
     }
   }
@@ -104,19 +107,21 @@ class EditMenu extends Component {
 
 const mapState = state => {
   return {
-    html: state.renderer.present,
+    html: state.renderer,
     editor: state.editor
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    createElement(id, type) {
+    createElement(id, type, state) {
       dispatch(createElement(id, type))
+      dispatch(addToPast(state))
     },
-    removeElement(id, elementId) {
+    removeElement(id, elementId, state) {
       dispatch(deselectElement())
       dispatch(removeElement(id, elementId))
+      dispatch(addToPast(state))
     },
     togglePopUp(id, style) {
       dispatch(togglePopUp(id, style))

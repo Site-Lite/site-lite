@@ -3,14 +3,13 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {MenuProvider} from 'react-contexify'
-import {ActionCreators} from 'redux-undo'
 
-import store from '../store/index'
+import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 import {setState, clear} from '../store/renderer'
 import {selectElement, toggleEditMode, deselectElement} from '../store/editor'
 import {addedTemplate, resetTemplateId} from '../store/template'
+import {undo, redo} from '../store/undo'
 
-import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 
 const ConditionalWrapper = ({condition, children}) =>
@@ -115,13 +114,27 @@ class Renderer extends Component {
               <i
                 className="fas fa-undo-alt"
                 onClick={() => {
-                  store.dispatch(ActionCreators.undo()) // undo the last action
+                  console.log('this is the this.props.past', this.props.past)
+
+                  // THIS NEEDS TO BE LOOKED INTO
+                  // SETTING THE STATE IS NOT WORKING
+                  if (this.props.past) {
+                    this.props.setState(
+                      this.props.past[this.props.past.length - 1]
+                    )
+                  }
+                  this.props.undo(this.props.html)
+                  // undo the last action
                 }}
               />
               <i
                 className="fas fa-redo-alt"
                 onClick={() => {
-                  store.dispatch(ActionCreators.redo()) // redo the last action
+                  // THIS NEEDS TO BE LOOKED INTO
+                  // SETTING THE STATE IS NOT WORKING
+                  this.props.setState(this.props.future[0])
+                  this.props.redo(this.props.html)
+                  // redo the last action
                 }}
               />
             </div>
@@ -184,10 +197,13 @@ class Renderer extends Component {
 
 const mapState = state => {
   return {
-    html: state.renderer.present,
+    html: state.renderer,
     user: state.user,
     editor: state.editor,
-    templateID: state.template.templateID
+    templateID: state.template.templateID,
+    // undo: state.undo
+    past: state.undo.past,
+    future: state.undo.future
   }
 }
 
@@ -209,6 +225,12 @@ const mapDispatch = dispatch => {
       dispatch(deselectElement())
       dispatch(clear())
       dispatch(resetTemplateId())
+    },
+    undo(state) {
+      dispatch(undo(state))
+    },
+    redo(state) {
+      dispatch(redo(state))
     }
   }
 }
