@@ -1,11 +1,5 @@
 export const fontSizes = [8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 48, 72]
-export const fontFamilies = [
-  'Arial',
-  'Times New Roman',
-  'Verdana',
-  'Georgia',
-  'Palatino'
-]
+export const fontFamilies = ['Arial', 'Times', 'Verdana', 'Georgia', 'Palatino']
 export const spacing = [
   0,
   1,
@@ -54,6 +48,7 @@ export const backgroundSize = [
 ]
 
 export const borderWidth = [
+  0,
   1,
   2,
   3,

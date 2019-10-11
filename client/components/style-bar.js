@@ -95,11 +95,11 @@ class StyleBar extends Component {
             onClick={() => {
               this.toggleCollapse('size')
             }}
-            className={
+            className={`${
               this.state.accordion.size
                 ? 'style-section active'
                 : 'style-section'
-            }
+            } ${this.props.editor.editModeEnabled ? 'edit-mode ' : ''}`}
           >
             <span>Size</span>
             <i className="fas fa-ruler-combined" />
@@ -179,7 +179,7 @@ class StyleBar extends Component {
               this.props.html[this.props.editor.selectedElement].type !== 'p'
                 ? 'hidden'
                 : ''
-            }`}
+            } ${this.props.editor.editModeEnabled ? 'edit-mode ' : ''}`}
           >
             <span>Text</span>
             <i className="fas fa-font" />
@@ -191,6 +191,60 @@ class StyleBar extends Component {
             }
           >
             <div>
+              <div>
+                <div>
+                  <span>Bold</span>
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      onClick={event => {
+                        event.target.checked
+                          ? this.handleSelect('font-weight', 'bold')
+                          : this.handleSelect('font-weight', 'normal')
+                      }}
+                      checked={
+                        this.state.selectedStyle['font-weight'] === 'bold'
+                      }
+                    />
+                    <div className="check" />
+                  </div>
+                </div>
+                <div>
+                  <span>Italic</span>
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      onClick={event => {
+                        event.target.checked
+                          ? this.handleSelect('font-style', 'italic')
+                          : this.handleSelect('font-style', 'normal')
+                      }}
+                      checked={
+                        this.state.selectedStyle['font-style'] === 'italic'
+                      }
+                    />
+                    <div className="check" />
+                  </div>
+                </div>
+                <div>
+                  <span>Underline</span>
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      onClick={event => {
+                        event.target.checked
+                          ? this.handleSelect('text-decoration', 'underline')
+                          : this.handleSelect('text-decoration', 'none')
+                      }}
+                      checked={
+                        this.state.selectedStyle['text-decoration'] ===
+                        'underline'
+                      }
+                    />
+                    <div className="check" />
+                  </div>
+                </div>
+              </div>
               <div>
                 <span>Font</span>
                 <select
@@ -243,28 +297,6 @@ class StyleBar extends Component {
                 </select>
               </div>
               <div>
-                <div>
-                  <span>Bold</span>
-                  <input
-                    type="checkbox"
-                    onClick={event => {
-                      event.target.checked
-                        ? this.handleSelect('font-weight', 'bold')
-                        : this.handleSelect('font-weight', 'normal')
-                    }}
-                  />
-                </div>
-                <div>
-                  <span>Italic</span>
-                  <input
-                    type="checkbox"
-                    onClick={event => {
-                      event.target.checked
-                        ? this.handleSelect('font-style', 'italic')
-                        : this.handleSelect('font-style', 'normal')
-                    }}
-                  />
-                </div>
                 <span>Color</span>
                 <input
                   type="color"
@@ -274,7 +306,6 @@ class StyleBar extends Component {
                   }}
                 />
               </div>
-
               <button
                 type="button"
                 onClick={() => {
@@ -289,11 +320,11 @@ class StyleBar extends Component {
             onClick={() => {
               this.toggleCollapse('border')
             }}
-            className={
+            className={`${
               this.state.accordion.border
                 ? 'style-section active'
                 : 'style-section'
-            }
+            } ${this.props.editor.editModeEnabled ? 'edit-mode ' : ''}`}
           >
             <span>Border</span>
             <i className="far fa-square" />
@@ -344,7 +375,23 @@ class StyleBar extends Component {
                   }}
                 />
               </div>
-
+              <div>
+                <span>Corner Radius</span>
+                <select
+                  value={this.state.selectedStyle['border-radius']}
+                  onChange={event => {
+                    this.handleSelect('border-radius', event.target.value)
+                  }}
+                >
+                  {borderWidth.map(radius => {
+                    return (
+                      <option value={`${radius}px`} key={radius}>
+                        {radius}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
               <button
                 type="button"
                 onClick={() => {
@@ -359,11 +406,11 @@ class StyleBar extends Component {
             onClick={() => {
               this.toggleCollapse('spacing')
             }}
-            className={
+            className={`${
               this.state.accordion.spacing
                 ? 'style-section active'
                 : 'style-section'
-            }
+            } ${this.props.editor.editModeEnabled ? 'edit-mode ' : ''}`}
           >
             <span>Spacing</span>
             <i className="fas fa-arrows-alt-h" />
@@ -426,7 +473,7 @@ class StyleBar extends Component {
               this.props.html[this.props.editor.selectedElement].type !== 'div'
                 ? 'hidden'
                 : ''
-            }`}
+            } ${this.props.editor.editModeEnabled ? 'edit-mode ' : ''}`}
           >
             <span>Formatting</span>
             <i className="fas fa-table" />
@@ -438,16 +485,69 @@ class StyleBar extends Component {
             }
           >
             <div>
-              <span>Column</span>
-              <input
-                type="checkbox"
-                onClick={event => {
-                  event.target.checked
-                    ? this.handleSelect('flex-direction', 'column')
-                    : this.handleSelect('flex-direction', 'row')
-                }}
-              />
-              <span>Row</span>
+              <div>
+                <span>Flow Direction</span>
+                <select
+                  value={this.state.selectedStyle['flex-direction']}
+                  onChange={event => {
+                    this.handleSelect('flex-direction', event.target.value)
+                  }}
+                >
+                  <option value="row">row</option>
+                  <option value="column">column</option>
+                </select>
+              </div>
+              <div>
+                <div>
+                  <span>Wrap</span>
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      onClick={event => {
+                        event.target.checked
+                          ? this.handleSelect('flex-wrap', 'wrap')
+                          : this.handleSelect('flex-wrap', 'nowrap')
+                      }}
+                      checked={this.state.selectedStyle['flex-wrap'] === 'wrap'}
+                    />
+                    <div className="check" />
+                  </div>
+                </div>
+                <div>
+                  <span>Center X</span>
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      onClick={event => {
+                        event.target.checked
+                          ? this.handleSelect('justify-content', 'center')
+                          : this.handleSelect('justify-content', 'initial')
+                      }}
+                      checked={
+                        this.state.selectedStyle['justify-content'] === 'center'
+                      }
+                    />
+                    <div className="check" />
+                  </div>
+                </div>
+                <div>
+                  <span>Center Y</span>
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      onClick={event => {
+                        event.target.checked
+                          ? this.handleSelect('align-items', 'center')
+                          : this.handleSelect('align-items', 'initial')
+                      }}
+                      checked={
+                        this.state.selectedStyle['align-items'] === 'center'
+                      }
+                    />
+                    <div className="check" />
+                  </div>
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={() => {
@@ -462,11 +562,11 @@ class StyleBar extends Component {
             onClick={() => {
               this.toggleCollapse('background')
             }}
-            className={
+            className={`${
               this.state.accordion.background
                 ? 'style-section active'
                 : 'style-section'
-            }
+            } ${this.props.editor.editModeEnabled ? 'edit-mode ' : ''}`}
           >
             <span>Background</span>
             <i className="fas fa-images" />

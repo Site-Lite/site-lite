@@ -2,8 +2,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
-import {createElement, removeElement, clear} from '../store/renderer'
-import {togglePopUp, deselectElement} from '../store/editor'
+import {
+  createElement,
+  removeElement,
+  clear,
+  applyStyle
+} from '../store/renderer'
+import {togglePopUp, deselectElement, storeStyle} from '../store/editor'
 
 class EditMenu extends Component {
   handleAdd(event, element) {
@@ -31,13 +36,27 @@ class EditMenu extends Component {
     )
   }
 
+  handleCopyStyle(event) {
+    this.props.storeStyle(this.props.html[event.srcElement.id].style)
+  }
+
+  handlePasteStyle(event) {
+    if (Object.keys(this.props.editor.storedStyle).length) {
+      console.log('you hit this')
+      this.props.applyStyle(event.srcElement.id, this.props.editor.storedStyle)
+    }
+  }
+
   render() {
     return (
       <Menu id="menu_id" animation={animation.fade}>
         <Submenu
           label="Add"
           arrow={<i className="fas fa-caret-right" />}
-          disabled={({event}) => event.srcElement.localName !== 'div'}
+          disabled={({event}) =>
+            event.srcElement.localName !== 'div' ||
+            !this.props.editor.editModeEnabled
+          }
         >
           <Item
             onClick={({event}) => {
@@ -65,7 +84,9 @@ class EditMenu extends Component {
           onClick={({event}) => {
             this.handleRemove(event)
           }}
-          disabled={({event}) => event.srcElement.id === 'main'}
+          disabled={({event}) =>
+            event.srcElement.id === 'main' || !this.props.editor.editModeEnabled
+          }
         >
           Delete
         </Item>
@@ -74,13 +95,33 @@ class EditMenu extends Component {
           onClick={({event}) => {
             this.handleEditContent(event)
           }}
-          disabled={({event}) => event.srcElement.localName === 'div'}
+          disabled={({event}) =>
+            event.srcElement.localName === 'div' ||
+            !this.props.editor.editModeEnabled
+          }
         >
           Edit Content
         </Item>
         <Separator />
-        <Item onClick={this.onClick}>Copy Style</Item>
-        <Item onClick={this.onClick}>Paste Style</Item>
+        <Item
+          onClick={({event}) => {
+            this.handleCopyStyle(event)
+          }}
+          disabled={!this.props.editor.editModeEnabled}
+        >
+          Copy Style
+        </Item>
+        <Item
+          onClick={({event}) => {
+            this.handlePasteStyle(event)
+          }}
+          disabled={
+            !Object.keys(this.props.editor.storedStyle).length ||
+            !this.props.editor.editModeEnabled
+          }
+        >
+          Paste Style
+        </Item>
         <Separator />
         <Item
           onClick={() => {
@@ -94,6 +135,7 @@ class EditMenu extends Component {
               this.onCancel()
             }
           }}
+          disabled={!this.props.editor.editModeEnabled}
         >
           Clear Template
         </Item>
@@ -124,6 +166,12 @@ const mapDispatch = dispatch => {
     clear() {
       dispatch(deselectElement())
       dispatch(clear())
+    },
+    storeStyle(style) {
+      dispatch(storeStyle(style))
+    },
+    applyStyle(id, style) {
+      dispatch(applyStyle(id, style))
     }
   }
 }
