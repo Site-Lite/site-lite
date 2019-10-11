@@ -2,8 +2,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
-import {createElement, removeElement, clear} from '../store/renderer'
-import {togglePopUp, deselectElement} from '../store/editor'
+import {
+  createElement,
+  removeElement,
+  clear,
+  applyStyle
+} from '../store/renderer'
+import {togglePopUp, deselectElement, storeStyle} from '../store/editor'
 
 class EditMenu extends Component {
   handleAdd(event, element) {
@@ -29,6 +34,17 @@ class EditMenu extends Component {
       event.srcElement.id,
       this.props.html[event.srcElement.id].style
     )
+  }
+
+  handleCopyStyle(event) {
+    this.props.storeStyle(this.props.html[event.srcElement.id].style)
+  }
+
+  handlePasteStyle(event) {
+    if (Object.keys(this.props.editor.storedStyle).length) {
+      console.log('you hit this')
+      this.props.applyStyle(event.srcElement.id, this.props.editor.storedStyle)
+    }
   }
 
   render() {
@@ -88,14 +104,21 @@ class EditMenu extends Component {
         </Item>
         <Separator />
         <Item
-          onClick={this.onClick}
+          onClick={({event}) => {
+            this.handleCopyStyle(event)
+          }}
           disabled={!this.props.editor.editModeEnabled}
         >
           Copy Style
         </Item>
         <Item
-          onClick={this.onClick}
-          disabled={!this.props.editor.editModeEnabled}
+          onClick={({event}) => {
+            this.handlePasteStyle(event)
+          }}
+          disabled={
+            !Object.keys(this.props.editor.storedStyle).length ||
+            !this.props.editor.editModeEnabled
+          }
         >
           Paste Style
         </Item>
@@ -143,6 +166,12 @@ const mapDispatch = dispatch => {
     clear() {
       dispatch(deselectElement())
       dispatch(clear())
+    },
+    storeStyle(style) {
+      dispatch(storeStyle(style))
+    },
+    applyStyle(id, style) {
+      dispatch(applyStyle(id, style))
     }
   }
 }

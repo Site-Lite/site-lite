@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 const CREATE_ELEMENT = 'CREATE_ELEMENT'
 const REMOVE_ELEMENT = 'REMOVE_ELEMENT'
 const APPLY_STYLE = 'APPLY_STYLE'
@@ -53,7 +54,7 @@ export default function(state = initialState, action) {
           style:
             action.elementType === 'div'
               ? {display: 'flex', flex: 1}
-              : {flex: 1},
+              : action.elementType === 'p' ? {flex: 1} : {},
           children: []
         }
       }

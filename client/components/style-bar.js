@@ -202,6 +202,9 @@ class StyleBar extends Component {
                           ? this.handleSelect('font-weight', 'bold')
                           : this.handleSelect('font-weight', 'normal')
                       }}
+                      checked={
+                        this.state.selectedStyle['font-weight'] === 'bold'
+                      }
                     />
                     <div className="check" />
                   </div>
@@ -216,6 +219,9 @@ class StyleBar extends Component {
                           ? this.handleSelect('font-style', 'italic')
                           : this.handleSelect('font-style', 'normal')
                       }}
+                      checked={
+                        this.state.selectedStyle['font-style'] === 'italic'
+                      }
                     />
                     <div className="check" />
                   </div>
@@ -230,6 +236,10 @@ class StyleBar extends Component {
                           ? this.handleSelect('text-decoration', 'underline')
                           : this.handleSelect('text-decoration', 'none')
                       }}
+                      checked={
+                        this.state.selectedStyle['text-decoration'] ===
+                        'underline'
+                      }
                     />
                     <div className="check" />
                   </div>
@@ -475,16 +485,69 @@ class StyleBar extends Component {
             }
           >
             <div>
-              <span>Column</span>
-              <input
-                type="checkbox"
-                onClick={event => {
-                  event.target.checked
-                    ? this.handleSelect('flex-direction', 'column')
-                    : this.handleSelect('flex-direction', 'row')
-                }}
-              />
-              <span>Row</span>
+              <div>
+                <span>Flow Direction</span>
+                <select
+                  value={this.state.selectedStyle['flex-direction']}
+                  onChange={event => {
+                    this.handleSelect('flex-direction', event.target.value)
+                  }}
+                >
+                  <option value="row">row</option>
+                  <option value="column">column</option>
+                </select>
+              </div>
+              <div>
+                <div>
+                  <span>Wrap</span>
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      onClick={event => {
+                        event.target.checked
+                          ? this.handleSelect('flex-wrap', 'wrap')
+                          : this.handleSelect('flex-wrap', 'nowrap')
+                      }}
+                      checked={this.state.selectedStyle['flex-wrap'] === 'wrap'}
+                    />
+                    <div className="check" />
+                  </div>
+                </div>
+                <div>
+                  <span>Center X</span>
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      onClick={event => {
+                        event.target.checked
+                          ? this.handleSelect('justify-content', 'center')
+                          : this.handleSelect('justify-content', 'initial')
+                      }}
+                      checked={
+                        this.state.selectedStyle['justify-content'] === 'center'
+                      }
+                    />
+                    <div className="check" />
+                  </div>
+                </div>
+                <div>
+                  <span>Center Y</span>
+                  <div className="checkbox">
+                    <input
+                      type="checkbox"
+                      onClick={event => {
+                        event.target.checked
+                          ? this.handleSelect('align-items', 'center')
+                          : this.handleSelect('align-items', 'initial')
+                      }}
+                      checked={
+                        this.state.selectedStyle['align-items'] === 'center'
+                      }
+                    />
+                    <div className="check" />
+                  </div>
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={() => {
