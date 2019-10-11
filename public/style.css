@@ -236,7 +236,7 @@ form label {
   font-family: 'PT Sans', sans-serif;
   background-color: #f7f7f7;
   right: 0;
-  width: 70px;
+  width: 85px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding: 10px;
@@ -257,9 +257,10 @@ form label {
   margin: 0;
   font-size: 16px;
   padding: 6px;
-}
-#nav-user-menu a:first-child {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+#nav-user-menu a:last-child {
+  border-bottom: none;
 }
 
 #main {
@@ -505,13 +506,12 @@ input:checked + .slider:before {
 
 .style-section {
   font-size: 0;
-  opacity: 0;
   padding: 0 20px;
   border-top: 1px solid #f5f5f5;
   border-left: 4px solid transparent;
   cursor: pointer;
   background-color: #ffffff;
-  color: #dadada;
+  color: transparent;
   font-weight: 700;
   min-height: 45px;
   align-items: center;
@@ -521,8 +521,8 @@ input:checked + .slider:before {
 }
 
 .style-section.edit-mode {
+  color: #dadada;
   font-size: 20px;
-  opacity: 1;
 }
 
 .style-section.active {
