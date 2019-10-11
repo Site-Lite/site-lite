@@ -37,7 +37,10 @@ class EditMenu extends Component {
         <Submenu
           label="Add"
           arrow={<i className="fas fa-caret-right" />}
-          disabled={({event}) => event.srcElement.localName !== 'div'}
+          disabled={({event}) =>
+            event.srcElement.localName !== 'div' ||
+            !this.props.editor.editModeEnabled
+          }
         >
           <Item
             onClick={({event}) => {
@@ -65,7 +68,9 @@ class EditMenu extends Component {
           onClick={({event}) => {
             this.handleRemove(event)
           }}
-          disabled={({event}) => event.srcElement.id === 'main'}
+          disabled={({event}) =>
+            event.srcElement.id === 'main' || !this.props.editor.editModeEnabled
+          }
         >
           Delete
         </Item>
@@ -74,13 +79,26 @@ class EditMenu extends Component {
           onClick={({event}) => {
             this.handleEditContent(event)
           }}
-          disabled={({event}) => event.srcElement.localName === 'div'}
+          disabled={({event}) =>
+            event.srcElement.localName === 'div' ||
+            !this.props.editor.editModeEnabled
+          }
         >
           Edit Content
         </Item>
         <Separator />
-        <Item onClick={this.onClick}>Copy Style</Item>
-        <Item onClick={this.onClick}>Paste Style</Item>
+        <Item
+          onClick={this.onClick}
+          disabled={!this.props.editor.editModeEnabled}
+        >
+          Copy Style
+        </Item>
+        <Item
+          onClick={this.onClick}
+          disabled={!this.props.editor.editModeEnabled}
+        >
+          Paste Style
+        </Item>
         <Separator />
         <Item
           onClick={() => {
@@ -94,6 +112,7 @@ class EditMenu extends Component {
               this.onCancel()
             }
           }}
+          disabled={!this.props.editor.editModeEnabled}
         >
           Clear Template
         </Item>
