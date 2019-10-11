@@ -53,8 +53,24 @@ export default function(state = initialState, action) {
           content: '',
           style:
             action.elementType === 'div'
-              ? {display: 'flex', flex: 1}
-              : action.elementType === 'p' ? {flex: 1} : {},
+              ? {
+                  display: 'flex',
+                  flex: 1,
+                  'flex-direction': 'column',
+                  margin: '20px',
+                  padding: '20px'
+                }
+              : action.elementType === 'p'
+                ? {
+                    flex: 1,
+                    'font-size': '16px',
+                    'font-family': 'Arial',
+                    'text-align': 'left',
+                    color: '#7f868b',
+                    margin: '20px',
+                    padding: '20px'
+                  }
+                : {margin: '20px', padding: '20px'},
           children: []
         }
       }
