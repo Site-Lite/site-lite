@@ -437,6 +437,44 @@ form label {
   margin-right: 10px;
 }
 
+#template-list {
+  height: calc(100% - 65px);
+  padding: 0 20%;
+  overflow-y: auto;
+}
+
+#template-list h1 {
+  font-size: 32px;
+}
+
+#template-list #no-template {
+  font-size: 20px;
+  text-align: center;
+  padding-top: 60px;
+  border-top: 1px solid #dcdcdc;
+  color: rgba(0, 0, 0, 0.2);
+}
+
+#template {
+  border: 1px solid #dcdcdc;
+  padding: 30px 0;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  border-width: 1px 0;
+  margin-bottom: -1px;
+}
+
+#template span {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(121, 128, 132, 0.5);
+}
+
+#template button {
+  font-size: 14px;
+}
+
 .navbar {
   height: 100%;
   display: flex;

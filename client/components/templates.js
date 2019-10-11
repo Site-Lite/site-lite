@@ -23,22 +23,31 @@ class Templates extends Component {
     console.log(this.props)
     console.log(this.state)
     return (
-      <div>
-        {this.state.templates &&
-          this.state.templates.map(template => {
-            return (
-              <div key={template.id}>
-                <Link
-                  to="/editor"
-                  onClick={() => {
-                    this.props.setTemplateId(template.id)
-                  }}
-                >
-                  {template.name}
-                </Link>
-              </div>
-            )
-          })}
+      <div id="template-list">
+        <h1>Templates</h1>
+        <div>
+          {Object.keys(this.state.templates).length ? (
+            this.state.templates.map(template => {
+              return (
+                <div id="template" key={template.id}>
+                  <span>{template.name}</span>
+                  <Link
+                    to="/editor"
+                    onClick={() => {
+                      this.props.setTemplateId(template.id)
+                    }}
+                  >
+                    <button type="button">Open in Editor</button>
+                  </Link>
+                </div>
+              )
+            })
+          ) : (
+            <div id="no-template">
+              <span>You do not have any saved templates!</span>
+            </div>
+          )}
+        </div>
       </div>
     )
   }
