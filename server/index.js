@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const compression = require('compression')
 const PORT = process.env.PORT || 8080
 const app = express()
-const socketio = require('socket.io')
+// const socketio = require('socket.io')
 module.exports = app
 
 const createApp = () => {
@@ -56,8 +56,8 @@ const startListening = () => {
   )
 
   // set up our socket control center
-  const io = socketio(server)
-  require('./socket')(io)
+  // const io = socketio(server)
+  // require('./socket')(io)
 }
 
 async function bootApp() {

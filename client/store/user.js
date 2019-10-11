@@ -1,5 +1,6 @@
-import axios from 'axios'
-import history from '../history'
+// import axios from 'axios'
+// import history from '../history'
+import {FirebaseWrapper} from '../../server/firebase/firebase'
 
 /**
  * ACTION TYPES
@@ -15,44 +16,48 @@ const defaultUser = {}
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({type: GET_USER, user})
+const getUser = (user, uid) => ({type: GET_USER, user, uid})
 const removeUser = () => ({type: REMOVE_USER})
 
 /**
  * THUNK CREATORS
  */
-export const me = () => async dispatch => {
-  try {
-    const res = await axios.get('/auth/me')
-    dispatch(getUser(res.data || defaultUser))
-  } catch (err) {
-    console.error(err)
+export const me = () => {
+  return dispatch => {
+    try {
+      // const result = await FirebaseWrapper.GetInstance().isLoggedIn()
+      FirebaseWrapper.GetInstance().auth.onAuthStateChanged(user => {
+        dispatch(getUser(user.email, user.uid))
+      })
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
-export const auth = (email, password, method) => async dispatch => {
-  let res
-  try {
-    res = await axios.post(`/auth/${method}`, {email, password})
-  } catch (authError) {
-    return dispatch(getUser({error: authError}))
-  }
-
-  try {
-    dispatch(getUser(res.data))
-    history.push('/home')
-  } catch (dispatchOrHistoryErr) {
-    console.error(dispatchOrHistoryErr)
+export const auth = (email, password, method) => {
+  return async dispatch => {
+    try {
+      const result = await FirebaseWrapper.GetInstance().userAuth(
+        email,
+        password,
+        method
+      )
+      dispatch(getUser(result.user, result.id))
+    } catch (err) {
+      console.err(err)
+    }
   }
 }
 
-export const logout = () => async dispatch => {
-  try {
-    await axios.post('/auth/logout')
-    dispatch(removeUser())
-    history.push('/login')
-  } catch (err) {
-    console.error(err)
+export const logout = () => {
+  return dispatch => {
+    try {
+      FirebaseWrapper.GetInstance().signOut()
+      dispatch(removeUser())
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
@@ -62,7 +67,7 @@ export const logout = () => async dispatch => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
-      return action.user
+      return {email: action.user, id: action.uid}
     case REMOVE_USER:
       return defaultUser
     default:
