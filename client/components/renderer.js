@@ -111,34 +111,32 @@ class Renderer extends Component {
                 />
                 <div className="slider" />
               </div>
-              <i
-                className="fas fa-undo-alt"
-                onClick={() => {
-                  console.log('this is the this.props.past', this.props.past)
-
-                  // THIS NEEDS TO BE LOOKED INTO
-                  // SETTING THE STATE IS NOT WORKING
-                  if (this.props.past) {
-                    this.props.setState(
-                      this.props.past[this.props.past.length - 1]
-                    )
-                  }
-                  this.props.undo(this.props.html)
-                  // undo the last action
-                }}
-              />
-              <i
-                className="fas fa-redo-alt"
-                onClick={() => {
-                  // THIS NEEDS TO BE LOOKED INTO
-                  // SETTING THE STATE IS NOT WORKING
-                  this.props.setState(this.props.future[0])
-                  this.props.redo(this.props.html)
-                  // redo the last action
-                }}
-              />
             </div>
             <div>
+              <div className="undo-redo">
+                <i
+                  className="fas fa-undo-alt"
+                  onClick={() => {
+                    if (this.props.past) {
+                      this.props.setState(
+                        this.props.past[this.props.past.length - 1]
+                      )
+                      this.props.undo(this.props.html)
+                    }
+                    // undo the last action
+                  }}
+                />
+                <i
+                  className="fas fa-redo-alt"
+                  onClick={() => {
+                    if (this.props.future) {
+                      this.props.setState(this.props.future[0])
+                      this.props.redo(this.props.html)
+                    }
+                    // redo the last action
+                  }}
+                />
+              </div>
               <Link
                 onClick={() => {
                   if (
@@ -201,7 +199,6 @@ const mapState = state => {
     user: state.user,
     editor: state.editor,
     templateID: state.template.templateID,
-    // undo: state.undo
     past: state.undo.past,
     future: state.undo.future
   }

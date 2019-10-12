@@ -2,8 +2,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
+
 import {updateStyle} from '../store/editor'
 import {applyStyle} from '../store/renderer'
+import {addToPast} from '../store/undo'
+
 import {
   fontSizes,
   fontFamilies,
@@ -38,7 +41,7 @@ class StyleBar extends Component {
       this.props.editor.selectedElementStyle !==
       prevProps.editor.selectedElementStyle
     ) {
-      console.log(this.state.selectedStyle)
+      // console.log(this.state.selectedStyle)
       this.setState(prevState => {
         return {
           ...prevState,
@@ -72,7 +75,8 @@ class StyleBar extends Component {
   applyStyle() {
     this.props.applyStyle(
       this.props.editor.selectedElement,
-      this.props.editor.selectedElementStyle
+      this.props.editor.selectedElementStyle,
+      this.props.html
     )
   }
 
@@ -566,8 +570,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    applyStyle(id, style) {
+    applyStyle(id, style, state) {
       dispatch(applyStyle(id, style))
+      dispatch(addToPast(state))
     },
     updateStyle(property, value) {
       dispatch(updateStyle(property, value))
@@ -576,3 +581,6 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(StyleBar)
+
+// WHAT IS GOING ON WITH APPLYTOSTYLE?
+// FUNCTION IS BEING CALLED FROM STORE BUT IT IS ALSO CREATED IN THE CLASS COMPONENT
