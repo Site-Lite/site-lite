@@ -9,13 +9,6 @@ import {MenuProvider} from 'react-contexify'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 import {addedTemplate, resetTemplateId} from '../store/template'
 
-const ConditionalWrapper = ({condition, children}) =>
-  condition ? (
-    <MenuProvider id="menu_id">{children}</MenuProvider>
-  ) : (
-    <div>{children}</div>
-  )
-
 class Renderer extends Component {
   constructor() {
     super()
@@ -48,7 +41,8 @@ class Renderer extends Component {
     if (event.target.id.length) {
       this.props.selectElement(
         event.target.id,
-        this.props.html[event.target.id].style
+        this.props.html[event.target.id].style,
+        this.props.html[event.target.id].content
       )
     }
   }
@@ -185,8 +179,8 @@ const mapDispatch = dispatch => {
     toggleStyler() {
       dispatch(toggleEditMode())
     },
-    selectElement(id, style) {
-      dispatch(selectElement(id, style))
+    selectElement(id, style, content) {
+      dispatch(selectElement(id, style, content))
     },
     setState(state) {
       dispatch(setState(state))

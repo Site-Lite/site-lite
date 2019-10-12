@@ -56,7 +56,7 @@ export default function(state = initialState, action) {
               ? {
                   display: 'flex',
                   flex: 1,
-                  'flex-direction': 'column',
+                  'flex-direction': 'row',
                   margin: '20px',
                   padding: '20px'
                 }

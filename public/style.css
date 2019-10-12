@@ -719,6 +719,17 @@ input:checked + .slider:before {
   margin: 60px 0 30px 0;
 }
 
+.popup input::placeholder,
+.popup textarea::placeholder {
+  transition: opacity 0.4s ease;
+  opacity: 0.5;
+}
+
+.popup input:focus::placeholder,
+.popup textarea:focus::placeholder {
+  opacity: 0;
+}
+
 .popup.active {
   opacity: 1;
   pointer-events: auto;

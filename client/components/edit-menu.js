@@ -17,6 +17,19 @@ class EditMenu extends Component {
         event.target.id === 'main' ? 'main' : Number(event.target.id),
         element
       )
+      setTimeout(() => {
+        const lastChildId = this.props.html[event.srcElement.id].children[
+          this.props.html[event.srcElement.id].children.length - 1
+        ]
+
+        if (this.props.html[lastChildId].type !== 'div') {
+          this.props.togglePopUp(
+            lastChildId,
+            this.props.html[lastChildId].style,
+            this.props.html[lastChildId].content
+          )
+        }
+      }, 0)
     }
   }
 
@@ -32,7 +45,8 @@ class EditMenu extends Component {
   handleEditContent(event) {
     this.props.togglePopUp(
       event.srcElement.id,
-      this.props.html[event.srcElement.id].style
+      this.props.html[event.srcElement.id].style,
+      this.props.html[event.srcElement.id].content
     )
   }
 
@@ -160,8 +174,8 @@ const mapDispatch = dispatch => {
       dispatch(deselectElement())
       dispatch(removeElement(id, elementId))
     },
-    togglePopUp(id, style) {
-      dispatch(togglePopUp(id, style))
+    togglePopUp(id, style, content) {
+      dispatch(togglePopUp(id, style, content))
     },
     clear() {
       dispatch(deselectElement())

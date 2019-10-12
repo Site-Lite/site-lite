@@ -27,7 +27,7 @@ class StyleBar extends Component {
         border: false,
         spacing: false,
         formatting: false,
-        background: false
+        background: true
       },
       selectedStyle: {}
     }
@@ -38,7 +38,6 @@ class StyleBar extends Component {
       this.props.editor.selectedElementStyle !==
       prevProps.editor.selectedElementStyle
     ) {
-      console.log(this.state.selectedStyle)
       this.setState(prevState => {
         return {
           ...prevState,

@@ -11,13 +11,24 @@ const initialState = {
   popUpEnabled: false,
   selectedElement: 'main',
   selectedElementStyle: {},
+  selectedElementContent: '',
   storedStyle: {}
 }
 
 export const toggleEditMode = () => ({type: TOGGLE_EDIT_MODE})
-export const togglePopUp = (id, style) => ({type: TOGGLE_POP_UP, id, style})
+export const togglePopUp = (id, style, content) => ({
+  type: TOGGLE_POP_UP,
+  id,
+  style,
+  content
+})
 export const togglePopUpOff = () => ({type: TOGGLE_POP_UP_OFF})
-export const selectElement = (id, style) => ({type: SELECT_ELEMENT, id, style})
+export const selectElement = (id, style, content) => ({
+  type: SELECT_ELEMENT,
+  id,
+  style,
+  content
+})
 export const updateStyle = (property, value) => ({
   type: UPDATE_STYLE,
   property,
@@ -38,6 +49,7 @@ export default function(state = initialState, action) {
         ...state,
         selectedElement: action.id,
         selectedElementStyle: action.style,
+        selectedElementContent: action.content,
         popUpEnabled: !state.popUpEnabled
       }
     case TOGGLE_POP_UP_OFF:
@@ -49,7 +61,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         selectedElement: action.id,
-        selectedElementStyle: action.style
+        selectedElementStyle: action.style,
+        selectedElementContent: action.content
       }
     case UPDATE_STYLE:
       return {
@@ -63,7 +76,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         selectedElement: 'main',
-        selectedElementStyle: {}
+        selectedElementStyle: {},
+        selectedElementContent: ''
       }
     case STORE_STYLE:
       return {
