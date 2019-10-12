@@ -681,6 +681,3 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(StyleBar)
-
-// WHAT IS GOING ON WITH APPLYTOSTYLE?
-// FUNCTION IS BEING CALLED FROM STORE BUT IT IS ALSO CREATED IN THE CLASS COMPONENT
