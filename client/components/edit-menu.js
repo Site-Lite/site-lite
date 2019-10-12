@@ -77,21 +77,24 @@ class EditMenu extends Component {
               this.handleAdd(event, 'div')
             }}
           >
-            div
+            <span>container</span>
+            <span>&lt;div/&gt;</span>
           </Item>
           <Item
             onClick={({event}) => {
               this.handleAdd(event, 'p')
             }}
           >
-            p
+            <span>paragraph</span>
+            <span>&lt;p/&gt;</span>
           </Item>
           <Item
             onClick={({event}) => {
               this.handleAdd(event, 'img')
             }}
           >
-            img
+            <span>image</span>
+            <span>&lt;img/&gt;</span>
           </Item>
         </Submenu>
         <Item

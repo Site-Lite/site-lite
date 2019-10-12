@@ -596,6 +596,7 @@ class StyleBar extends Component {
                         )
                       : ''
                   }
+                  placeholder="URL"
                   onChange={event => {
                     console.log('test')
                     this.handleSelect(

@@ -1,6 +1,8 @@
+/* eslint-disable complexity */
 const TOGGLE_EDIT_MODE = 'TOGGLE_EDIT_MODE'
 const TOGGLE_POP_UP = 'TOGGLE_POP_UP'
 const TOGGLE_POP_UP_OFF = 'TOGGLE_POP_UP_OFF'
+const TOGGLE_TUTORIAL = 'TOGGLE_TUTORIAL'
 const SELECT_ELEMENT = 'SELECT_ELEMENT'
 const UPDATE_STYLE = 'UPDATE_STYLE'
 const DESELECT_ELEMENT = 'DESELECT_ELEMENT'
@@ -9,6 +11,7 @@ const STORE_STYLE = 'STORE_STYLE'
 const initialState = {
   editModeEnabled: true,
   popUpEnabled: false,
+  tutorialEnabled: true,
   selectedElement: 'main',
   selectedElementStyle: {},
   selectedElementContent: '',
@@ -23,6 +26,7 @@ export const togglePopUp = (id, style, content) => ({
   content
 })
 export const togglePopUpOff = () => ({type: TOGGLE_POP_UP_OFF})
+export const toggleTutorial = () => ({type: TOGGLE_TUTORIAL})
 export const selectElement = (id, style, content) => ({
   type: SELECT_ELEMENT,
   id,
@@ -56,6 +60,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         popUpEnabled: !state.popUpEnabled
+      }
+    case TOGGLE_TUTORIAL:
+      return {
+        ...state,
+        tutorialEnabled: !state.tutorialEnabled
       }
     case SELECT_ELEMENT:
       return {
