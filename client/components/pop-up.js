@@ -46,7 +46,7 @@ class PopUp extends Component {
               name="content"
               value={this.state.content}
               type="text"
-              placeholder="Content"
+              placeholder="Text"
               onChange={this.handleChange}
             />
           </div>

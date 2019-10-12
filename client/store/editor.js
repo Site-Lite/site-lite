@@ -4,12 +4,14 @@ const TOGGLE_POP_UP_OFF = 'TOGGLE_POP_UP_OFF'
 const SELECT_ELEMENT = 'SELECT_ELEMENT'
 const UPDATE_STYLE = 'UPDATE_STYLE'
 const DESELECT_ELEMENT = 'DESELECT_ELEMENT'
+const STORE_STYLE = 'STORE_STYLE'
 
 const initialState = {
   editModeEnabled: true,
   popUpEnabled: false,
   selectedElement: 'main',
-  selectedElementStyle: {}
+  selectedElementStyle: {},
+  storedStyle: {}
 }
 
 export const toggleEditMode = () => ({type: TOGGLE_EDIT_MODE})
@@ -22,6 +24,7 @@ export const updateStyle = (property, value) => ({
   value
 })
 export const deselectElement = () => ({type: DESELECT_ELEMENT})
+export const storeStyle = style => ({type: STORE_STYLE, style})
 
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -61,6 +64,11 @@ export default function(state = initialState, action) {
         ...state,
         selectedElement: 'main',
         selectedElementStyle: {}
+      }
+    case STORE_STYLE:
+      return {
+        ...state,
+        storedStyle: action.style
       }
     default:
       return state

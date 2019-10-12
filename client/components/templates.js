@@ -42,30 +42,39 @@ class Templates extends Component {
     console.log('this is the this.props: ', this.props)
     console.log('this is the this.state: ', this.state)
     return (
-      <div>
-        {this.state.templates &&
-          this.state.templates.map(template => {
-            return (
-              <div key={template.id}>
-                <Link
-                  to="/editor"
-                  onClick={() => {
-                    this.props.setTemplateId(template.id)
-                  }}
-                >
-                  {template.name}
-                </Link>
-                <button
-                  type="submit"
-                  onClick={() => {
-                    this.deleteTemplate(this.props.user.id, template.id)
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
-            )
-          })}
+      <div id="template-list">
+        <h1>Templates</h1>
+        <div>
+          {Object.keys(this.state.templates).length ? (
+            this.state.templates.map(template => {
+              return (
+                <div id="template" key={template.id}>
+                  <span>{template.name}</span>
+                  <Link
+                    to="/editor"
+                    onClick={() => {
+                      this.props.setTemplateId(template.id)
+                    }}
+                  >
+                    <button type="button">Open in Editor</button>
+                  </Link>
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      this.deleteTemplate(this.props.user.id, template.id)
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              )
+            })
+          ) : (
+            <div id="no-template">
+              <span>You do not have any saved templates!</span>
+            </div>
+          )}
+        </div>
       </div>
     )
   }
