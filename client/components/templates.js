@@ -28,6 +28,14 @@ class Templates extends Component {
 
   async deleteTemplate(uid, tid) {
     await FirebaseWrapper.GetInstance().deleteTemplate(uid, tid)
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        templates: prevState.templates.filter(temp => {
+          return temp.id !== tid
+        })
+      }
+    })
   }
 
   render() {
