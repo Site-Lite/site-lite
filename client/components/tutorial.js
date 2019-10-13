@@ -20,8 +20,20 @@ class Tutorial extends Component {
           }
         }}
       >
-        <Slide onActive={swiper => console.log('Slide Active!')}>Test 1</Slide>
-        <Slide onActive={swiper => console.log('Slide Active!')}>Test 2</Slide>
+        <Slide onActive={swiper => console.log('Slide Active!')}>
+          <span>
+            Right click in the editor to show edit options. Adding an element
+            can be done by selecting the 'Add' option and then selecting an
+            element
+          </span>
+        </Slide>
+        <Slide onActive={swiper => console.log('Slide Active!')}>
+          {' '}
+          <span>
+            Right click in the editor to show edit options such as adding
+            elements
+          </span>
+        </Slide>
         <Slide onActive={swiper => console.log('Slide Active!')}>Test 3</Slide>
       </Swiper>
     )
