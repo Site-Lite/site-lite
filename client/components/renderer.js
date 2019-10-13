@@ -122,6 +122,11 @@ class Renderer extends Component {
                     this.onCancel()
                   }
                 }}
+                className={
+                  this.props.editor.editModeEnabled
+                    ? 'new-template'
+                    : 'new-template hidden'
+                }
               >
                 New Template
               </Link>
