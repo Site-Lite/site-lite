@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
-import {updateStyle} from '../store/editor'
+import {updateStyle, selectElement, togglePopUp} from '../store/editor'
 import {applyStyle, createElement} from '../store/renderer'
 import {
   fontSizes,
@@ -38,7 +38,6 @@ class StyleBar extends Component {
       this.props.editor.selectedElementStyle !==
       prevProps.editor.selectedElementStyle
     ) {
-      console.log(this.state.selectedStyle)
       this.setState(prevState => {
         return {
           ...prevState,
@@ -81,13 +80,23 @@ class StyleBar extends Component {
     this.props.updateStyle('font-size', event.target.value + 'px')
   }
 
-  handleAdd(element) {
-    this.props.createElement(
+  async handleAdd(element) {
+    // if selected = p || img then error
+    // if selected
+    await this.props.createElement(
       this.props.editor.selectedElement === 'main'
         ? 'main'
         : Number(this.props.editor.selectedElement),
       element
     )
+
+    const id = this.props.html.counter - 1
+    const style = this.props.html[id].style
+    this.props.selectElement(id, style)
+
+    if (element !== 'div') {
+      this.props.togglePopUp(id, style)
+    }
   }
 
   render() {
@@ -686,6 +695,12 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
+    togglePopUp(id, style) {
+      dispatch(togglePopUp(id, style))
+    },
+    selectElement(id, style) {
+      dispatch(selectElement(id, style))
+    },
     applyStyle(id, style) {
       dispatch(applyStyle(id, style))
     },

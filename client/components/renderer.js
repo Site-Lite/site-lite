@@ -77,7 +77,6 @@ class Renderer extends Component {
       )
     } else {
       const templateName = prompt('Name your template')
-      console.log('prompt', templateName)
       this.props.addNewTemplateId(
         this.props.html,
         this.props.user.id,
