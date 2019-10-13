@@ -676,7 +676,10 @@ class StyleBar extends Component {
           </Collapse>
           <span className="style-section" />
         </div>
-        <div id="add-section">
+        <div
+          id="add-section"
+          className={this.props.editor.editModeEnabled ? 'edit-mode ' : ''}
+        >
           <div>
             <span onClick={() => this.handleAdd('div')}>Add container</span>
           </div>

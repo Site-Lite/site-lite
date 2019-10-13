@@ -781,10 +781,18 @@ input:checked + .slider:before {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 10px 0 10px 0;
+  color: transparent;
+  font-size: 0px;
+  transition: all 0.4s ease;
 }
 
 #add-section div span {
   cursor: pointer;
+}
+
+#add-section.edit-mode {
+  color: #666666;
+  font-size: 16px;
 }
 
 #add-bar {
