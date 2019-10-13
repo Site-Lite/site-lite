@@ -236,7 +236,7 @@ form label {
   font-family: 'PT Sans', sans-serif;
   background-color: #f7f7f7;
   right: 0;
-  width: 70px;
+  width: 85px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding: 10px;
@@ -257,9 +257,10 @@ form label {
   margin: 0;
   font-size: 16px;
   padding: 6px;
-}
-#nav-user-menu a:first-child {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+#nav-user-menu a:last-child {
+  border-bottom: none;
 }
 
 #main {
@@ -356,7 +357,7 @@ form label {
 }
 
 #style-bar-content {
-  height: calc(100% - 51px);
+  /* height: calc(100% - 51px); */
   display: flex;
   flex-direction: column;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -424,7 +425,9 @@ form label {
   transition: all 0.4s ease;
 }
 
-#settings-bar .download.hidden {
+#settings-bar .download.hidden,
+#settings-bar .new-template.hidden {
+  opacity: 0;
   font-size: 0;
   margin: 0;
   pointer-events: none;
@@ -432,6 +435,44 @@ form label {
 
 #settings-bar span {
   margin-right: 10px;
+}
+
+#template-list {
+  height: calc(100% - 65px);
+  padding: 0 20%;
+  overflow-y: auto;
+}
+
+#template-list h1 {
+  font-size: 32px;
+}
+
+#template-list #no-template {
+  font-size: 20px;
+  text-align: center;
+  padding-top: 60px;
+  border-top: 1px solid #dcdcdc;
+  color: rgba(0, 0, 0, 0.2);
+}
+
+#template {
+  border: 1px solid #dcdcdc;
+  padding: 30px 0;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  border-width: 1px 0;
+  margin-bottom: -1px;
+}
+
+#template span {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(121, 128, 132, 0.5);
+}
+
+#template button {
+  font-size: 14px;
 }
 
 .navbar {
@@ -508,7 +549,7 @@ input:checked + .slider:before {
   border-left: 4px solid transparent;
   cursor: pointer;
   background-color: #ffffff;
-  color: #dadada;
+  color: transparent;
   font-weight: 700;
   min-height: 45px;
   align-items: center;
@@ -518,6 +559,7 @@ input:checked + .slider:before {
 }
 
 .style-section.edit-mode {
+  color: #dadada;
   font-size: 20px;
 }
 
@@ -729,4 +771,15 @@ input:checked + .slider:before {
 .checkbox input:checked + .check {
   background-color: #4cbb19;
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+#add-section {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  height: 100%;
+}
+
+#add-section div span {
+  cursor: pointer;
 }

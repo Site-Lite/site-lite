@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
 import {updateStyle} from '../store/editor'
-import {applyStyle} from '../store/renderer'
+import {applyStyle, createElement} from '../store/renderer'
 import {
   fontSizes,
   fontFamilies,
@@ -79,6 +79,15 @@ class StyleBar extends Component {
   handleChange(event) {
     this.setState({input: event.target.value})
     this.props.updateStyle('font-size', event.target.value + 'px')
+  }
+
+  handleAdd(element) {
+    this.props.createElement(
+      this.props.editor.selectedElement === 'main'
+        ? 'main'
+        : Number(this.props.editor.selectedElement),
+      element
+    )
   }
 
   render() {
@@ -651,6 +660,17 @@ class StyleBar extends Component {
             </div>
           </Collapse>
           <span className="style-section" />
+          <div id="add-section">
+            <div>
+              <span onClick={() => this.handleAdd('div')}>Add container</span>
+            </div>
+            <div>
+              <span onClick={() => this.handleAdd('p')}>Add text</span>
+            </div>
+            <div>
+              <span onClick={() => this.handleAdd('img')}>Add image</span>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -671,6 +691,9 @@ const mapDispatch = dispatch => {
     },
     updateStyle(property, value) {
       dispatch(updateStyle(property, value))
+    },
+    createElement(id, type) {
+      dispatch(createElement(id, type))
     }
   }
 }
