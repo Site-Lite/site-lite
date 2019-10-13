@@ -23,6 +23,12 @@ class PopUp extends Component {
       )
     }
   }
+
+  handleClick() {
+    this.props.setContent(this.props.editor.selectedElement, this.state.content)
+    this.setState({content: ''})
+  }
+
   renderSwitch(parameter) {
     switch (parameter) {
       case 'img':
@@ -74,10 +80,7 @@ class PopUp extends Component {
             type="submit"
             value="Submit"
             onClick={() => {
-              this.props.setContent(
-                this.props.editor.selectedElement,
-                this.state.content
-              )
+              this.handleClick()
               this.props.togglePopUpOff()
             }}
           >

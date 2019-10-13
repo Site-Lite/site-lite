@@ -81,21 +81,27 @@ class StyleBar extends Component {
   }
 
   async handleAdd(element) {
-    // if selected = p || img then error
-    // if selected
-    await this.props.createElement(
-      this.props.editor.selectedElement === 'main'
-        ? 'main'
-        : Number(this.props.editor.selectedElement),
-      element
-    )
+    const html = this.props.html
+    const selected = this.props.editor.selectedElement
+    if (html[selected].type === 'p' || html[selected].type === 'img') {
+      alert(
+        "Oops! You can't create a new element here. Please make sure you don't have an image or text selected"
+      )
+    } else {
+      await this.props.createElement(
+        this.props.editor.selectedElement === 'main'
+          ? 'main'
+          : Number(this.props.editor.selectedElement),
+        element
+      )
 
-    const id = this.props.html.counter - 1
-    const style = this.props.html[id].style
-    this.props.selectElement(id, style)
+      const id = this.props.html.counter - 1
+      const style = this.props.html[id].style
+      this.props.selectElement(id, style)
 
-    if (element !== 'div') {
-      this.props.togglePopUp(id, style)
+      if (element !== 'div') {
+        this.props.togglePopUp(id, style)
+      }
     }
   }
 
@@ -669,16 +675,16 @@ class StyleBar extends Component {
             </div>
           </Collapse>
           <span className="style-section" />
-          <div id="add-section">
-            <div>
-              <span onClick={() => this.handleAdd('div')}>Add container</span>
-            </div>
-            <div>
-              <span onClick={() => this.handleAdd('p')}>Add text</span>
-            </div>
-            <div>
-              <span onClick={() => this.handleAdd('img')}>Add image</span>
-            </div>
+        </div>
+        <div id="add-section">
+          <div>
+            <span onClick={() => this.handleAdd('div')}>Add container</span>
+          </div>
+          <div>
+            <span onClick={() => this.handleAdd('p')}>Add text</span>
+          </div>
+          <div>
+            <span onClick={() => this.handleAdd('img')}>Add image</span>
           </div>
         </div>
       </div>

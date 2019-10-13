@@ -2,8 +2,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {setState, clear} from '../store/renderer'
-import {selectElement, toggleEditMode, deselectElement} from '../store/editor'
+import {setState, clear, createElement} from '../store/renderer'
+import {
+  selectElement,
+  toggleEditMode,
+  deselectElement,
+  togglePopUp
+} from '../store/editor'
 import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 import {MenuProvider} from 'react-contexify'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
@@ -85,6 +90,31 @@ class Renderer extends Component {
     }
   }
 
+  async handleAdd(element) {
+    const html = this.props.html
+    const selected = this.props.editor.selectedElement
+    if (html[selected].type === 'p' || html[selected].type === 'img') {
+      alert(
+        "Oops! You can't create a new element here. Please make sure you don't have an image or text selected"
+      )
+    } else {
+      await this.props.createElement(
+        this.props.editor.selectedElement === 'main'
+          ? 'main'
+          : Number(this.props.editor.selectedElement),
+        element
+      )
+
+      const id = this.props.html.counter - 1
+      const style = this.props.html[id].style
+      this.props.selectElement(id, style)
+
+      if (element !== 'div') {
+        this.props.togglePopUp(id, style)
+      }
+    }
+  }
+
   render() {
     return (
       <div id="editor">
@@ -92,6 +122,7 @@ class Renderer extends Component {
           id="editor-panel"
           className={this.props.editor.editModeEnabled ? 'edit-mode ' : ''}
         >
+          {/* <div> */}
           <div id="settings-bar">
             <div>
               <span>Edit Mode</span>
@@ -142,6 +173,18 @@ class Renderer extends Component {
               </Link>
             </div>
           </div>
+          {/* <div id="add-bar">
+            <div>
+                <span onClick={() => this.handleAdd('div')}>Add container</span>
+              </div>
+              <div>
+                <span onClick={() => this.handleAdd('p')}>Add text</span>
+              </div>
+              <div>
+                <span onClick={() => this.handleAdd('img')}>Add image</span>
+              </div>
+          </div>
+          </div> */}
           <MenuProvider id="menu_id">
             <div
               id="main"
@@ -197,6 +240,12 @@ const mapDispatch = dispatch => {
       dispatch(deselectElement())
       dispatch(clear())
       dispatch(resetTemplateId())
+    },
+    createElement(id, type) {
+      dispatch(createElement(id, type))
+    },
+    togglePopUp(id, style) {
+      dispatch(togglePopUp(id, style))
     }
   }
 }
