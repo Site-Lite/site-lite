@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 import {auth} from '../store'
 
 /**
@@ -10,35 +11,51 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div id="auth-form">
-      <h1>{displayName}</h1>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <i className="fas fa-envelope input-icon" />
-          <input name="email" type="text" placeholder="Email" />
-        </div>
-        <div>
-          <i className="fas fa-key input-icon" />
-          <input name="password" type="password" placeholder="Password" />
-        </div>
-        {/* {error &&
+    <div id="auth-bg">
+      <Link to="/" id="logo">
+        site<span>lite</span>
+      </Link>
+      <div id="auth-form">
+        <h1>{displayName}</h1>
+        <form onSubmit={handleSubmit} name={name}>
+          <div>
+            <i className="fas fa-envelope input-icon" />
+            <input name="email" type="text" placeholder="Email" />
+          </div>
+          <div>
+            <i className="fas fa-key input-icon" />
+            <input name="password" type="password" placeholder="Password" />
+          </div>
+          {/* {error &&
           error.response && <div id="form-error"> {error.response.data} </div>} */}
 
-        <div className={`error-warning ${error && error.response && 'active'}`}>
-          <i className="fas fa-exclamation-triangle" />
-          <span>{error && error.response && `${error.response.data}`}</span>
-        </div>
+          <div
+            className={`error-warning ${error && error.response && 'active'}`}
+          >
+            <i className="fas fa-exclamation-triangle" />
+            <span>{error && error.response && `${error.response.data}`}</span>
+          </div>
 
+          <div>
+            <button type="submit">{displayName}</button>
+          </div>
+        </form>
+        <hr />
+        <a href="/auth/google">
+          <button type="button" className="google-auth">
+            {displayName} with Google
+          </button>
+        </a>
+      </div>
+      {displayName === 'Login' ? (
         <div>
-          <button type="submit">{displayName}</button>
+          New to SiteLite? <Link to="/signup">Create an account</Link>
         </div>
-      </form>
-      <hr />
-      <a href="/auth/google">
-        <button type="button" className="google-auth">
-          <i className="fab fa-google" /> {displayName} with Google
-        </button>
-      </a>
+      ) : (
+        <div>
+          Have an account? <Link to="/login">Log in</Link>
+        </div>
+      )}
     </div>
   )
 }

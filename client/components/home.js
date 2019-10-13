@@ -8,7 +8,7 @@ const Home = props => {
         <div id="hero">
           <div>
             <div id="hero-text">
-              <h1>Create Your Page</h1>
+              <h1>Get Creative</h1>
               <p>Build your own web page with SiteLite.</p>
               <p>Free, easy, and simple to use.</p>
               <button type="button">
@@ -31,9 +31,35 @@ const Home = props => {
               </div>
             </div>
           </div>
+          <div id="bottom-border">
+            <div />
+          </div>
         </div>
       </div>
-      <div>Other stuff</div>
+      <div id="home-2">
+        <div>
+          <h2>No Coding Necessary</h2>
+          <p>
+            With SiteLite, you can make webpages with our straightforward and
+            easy-to-use editor without needing to touch any lines of code.
+          </p>
+        </div>
+        <div>
+          <i className="fas fa-layer-group" />
+          <h3>Create</h3>
+          <p>Get creative with our editor</p>
+        </div>
+        <div>
+          <i className="fas fa-save" />
+          <h3>Save</h3>
+          <p>Save templates for later</p>
+        </div>
+        <div>
+          <i className="fas fa-file-download" />
+          <h3>Download</h3>
+          <p>Download your page as an HTML file</p>
+        </div>
+      </div>
       <div id="footer">
         <span>SiteLite © 2019</span>
         <span>

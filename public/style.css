@@ -20,10 +20,6 @@ body,
   height: 100%;
 }
 
-a {
-  transition: filter 0.4s ease;
-}
-
 body {
   font-family: 'PT Sans', sans-serif;
   color: #798084;
@@ -42,8 +38,7 @@ button {
   transition: filter 0.4s ease;
 }
 
-button:hover,
-a:hover {
+button:hover {
   filter: brightness(1.1);
 }
 
@@ -92,7 +87,7 @@ form {
 
 form button {
   margin: 0 5%;
-  font-size: 1.4vw;
+  font-size: 20px;
   padding: 2% 1%;
 }
 
@@ -115,12 +110,14 @@ select {
   padding: 5px 5px 5px 30px;
   margin: 0 10px;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 form input:focus {
   color: #3c3c3c;
   background-color: #ffffff;
+  border: 1px solid var(--sl-green);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 0 2px var(--sl-green);
 }
 
 form label {
@@ -136,7 +133,8 @@ form label {
   height: 65px;
 }
 
-#header a {
+#header a,
+#auth-bg a {
   color: #f5f5f5;
   font-weight: 700;
   display: flex;
@@ -158,6 +156,17 @@ form label {
   padding-top: 180px;
 }
 
+#hero #bottom-border {
+  overflow-x: hidden;
+  padding-top: 100px;
+  margin-top: -13vw;
+}
+
+#hero #bottom-border > div {
+  border-top: 100px solid transparent;
+  border-right: 100vw solid #eaeaea;
+}
+
 #hero-text {
   color: #f5f5f5;
   flex: 3;
@@ -167,21 +176,22 @@ form label {
 }
 
 #hero-text h1 {
-  font-size: 45px;
+  font-size: 4vw;
+  margin: 1vw;
 }
 
 #hero-text p {
-  font-size: 23px;
+  font-size: 2vw;
   margin: 0;
 }
 
 #hero-text button {
-  margin-top: 30px;
+  margin-top: 2vw;
   padding: 6px 15px;
 }
 
 #hero-text button a {
-  font-size: 23px;
+  font-size: 1.7vw;
   color: #f5f5f5;
   display: flex;
   align-items: center;
@@ -197,8 +207,8 @@ form label {
   width: 25vw;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 1vw;
-  box-shadow: 2.2vw 3vw 2.5vw rgba(0, 0, 0, 0.3);
-  transform: rotateX(-25deg) rotateY(20deg) rotateZ(15deg);
+  box-shadow: 2.2vw 2.5vw 2.2vw rgba(0, 0, 0, 0.22);
+  transform: rotateX(-25deg) rotateY(20deg) rotateZ(15deg) scale(1);
   animation: hero infinite 4s ease-in-out alternate;
 }
 
@@ -213,9 +223,9 @@ form label {
   margin: auto;
   border-radius: 1vw;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  transform: translateX(-2vw) translateY(-2vw) scale(0.99);
+  transform: translateX(-2vw) translateY(-2vw) scale(1);
   box-shadow: inset 0 0 1vw rgba(255, 255, 255, 0.15),
-    2.2vw 2.5vw 2.2vw rgba(0, 0, 0, 0.1);
+    2.2vw 2.5vw 2.2vw rgba(0, 0, 0, 0.09);
 }
 
 #hero-img > div > div > div:nth-child(2) {
@@ -236,6 +246,34 @@ form label {
   top: 0.3vw;
   font-size: 1.5vw;
   text-shadow: 2vw 2vw 1vw rgba(0, 0, 0, 0.2);
+}
+
+#home-2 {
+  display: flex;
+  padding: 6vw;
+}
+
+#home-2 > div:first-child {
+  flex: 2;
+}
+
+#home-2 > div {
+  text-align: center;
+  padding: 2vw;
+  flex: 1;
+}
+
+#home-2 > div h2 {
+  font-size: 2.5vw;
+}
+
+#home-2 > div:first-child p {
+  font-size: 1.3vw;
+}
+
+#home-2 > div i {
+  font-size: 3vw;
+  color: var(--sl-green);
 }
 
 #logo {
@@ -477,21 +515,58 @@ form label {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+#auth-bg {
+  height: 100%;
+  margin-top: -65px;
+  background-color: #eaeaea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+}
+
+#auth-bg #logo {
+  transform: scale(1.5);
+  color: #798084;
+  margin-top: -11vw;
+  margin-bottom: 40px;
+}
+
+#auth-bg > div:last-child {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  padding: 10px;
+  width: 300px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+#auth-bg > div:last-child a {
+  color: var(--sl-green);
+  margin-left: 10px;
+}
+
 #auth-form {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding: 10px;
-  margin: 50px auto;
   width: 300px;
   text-align: center;
   background-color: #f5f5f5;
 }
 
 #auth-form .google-auth {
-  margin: 2% 5%;
-  font-size: 1.2vw;
+  margin: 5%;
+  font-size: 17px;
   padding: 1.6% 1%;
   width: 84%;
+}
+
+#auth-form > a {
+  display: flex;
+  justify-content: center;
 }
 
 #auth-form i.input-icon {
@@ -499,6 +574,10 @@ form label {
   position: absolute;
   left: 20px;
   font-size: 14px;
+}
+
+#auth-form h1 {
+  margin: 10px;
 }
 
 #auth-form hr {
@@ -516,12 +595,6 @@ form label {
   color: #8d9091;
   padding: 15px 20px;
   border-top: 1px solid #e1e1e1;
-}
-
-#home-page > div:nth-child(2) {
-  background-color: #f5f5f5;
-  margin-top: -55px;
-  height: 50vw;
 }
 
 #footer a {
@@ -967,24 +1040,24 @@ input:checked + .slider:before {
 
 @keyframes hero {
   0% {
-    box-shadow: 2.2vw 2.5vw 2.2vw rgba(0, 0, 0, 0.3);
+    box-shadow: 2.2vw 2.5vw 2.2vw rgba(0, 0, 0, 0.22) scale(1);
     transform: rotateX(-25deg) rotateY(20deg) rotateZ(15deg);
   }
   100% {
     transform: rotateX(-25deg) rotateY(20deg) rotateZ(15deg)
       translate(0.4vw, 0.6vw) scale(0.98);
-    box-shadow: 2vw 2vw 1.5vw rgba(0, 0, 0, 0.3);
+    box-shadow: 2vw 2vw 1.5vw rgba(0, 0, 0, 0.27);
   }
 }
 
 @keyframes hero-child {
   0% {
-    transform: translateX(-2vw) translateY(-2vw) scale(0.99);
+    transform: translateX(-2vw) translateY(-2vw) scale(1);
     box-shadow: inset 0 0 1vw rgba(255, 255, 255, 0.15),
-      2.2vw 2.5vw 2.2vw rgba(0, 0, 0, 0.1);
+      2.2vw 2.5vw 2.2vw rgba(0, 0, 0, 0.09);
   }
   100% {
-    transform: translateX(-1.8vw) translateY(-1.5vw);
+    transform: translateX(-1.8vw) translateY(-1.5vw) scale(0.99);
     box-shadow: inset 0 0 1vw rgba(255, 255, 255, 0.15),
       2vw 2vw 2vw rgba(0, 0, 0, 0.1);
   }
