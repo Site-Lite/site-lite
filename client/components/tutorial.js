@@ -20,21 +20,35 @@ class Tutorial extends Component {
           }
         }}
       >
-        <Slide onActive={swiper => console.log('Slide Active!')}>
-          <span>
-            Right click in the editor to show edit options. Adding an element
-            can be done by selecting the 'Add' option and then selecting an
-            element
-          </span>
+        <Slide>
+          <img src="/images/SiteLite.png" />
+          <div>
+            Right click in the editor to show edit options.<br />
+            Adding an element can be done by selecting <strong>Add</strong>.
+          </div>
         </Slide>
-        <Slide onActive={swiper => console.log('Slide Active!')}>
-          {' '}
-          <span>
-            Right click in the editor to show edit options such as adding
-            elements
-          </span>
+        <Slide>
+          <img src="/images/SiteLite.png" />
+          <div>
+            You can edit the styling of an element in the<br />
+            <strong>Styles</strong> interface on the right side after selecting
+            it.
+          </div>
         </Slide>
-        <Slide onActive={swiper => console.log('Slide Active!')}>Test 3</Slide>
+        <Slide>
+          <img src="/images/SiteLite.png" />
+          <div>
+            You can save your page by clicking <strong>Save Template</strong>,<br />
+            or start a new one by clicking <strong>New Template</strong>.
+          </div>
+        </Slide>
+        <Slide>
+          <img src="/images/SiteLite.png" />
+          <div>
+            You can turn off <strong>Edit Mode</strong> to preview your page.<br />
+            You may also download your page as an HTML file.
+          </div>
+        </Slide>
       </Swiper>
     )
   }

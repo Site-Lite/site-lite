@@ -755,6 +755,21 @@ input:checked + .slider:before {
   margin-top: -70px;
 }
 
+.tutorial .swiper-slide {
+  display: flex;
+  flex-direction: column;
+}
+
+.tutorial .swiper-slide img {
+  background-color: grey;
+}
+
+.tutorial .swiper-slide div {
+  text-align: center;
+  padding: 17px 20px;
+  font-size: 16px;
+}
+
 .checkbox {
   position: relative;
   display: inline-block;
