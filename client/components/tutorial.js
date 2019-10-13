@@ -21,14 +21,14 @@ class Tutorial extends Component {
         }}
       >
         <Slide>
-          <img src="/images/SiteLite.png" />
+          <img src="/images/dots-bg.png" />
           <div>
             Right click in the editor to show edit options.<br />
             Adding an element can be done by selecting <strong>Add</strong>.
           </div>
         </Slide>
         <Slide>
-          <img src="/images/SiteLite.png" />
+          <img src="/images/dots-bg.png" />
           <div>
             You can edit the styling of an element in the<br />
             <strong>Styles</strong> interface on the right side after selecting
@@ -36,14 +36,14 @@ class Tutorial extends Component {
           </div>
         </Slide>
         <Slide>
-          <img src="/images/SiteLite.png" />
+          <img src="/images/dots-bg.png" />
           <div>
             You can save your page by clicking <strong>Save Template</strong>,<br />
             or start a new one by clicking <strong>New Template</strong>.
           </div>
         </Slide>
         <Slide>
-          <img src="/images/SiteLite.png" />
+          <img src="/images/dots-bg.png" />
           <div>
             You can turn off <strong>Edit Mode</strong> to preview your page.<br />
             You may also download your page as an HTML file.

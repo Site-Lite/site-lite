@@ -80,9 +80,11 @@ class PopUp extends Component {
         }}
       >
         <div>
-          {this.renderSwitch(
-            this.props.html[this.props.editor.selectedElement].type
-          )}
+          {this.props.html[this.props.editor.selectedElement].type
+            ? this.renderSwitch(
+                this.props.html[this.props.editor.selectedElement].type
+              )
+            : null}
           <button
             type="submit"
             value="Submit"

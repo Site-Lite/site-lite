@@ -580,6 +580,9 @@ form label {
   font-size: 17px;
   padding: 1.6% 1%;
   width: 84%;
+  background-color: #fbfbfb;
+  color: #4cbb19;
+  border: 1px solid #eaeaea;
 }
 
 #auth-form > a {
@@ -984,7 +987,9 @@ input:checked + .slider:before {
 }
 
 .tutorial .swiper-slide img {
-  background-color: grey;
+  background: url(/images/tags-bg.png) center/175px repeat whitesmoke;
+  width: 450px;
+  height: 300px;
 }
 
 .tutorial .swiper-slide div {

@@ -70,7 +70,7 @@ export default function(state = initialState, action) {
                     margin: '20px',
                     padding: '20px'
                   }
-                : {margin: '20px', padding: '20px'},
+                : {margin: '20px'},
           children: []
         }
       }

@@ -63,7 +63,7 @@ const Home = props => {
         </div>
       </div>
       <div id="footer">
-        <span>SiteLite © 2019</span>
+        <span>SiteLite © {new Date().getFullYear()}</span>
         <span>
           <Link>Terms&nbsp;&nbsp;</Link>
           <Link>&nbsp;&nbsp;Privacy</Link>
