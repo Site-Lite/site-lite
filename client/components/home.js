@@ -45,19 +45,21 @@ const Home = props => {
           </p>
         </div>
         <div>
-          <i className="fas fa-layer-group" />
-          <h3>Create</h3>
-          <p>Get creative with our editor</p>
-        </div>
-        <div>
-          <i className="fas fa-save" />
-          <h3>Save</h3>
-          <p>Save templates for later</p>
-        </div>
-        <div>
-          <i className="fas fa-file-download" />
-          <h3>Download</h3>
-          <p>Download your page as an HTML file</p>
+          <div>
+            <i className="far fa-edit" />
+            <h3>Create</h3>
+            <p>Design and style a page with our simple editor</p>
+          </div>
+          <div>
+            <i className="far fa-save" />
+            <h3>Save</h3>
+            <p>Save templates to view or edit for later</p>
+          </div>
+          <div>
+            <i className="far fa-arrow-alt-circle-down" />
+            <h3>Download</h3>
+            <p>After creating a page, download it to use!</p>
+          </div>
         </div>
       </div>
       <div id="footer">

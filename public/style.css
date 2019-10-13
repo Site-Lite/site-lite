@@ -253,14 +253,32 @@ form label {
   padding: 6vw;
 }
 
+#home-2 > div,
+#home-2 > div:last-child > div {
+  text-align: center;
+  padding: 2vw;
+}
+
 #home-2 > div:first-child {
   flex: 2;
 }
 
-#home-2 > div {
-  text-align: center;
-  padding: 2vw;
-  flex: 1;
+#home-2 > div:last-child {
+  display: flex;
+  flex: 3;
+}
+
+#home-2 > div:last-child > div:first-child i {
+  margin-left: 0.8vw;
+}
+
+#home-2 > div:last-child > div h3 {
+  font-size: 1.4vw;
+  margin-bottom: 0;
+}
+
+#home-2 > div:last-child > div p {
+  font-size: 1.15vw;
 }
 
 #home-2 > div h2 {
