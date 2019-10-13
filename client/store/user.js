@@ -1,5 +1,5 @@
 // import axios from 'axios'
-// import history from '../history'
+import history from '../history'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 
 /**
@@ -29,6 +29,7 @@ export const me = () => {
       FirebaseWrapper.GetInstance().auth.onAuthStateChanged(user => {
         dispatch(getUser(user.email, user.uid))
       })
+      history.push('/')
     } catch (err) {
       console.error(err)
     }
@@ -45,7 +46,7 @@ export const auth = (email, password, method) => {
       )
       dispatch(getUser(result.user, result.id))
     } catch (err) {
-      console.err(err)
+      console.error(err)
     }
   }
 }
