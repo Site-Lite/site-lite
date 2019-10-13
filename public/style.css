@@ -544,8 +544,8 @@ form label {
   position: absolute;
   right: 25px;
   opacity: 0;
+  animation: rotate 1.5s linear infinite;
   transition: all 0.4s ease;
-  animation: rotate 2s linear infinite;
 }
 
 #auth-button.active i {

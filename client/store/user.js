@@ -45,6 +45,7 @@ export const auth = (email, password, method) => {
         method
       )
       dispatch(getUser(result.user, result.id))
+      history.push('/')
     } catch (err) {
       console.error(err)
     }

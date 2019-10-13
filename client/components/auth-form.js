@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {auth} from '../store'
-import history from '../history'
 
 /**
  * COMPONENT
@@ -133,6 +132,5 @@ export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }
