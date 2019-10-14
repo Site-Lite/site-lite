@@ -12,7 +12,8 @@ import {
   selectElement,
   toggleEditMode,
   deselectElement,
-  togglePopUp,   toggleName
+  togglePopUp,
+  toggleName
 } from '../store/editor'
 
 import {
@@ -27,7 +28,6 @@ import {
 } from '../components'
 
 import {FirebaseWrapper} from '../../server/firebase/firebase'
-
 
 class Renderer extends Component {
   constructor() {
@@ -269,10 +269,13 @@ const mapDispatch = dispatch => {
     },
     togglePopUp(id, style) {
       dispatch(togglePopUp(id, style))
+    },
     undo(state) {
+      dispatch(deselectElement())
       dispatch(undo(state))
     },
     redo(state) {
+      dispatch(deselectElement())
       dispatch(redo(state))
     }
   }
