@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import {FirebaseWrapper} from '../../server/firebase/firebase'
-import {setTemplateId} from '../store/template'
+import {setTemplateId, setTemplateName} from '../store/template'
 import {deselectElement, togglePopUpOff} from '../store/editor'
 
 class Templates extends Component {
@@ -21,11 +21,11 @@ class Templates extends Component {
     )
   }
 
-  async getAllTemplates(uid, cb) {
-    await FirebaseWrapper.GetInstance().getAllTemplates(uid, templates =>
-      this.setState({templates})
-    )
-  }
+  // async getAllTemplates(uid, cb) {
+  //   await FirebaseWrapper.GetInstance().getAllTemplates(uid, templates =>
+  //     this.setState({templates})
+  //   )
+  // }
 
   async deleteTemplate(uid, tid) {
     await FirebaseWrapper.GetInstance().deleteTemplate(uid, tid)
@@ -57,6 +57,7 @@ class Templates extends Component {
                       this.props.togglePopUpOff()
                       this.props.deselectElement()
                       this.props.setTemplateId(template.id)
+                      this.props.setTemplateName(template.name)
                     }}
                   >
                     <button type="button">Open in Editor</button>
@@ -96,6 +97,9 @@ const mapDispatch = dispatch => ({
   },
   togglePopUpOff() {
     dispatch(togglePopUpOff())
+  },
+  setTemplateName(name) {
+    dispatch(setTemplateName(name))
   }
 })
 
