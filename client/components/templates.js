@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 import {setTemplateId} from '../store/template'
+import {deselectElement, togglePopUpOff} from '../store/editor'
 
 class Templates extends Component {
   constructor() {
@@ -53,6 +54,8 @@ class Templates extends Component {
                   <Link
                     to="/editor"
                     onClick={() => {
+                      this.props.togglePopUpOff()
+                      this.props.deselectElement()
                       this.props.setTemplateId(template.id)
                     }}
                   >
@@ -87,6 +90,12 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   setTemplateId(tid) {
     dispatch(setTemplateId(tid))
+  },
+  deselectElement() {
+    dispatch(deselectElement())
+  },
+  togglePopUpOff() {
+    dispatch(togglePopUpOff())
   }
 })
 

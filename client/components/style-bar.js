@@ -3,8 +3,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
 
-import {updateStyle} from '../store/editor'
-import {applyStyle} from '../store/renderer'
+import {updateStyle, selectElement, togglePopUp} from '../store/editor'
+import {applyStyle, createElement} from '../store/renderer'
 import {addToPast} from '../store/undo'
 
 import {
@@ -82,6 +82,31 @@ class StyleBar extends Component {
   handleChange(event) {
     this.setState({input: event.target.value})
     this.props.updateStyle('font-size', event.target.value + 'px')
+  }
+
+  async handleAdd(element) {
+    const html = this.props.html
+    const selected = this.props.editor.selectedElement
+    if (html[selected].type === 'p' || html[selected].type === 'img') {
+      alert(
+        "Oops! You can't create a new element here. Please make sure you don't have an image or text selected"
+      )
+    } else {
+      await this.props.createElement(
+        this.props.editor.selectedElement === 'main'
+          ? 'main'
+          : Number(this.props.editor.selectedElement),
+        element
+      )
+
+      const id = this.props.html.counter - 1
+      const style = this.props.html[id].style
+      this.props.selectElement(id, style)
+
+      if (element !== 'div') {
+        this.props.togglePopUp(id, style)
+      }
+    }
   }
 
   render() {
@@ -656,6 +681,20 @@ class StyleBar extends Component {
           </Collapse>
           <span className="style-section" />
         </div>
+        <div
+          id="add-section"
+          className={this.props.editor.editModeEnabled ? 'edit-mode ' : ''}
+        >
+          <div>
+            <span onClick={() => this.handleAdd('div')}>Add container</span>
+          </div>
+          <div>
+            <span onClick={() => this.handleAdd('p')}>Add text</span>
+          </div>
+          <div>
+            <span onClick={() => this.handleAdd('img')}>Add image</span>
+          </div>
+        </div>
       </div>
     )
   }
@@ -670,12 +709,22 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
+    togglePopUp(id, style) {
+      dispatch(togglePopUp(id, style))
+    },
+    selectElement(id, style) {
+      dispatch(selectElement(id, style))
+    },
+
     applyStyle(id, style, state) {
       dispatch(applyStyle(id, style))
       dispatch(addToPast(state))
     },
     updateStyle(property, value) {
       dispatch(updateStyle(property, value))
+    },
+    createElement(id, type) {
+      dispatch(createElement(id, type))
     }
   }
 }
