@@ -102,7 +102,7 @@ class Renderer extends Component {
     const selected = this.props.editor.selectedElement
     if (html[selected].type === 'p' || html[selected].type === 'img') {
       alert(
-        "Oops! You can't create a new element here. Please make sure you don't have an image or text selected"
+        "Oops! You can't create a new element here. Please make sure you don't have an image or paragraph element selected"
       )
     } else {
       await this.props.createElement(
@@ -132,26 +132,32 @@ class Renderer extends Component {
         >
           <div id="settings-bar">
             <div>
-              <span>Edit Mode</span>
-              <div
-                className="switch"
-                onClick={() => {
-                  this.toggleEditMode()
-                }}
-              >
-                <input
-                  type="checkbox"
-                  checked={this.props.editor.editModeEnabled}
-                />
-                <div className="slider" />
-              </div>
-            </div>
-            <div>
-              <div className="undo-redo">
-                <i
-                  className="fas fa-undo-alt"
+              <div>
+                <span>Edit Mode</span>
+                <div
+                  className="switch"
                   onClick={() => {
-                    if (this.props.past) {
+                    this.toggleEditMode()
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={this.props.editor.editModeEnabled}
+                  />
+                  <div className="slider" />
+                </div>
+              </div>
+              <div
+                className={
+                  this.props.editor.editModeEnabled
+                    ? 'undo-redo'
+                    : 'undo-redo hidden'
+                }
+              >
+                <i
+                  className="fas fa-reply"
+                  onClick={() => {
+                    if (this.props.past.length) {
                       this.props.setState(
                         this.props.past[this.props.past.length - 1]
                       )
@@ -161,9 +167,9 @@ class Renderer extends Component {
                   }}
                 />
                 <i
-                  className="fas fa-redo-alt"
+                  className="fas fa-share"
                   onClick={() => {
-                    if (this.props.future) {
+                    if (this.props.future.length) {
                       this.props.setState(this.props.future[0])
                       this.props.redo(this.props.html)
                     }
@@ -171,6 +177,18 @@ class Renderer extends Component {
                   }}
                 />
               </div>
+              <div
+                id="add-section"
+                className={
+                  this.props.editor.editModeEnabled ? 'edit-mode ' : ''
+                }
+              >
+                <span onClick={() => this.handleAdd('div')}>Add Container</span>
+                <span onClick={() => this.handleAdd('p')}>Add Paragraph</span>
+                <span onClick={() => this.handleAdd('img')}>Add Image</span>
+              </div>
+            </div>
+            <div>
               <Link
                 onClick={() => {
                   if (
