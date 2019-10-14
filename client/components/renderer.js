@@ -2,12 +2,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {MenuProvider} from 'react-contexify'
+
+import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 import {setState, clear} from '../store/renderer'
 import {selectElement, toggleEditMode, deselectElement} from '../store/editor'
-import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
-import {MenuProvider} from 'react-contexify'
-import {FirebaseWrapper} from '../../server/firebase/firebase'
 import {addedTemplate, resetTemplateId} from '../store/template'
+import {undo, redo} from '../store/undo'
+
+import {FirebaseWrapper} from '../../server/firebase/firebase'
 
 const ConditionalWrapper = ({condition, children}) =>
   condition ? (
@@ -34,12 +37,12 @@ class Renderer extends Component {
 
   async addTemplate(state, uid) {
     await FirebaseWrapper.GetInstance().addTemplate(state, uid)
-    // console.log(this.props.user)
   }
 
   async updateTemplate(uid, tid, state) {
     await FirebaseWrapper.GetInstance().updateTemplate(uid, tid, state)
   }
+
   toggleEditMode() {
     this.props.toggleStyler()
   }
@@ -77,7 +80,7 @@ class Renderer extends Component {
       )
     } else {
       const templateName = prompt('Name your template')
-      console.log('prompt', templateName)
+      // console.log('prompt', templateName)
       this.props.addNewTemplateId(
         this.props.html,
         this.props.user.id,
@@ -110,6 +113,30 @@ class Renderer extends Component {
               </div>
             </div>
             <div>
+              <div className="undo-redo">
+                <i
+                  className="fas fa-undo-alt"
+                  onClick={() => {
+                    if (this.props.past) {
+                      this.props.setState(
+                        this.props.past[this.props.past.length - 1]
+                      )
+                      this.props.undo(this.props.html)
+                    }
+                    // undo the last action
+                  }}
+                />
+                <i
+                  className="fas fa-redo-alt"
+                  onClick={() => {
+                    if (this.props.future) {
+                      this.props.setState(this.props.future[0])
+                      this.props.redo(this.props.html)
+                    }
+                    // redo the last action
+                  }}
+                />
+              </div>
               <Link
                 onClick={() => {
                   if (
@@ -176,7 +203,9 @@ const mapState = state => {
     html: state.renderer,
     user: state.user,
     editor: state.editor,
-    templateID: state.template.templateID
+    templateID: state.template.templateID,
+    past: state.undo.past,
+    future: state.undo.future
   }
 }
 
@@ -198,6 +227,12 @@ const mapDispatch = dispatch => {
       dispatch(deselectElement())
       dispatch(clear())
       dispatch(resetTemplateId())
+    },
+    undo(state) {
+      dispatch(undo(state))
+    },
+    redo(state) {
+      dispatch(redo(state))
     }
   }
 }
