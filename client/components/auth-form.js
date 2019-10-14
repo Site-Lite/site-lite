@@ -1,46 +1,95 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 import {auth} from '../store'
 
 /**
  * COMPONENT
  */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+class AuthForm extends Component {
+  constructor() {
+    super()
+    this.state = {
+      authenticated: false
+    }
+  }
 
-  return (
-    <div id="auth-form">
-      <h1>{displayName}</h1>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <i className="fas fa-envelope input-icon" />
-          <input name="email" type="text" placeholder="Email" />
-        </div>
-        <div>
-          <i className="fas fa-key input-icon" />
-          <input name="password" type="password" placeholder="Password" />
-        </div>
-        {/* {error &&
+  handleSubmit(event) {
+    event.preventDefault()
+    this.setState({authenticated: true})
+    const formName = event.target.name
+    const email = event.target.email.value
+    const password = event.target.password.value
+    setTimeout(() => {
+      this.props.auth(email, password, formName)
+      this.setState({authenticated: false})
+    }, 2000)
+  }
+
+  render() {
+    const {name, displayName, error} = this.props
+
+    return (
+      <div id="auth-bg">
+        <Link to="/" id="logo">
+          site<span>lite</span>
+        </Link>
+        <div id="auth-form">
+          <h1>{displayName}</h1>
+          <form
+            onSubmit={event => {
+              this.handleSubmit(event)
+            }}
+            name={name}
+          >
+            <div>
+              <i className="fas fa-envelope input-icon" />
+              <input name="email" type="text" placeholder="Email" />
+            </div>
+            <div>
+              <i className="fas fa-key input-icon" />
+              <input name="password" type="password" placeholder="Password" />
+            </div>
+            {/* {error &&
           error.response && <div id="form-error"> {error.response.data} </div>} */}
 
-        <div className={`error-warning ${error && error.response && 'active'}`}>
-          <i className="fas fa-exclamation-triangle" />
-          <span>{error && error.response && `${error.response.data}`}</span>
-        </div>
+            <div
+              className={`error-warning ${error && error.response && 'active'}`}
+            >
+              <i className="fas fa-exclamation-triangle" />
+              <span>{error && error.response && `${error.response.data}`}</span>
+            </div>
 
-        <div>
-          <button type="submit">{displayName}</button>
+            <div>
+              <button
+                type="submit"
+                id="auth-button"
+                className={this.state.authenticated ? 'active' : ''}
+              >
+                {displayName} <i className="fas fa-spinner" />
+              </button>
+            </div>
+          </form>
+          <hr />
+          <a href="/auth/google">
+            <button type="button" className="google-auth">
+              {displayName} with Google
+            </button>
+          </a>
         </div>
-      </form>
-      <hr />
-      <a href="/auth/google">
-        <button type="button" className="google-auth">
-          <i className="fab fa-google" /> {displayName} with Google
-        </button>
-      </a>
-    </div>
-  )
+        {displayName === 'Login' ? (
+          <div>
+            New to SiteLite? <Link to="/signup">Create an account</Link>
+          </div>
+        ) : (
+          <div>
+            Have an account? <Link to="/login">Log in</Link>
+          </div>
+        )}
+      </div>
+    )
+  }
 }
 
 /**
@@ -68,11 +117,7 @@ const mapSignup = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      const email = evt.target.email.value
-      const password = evt.target.password.value
+    auth: (email, password, formName) => {
       dispatch(auth(email, password, formName))
     }
   }
@@ -87,6 +132,5 @@ export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }

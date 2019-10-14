@@ -3,21 +3,31 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {MenuProvider} from 'react-contexify'
+import {toast} from 'react-toastify'
 
-import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
 import {setState, clear} from '../store/renderer'
-import {selectElement, toggleEditMode, deselectElement} from '../store/editor'
+import {
+  selectElement,
+  toggleEditMode,
+  deselectElement,
+  toggleName
+} from '../store/editor'
 import {addedTemplate, resetTemplateId} from '../store/template'
 import {undo, redo} from '../store/undo'
 
+import {
+  Div,
+  P,
+  Img,
+  PopUp,
+  StyleBar,
+  EditMenu,
+  Tutorial,
+  SetName
+} from '../components'
+
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 
-const ConditionalWrapper = ({condition, children}) =>
-  condition ? (
-    <MenuProvider id="menu_id">{children}</MenuProvider>
-  ) : (
-    <div>{children}</div>
-  )
 
 class Renderer extends Component {
   constructor() {
@@ -51,7 +61,8 @@ class Renderer extends Component {
     if (event.target.id.length) {
       this.props.selectElement(
         event.target.id,
-        this.props.html[event.target.id].style
+        this.props.html[event.target.id].style,
+        this.props.html[event.target.id].content
       )
     }
   }
@@ -78,14 +89,9 @@ class Renderer extends Component {
         this.props.templateID,
         this.props.html
       )
+      toast.success('Template Saved!')
     } else {
-      const templateName = prompt('Name your template')
-      // console.log('prompt', templateName)
-      this.props.addNewTemplateId(
-        this.props.html,
-        this.props.user.id,
-        templateName
-      )
+      this.props.toggleName()
     }
   }
 
@@ -191,6 +197,8 @@ class Renderer extends Component {
           </MenuProvider>
           <EditMenu />
           <PopUp />
+          <Tutorial />
+          <SetName />
         </div>
         <StyleBar />
       </div>
@@ -214,8 +222,11 @@ const mapDispatch = dispatch => {
     toggleStyler() {
       dispatch(toggleEditMode())
     },
-    selectElement(id, style) {
-      dispatch(selectElement(id, style))
+    toggleName() {
+      dispatch(toggleName())
+    },
+    selectElement(id, style, content) {
+      dispatch(selectElement(id, style, content))
     },
     setState(state) {
       dispatch(setState(state))

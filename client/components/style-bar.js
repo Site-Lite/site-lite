@@ -30,7 +30,7 @@ class StyleBar extends Component {
         border: false,
         spacing: false,
         formatting: false,
-        background: false
+        background: true
       },
       selectedStyle: {}
     }
@@ -41,7 +41,6 @@ class StyleBar extends Component {
       this.props.editor.selectedElementStyle !==
       prevProps.editor.selectedElementStyle
     ) {
-      // console.log(this.state.selectedStyle)
       this.setState(prevState => {
         return {
           ...prevState,
@@ -111,7 +110,7 @@ class StyleBar extends Component {
           <Collapse isOpen={this.state.accordion.size}>
             <div>
               <div>
-                <span>Flex Ratio</span>
+                <span>Fit Container</span>
                 <select
                   value={this.state.selectedStyle.flex}
                   onChange={event => {
@@ -601,6 +600,7 @@ class StyleBar extends Component {
                         )
                       : ''
                   }
+                  placeholder="URL"
                   onChange={event => {
                     console.log('test')
                     this.handleSelect(

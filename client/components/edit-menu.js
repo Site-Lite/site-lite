@@ -14,40 +14,56 @@ import {
 
 class EditMenu extends Component {
   handleAdd(event, element) {
-    if (event.srcElement.tagName === 'DIV') {
+    if (event.target.tagName === 'DIV') {
       this.props.createElement(
         event.target.id === 'main' ? 'main' : Number(event.target.id),
         element,
         this.props.html
       )
+      setTimeout(() => {
+        const lastChildId = this.props.html[event.target.id].children[
+          this.props.html[event.target.id].children.length - 1
+        ]
+
+        if (this.props.html[lastChildId].type !== 'div') {
+          this.props.togglePopUp(
+            lastChildId,
+            this.props.html[lastChildId].style,
+            this.props.html[lastChildId].content
+          )
+        }
+      }, 0)
     }
   }
 
   handleRemove(event) {
-    if (event.srcElement.id !== 'main') {
+    if (event.target.id !== 'main') {
       this.props.removeElement(
-        event.path[1].id === 'main' ? 'main' : Number(event.path[1].id),
-        Number(event.srcElement.id),
-        this.props.html
+        event.target.parentNode.id === 'main'
+          ? 'main'
+          : Number(event.target.parentNode.id),
+        Number(event.target.id)
+
       )
     }
   }
 
   handleEditContent(event) {
     this.props.togglePopUp(
-      event.srcElement.id,
-      this.props.html[event.srcElement.id].style
+      event.target.id,
+      this.props.html[event.target.id].style,
+      this.props.html[event.target.id].content
     )
   }
 
   handleCopyStyle(event) {
-    this.props.storeStyle(this.props.html[event.srcElement.id].style)
+    this.props.storeStyle(this.props.html[event.target.id].style)
   }
 
   handlePasteStyle(event) {
     if (Object.keys(this.props.editor.storedStyle).length) {
       console.log('you hit this')
-      this.props.applyStyle(event.srcElement.id, this.props.editor.storedStyle)
+      this.props.applyStyle(event.target.id, this.props.editor.storedStyle)
     }
   }
 
@@ -58,7 +74,7 @@ class EditMenu extends Component {
           label="Add"
           arrow={<i className="fas fa-caret-right" />}
           disabled={({event}) =>
-            event.srcElement.localName !== 'div' ||
+            event.target.localName !== 'div' ||
             !this.props.editor.editModeEnabled
           }
         >
@@ -67,21 +83,24 @@ class EditMenu extends Component {
               this.handleAdd(event, 'div')
             }}
           >
-            div
+            <span>container</span>
+            <span>&lt;div/&gt;</span>
           </Item>
           <Item
             onClick={({event}) => {
               this.handleAdd(event, 'p')
             }}
           >
-            p
+            <span>paragraph</span>
+            <span>&lt;p/&gt;</span>
           </Item>
           <Item
             onClick={({event}) => {
               this.handleAdd(event, 'img')
             }}
           >
-            img
+            <span>image</span>
+            <span>&lt;img/&gt;</span>
           </Item>
         </Submenu>
         <Item
@@ -89,7 +108,7 @@ class EditMenu extends Component {
             this.handleRemove(event)
           }}
           disabled={({event}) =>
-            event.srcElement.id === 'main' || !this.props.editor.editModeEnabled
+            event.target.id === 'main' || !this.props.editor.editModeEnabled
           }
         >
           Delete
@@ -100,7 +119,7 @@ class EditMenu extends Component {
             this.handleEditContent(event)
           }}
           disabled={({event}) =>
-            event.srcElement.localName === 'div' ||
+            event.target.localName === 'div' ||
             !this.props.editor.editModeEnabled
           }
         >
@@ -166,8 +185,8 @@ const mapDispatch = dispatch => {
       dispatch(removeElement(id, elementId))
       dispatch(addToPast(state))
     },
-    togglePopUp(id, style) {
-      dispatch(togglePopUp(id, style))
+    togglePopUp(id, style, content) {
+      dispatch(togglePopUp(id, style, content))
     },
     clear() {
       dispatch(deselectElement())
