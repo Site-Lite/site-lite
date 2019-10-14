@@ -3,8 +3,22 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {setState, clear} from '../store/renderer'
-import {selectElement, toggleEditMode, deselectElement} from '../store/editor'
-import {Div, P, Img, PopUp, StyleBar, EditMenu, Tutorial} from '../components'
+import {
+  selectElement,
+  toggleEditMode,
+  deselectElement,
+  toggleName
+} from '../store/editor'
+import {
+  Div,
+  P,
+  Img,
+  PopUp,
+  StyleBar,
+  EditMenu,
+  Tutorial,
+  SetName
+} from '../components'
 import {MenuProvider} from 'react-contexify'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 import {addedTemplate, resetTemplateId} from '../store/template'
@@ -27,7 +41,6 @@ class Renderer extends Component {
 
   async addTemplate(state, uid) {
     await FirebaseWrapper.GetInstance().addTemplate(state, uid)
-    // console.log(this.props.user)
   }
 
   async updateTemplate(uid, tid, state) {
@@ -70,13 +83,14 @@ class Renderer extends Component {
         this.props.html
       )
     } else {
-      const templateName = prompt('Name your template')
-      console.log('prompt', templateName)
-      this.props.addNewTemplateId(
-        this.props.html,
-        this.props.user.id,
-        templateName
-      )
+      // const templateName = prompt('Name your template')
+      // console.log('prompt', templateName)
+      // this.props.addNewTemplateId(
+      //   this.props.html,
+      //   this.props.user.id,
+      //   templateName
+      // )
+      this.props.toggleName()
     }
   }
 
@@ -159,6 +173,7 @@ class Renderer extends Component {
           <EditMenu />
           <PopUp />
           <Tutorial />
+          <SetName />
         </div>
         <StyleBar />
       </div>
@@ -179,6 +194,9 @@ const mapDispatch = dispatch => {
   return {
     toggleStyler() {
       dispatch(toggleEditMode())
+    },
+    toggleName() {
+      dispatch(toggleName())
     },
     selectElement(id, style, content) {
       dispatch(selectElement(id, style, content))

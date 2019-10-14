@@ -911,7 +911,8 @@ input:checked + .slider:before {
 }
 
 .popup,
-.tutorial {
+.tutorial,
+.set-name {
   opacity: 0;
   pointer-events: none;
   position: absolute;
@@ -925,7 +926,8 @@ input:checked + .slider:before {
   transition: all 0.4s ease;
 }
 
-.popup > div {
+.popup > div,
+.set-name > div {
   width: 450px;
   height: 200px;
   background-color: white;
@@ -936,22 +938,24 @@ input:checked + .slider:before {
   align-items: center;
   margin-top: -90px;
 }
-.popup > div > div {
+.popup > div > div,
+.set-name > div > div {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
 }
 
-.popup > div span {
+.popup > div span,
+.set-name > div span {
   font-weight: 700;
-  color: #f5f5f5;
+  color: #b7bcbf;
   font-size: 20px;
   padding: 6px 0 2px 0;
   width: 100%;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid #e8e8e8;
   text-align: center;
-  background-color: #282e31;
+  background-color: #f5f5f5;
   border-radius: 3px 3px 0 0;
 }
 
@@ -967,7 +971,8 @@ input:checked + .slider:before {
   color: rgba(60, 60, 60, 0.6);
 }
 
-.popup input {
+.popup input,
+.set-name input {
   font-family: 'PT Sans', sans-serif;
   font-size: 20px;
   color: rgba(60, 60, 60, 0.6);
@@ -977,12 +982,14 @@ input:checked + .slider:before {
   margin: 60px 0 30px 0;
 }
 
-.popup button {
+.popup button,
+.set-name button {
   font-size: 13px;
 }
 
 .popup.active,
-.tutorial.active {
+.tutorial.active,
+.set-name.active {
   opacity: 1;
   pointer-events: auto;
   background-color: rgba(0, 0, 0, 0.25);

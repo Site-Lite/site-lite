@@ -3,6 +3,7 @@ const TOGGLE_EDIT_MODE = 'TOGGLE_EDIT_MODE'
 const TOGGLE_POP_UP = 'TOGGLE_POP_UP'
 const TOGGLE_POP_UP_OFF = 'TOGGLE_POP_UP_OFF'
 const TOGGLE_TUTORIAL = 'TOGGLE_TUTORIAL'
+const TOGGLE_NAME = 'TOGGLE_NAME'
 const SELECT_ELEMENT = 'SELECT_ELEMENT'
 const UPDATE_STYLE = 'UPDATE_STYLE'
 const DESELECT_ELEMENT = 'DESELECT_ELEMENT'
@@ -11,7 +12,8 @@ const STORE_STYLE = 'STORE_STYLE'
 const initialState = {
   editModeEnabled: true,
   popUpEnabled: false,
-  tutorialEnabled: true,
+  tutorialEnabled: false,
+  nameEnabled: false,
   selectedElement: 'main',
   selectedElementStyle: {},
   selectedElementContent: '',
@@ -27,6 +29,7 @@ export const togglePopUp = (id, style, content) => ({
 })
 export const togglePopUpOff = () => ({type: TOGGLE_POP_UP_OFF})
 export const toggleTutorial = () => ({type: TOGGLE_TUTORIAL})
+export const toggleName = () => ({type: TOGGLE_NAME})
 export const selectElement = (id, style, content) => ({
   type: SELECT_ELEMENT,
   id,
@@ -60,6 +63,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         popUpEnabled: !state.popUpEnabled
+      }
+    case TOGGLE_NAME:
+      return {
+        ...state,
+        nameEnabled: !state.nameEnabled
       }
     case TOGGLE_TUTORIAL:
       return {
