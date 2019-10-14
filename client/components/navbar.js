@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {resetTemplateId} from '../store/template'
+import {clear} from '../store/renderer'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div id="header">
@@ -25,9 +27,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               <div id="nav-user-menu">
                 <Link to="/profile">Profile</Link>
                 <Link to="/templates">Templates</Link>
-                <a href="#" onClick={handleClick}>
+                <Link to="/" onClick={handleClick}>
                   Logout
-                </a>
+                </Link>
                 {/* <Link to="/login">Login</Link>
                 <Link to="/signup">Sign Up</Link> */}
               </div>
@@ -73,6 +75,8 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+      dispatch(resetTemplateId())
+      dispatch(clear())
     }
   }
 }
