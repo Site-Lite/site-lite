@@ -528,7 +528,7 @@ form label {
 }
 
 #style-bar-content {
-  height: calc(100% - 91px);
+  height: calc(100% - 51px);
   display: flex;
   flex-direction: column;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -651,7 +651,8 @@ form label {
   padding: 0 30px;
 }
 
-#settings-bar > div {
+#settings-bar > div,
+#settings-bar > div > div {
   display: flex;
   align-items: center;
 }
@@ -716,6 +717,21 @@ form label {
   font-size: 20px;
   font-weight: 700;
   color: rgba(121, 128, 132, 0.5);
+}
+
+#template > div > a {
+  margin-right: 20px;
+}
+
+#template > div > button {
+  background-color: #e2e2e2;
+  color: #ce6161;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+#template > div > button:hover {
+  border: 1px solid #d84250;
+  color: #d84250;
 }
 
 #template button {
@@ -1024,6 +1040,31 @@ input:checked + .slider:before {
   font-size: 16px;
 }
 
+.undo-redo {
+  margin-left: 20px;
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0 8px;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.undo-redo.hidden {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.undo-redo i {
+  margin: 5px 10px;
+  color: #b7bcbf;
+  cursor: pointer;
+  transition: color 0.4s ease;
+}
+
+.undo-redo i:hover {
+  color: var(--sl-green);
+}
+
 .checkbox {
   position: relative;
   display: inline-block;
@@ -1075,22 +1116,23 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: #ffffff;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 10px 0 10px 0;
-  color: transparent;
-  font-size: 0px;
+  margin: 0 10px;
+  opacity: 0;
   transition: all 0.4s ease;
 }
 
-#add-section div span {
-  cursor: pointer;
+#add-section.edit-mode {
+  opacity: 1;
 }
 
-#add-section.edit-mode {
-  color: #666666;
-  font-size: 16px;
+#add-section span {
+  margin: 0 10px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+#add-section span:hover {
+  color: var(--sl-green);
 }
 
 .react-contexify__item__content {

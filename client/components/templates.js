@@ -51,25 +51,27 @@ class Templates extends Component {
               return (
                 <div id="template" key={template.id}>
                   <span>{template.name}</span>
-                  <Link
-                    to="/editor"
-                    onClick={() => {
-                      this.props.togglePopUpOff()
-                      this.props.deselectElement()
-                      this.props.setTemplateId(template.id)
-                      this.props.setTemplateName(template.name)
-                    }}
-                  >
-                    <button type="button">Open in Editor</button>
-                  </Link>
-                  <button
-                    type="submit"
-                    onClick={() => {
-                      this.deleteTemplate(this.props.user.id, template.id)
-                    }}
-                  >
-                    Delete
-                  </button>
+                  <div>
+                    <Link
+                      to="/editor"
+                      onClick={() => {
+                        this.props.togglePopUpOff()
+                        this.props.deselectElement()
+                        this.props.setTemplateId(template.id)
+                        this.props.setTemplateName(template.name)
+                      }}
+                    >
+                      <button type="button">Open in Editor</button>
+                    </Link>
+                    <button
+                      type="submit"
+                      onClick={() => {
+                        this.deleteTemplate(this.props.user.id, template.id)
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               )
             })
