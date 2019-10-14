@@ -57,12 +57,12 @@ export default function(state = initialState, action) {
         selectedElement: action.id,
         selectedElementStyle: action.style,
         selectedElementContent: action.content,
-        popUpEnabled: !state.popUpEnabled
+        popUpEnabled: true
       }
     case TOGGLE_POP_UP_OFF:
       return {
         ...state,
-        popUpEnabled: !state.popUpEnabled
+        popUpEnabled: false
       }
     case TOGGLE_NAME:
       return {
