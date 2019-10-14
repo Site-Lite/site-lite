@@ -96,7 +96,8 @@ class StyleBar extends Component {
         this.props.editor.selectedElement === 'main'
           ? 'main'
           : Number(this.props.editor.selectedElement),
-        element
+        element,
+        this.props.html
       )
 
       const id = this.props.html.counter - 1
@@ -723,8 +724,9 @@ const mapDispatch = dispatch => {
     updateStyle(property, value) {
       dispatch(updateStyle(property, value))
     },
-    createElement(id, type) {
+    createElement(id, type, state) {
       dispatch(createElement(id, type))
+      dispatch(addToPast(state))
     }
   }
 }

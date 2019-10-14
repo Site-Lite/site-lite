@@ -271,9 +271,11 @@ const mapDispatch = dispatch => {
       dispatch(togglePopUp(id, style))
     },
     undo(state) {
+      dispatch(deselectElement())
       dispatch(undo(state))
     },
     redo(state) {
+      dispatch(deselectElement())
       dispatch(redo(state))
     }
   }
