@@ -5,15 +5,15 @@ import {Link} from 'react-router-dom'
 import {MenuProvider} from 'react-contexify'
 import {toast} from 'react-toastify'
 
-import {setState, clear} from '../store/renderer'
+import {setState, clear, createElement} from '../store/renderer'
+import {addedTemplate, resetTemplateId} from '../store/template'
+import {undo, redo} from '../store/undo'
 import {
   selectElement,
   toggleEditMode,
   deselectElement,
-  toggleName
+  togglePopUp,   toggleName
 } from '../store/editor'
-import {addedTemplate, resetTemplateId} from '../store/template'
-import {undo, redo} from '../store/undo'
 
 import {
   Div,
@@ -92,6 +92,31 @@ class Renderer extends Component {
       toast.success('Template Saved!')
     } else {
       this.props.toggleName()
+    }
+  }
+
+  async handleAdd(element) {
+    const html = this.props.html
+    const selected = this.props.editor.selectedElement
+    if (html[selected].type === 'p' || html[selected].type === 'img') {
+      alert(
+        "Oops! You can't create a new element here. Please make sure you don't have an image or text selected"
+      )
+    } else {
+      await this.props.createElement(
+        this.props.editor.selectedElement === 'main'
+          ? 'main'
+          : Number(this.props.editor.selectedElement),
+        element
+      )
+
+      const id = this.props.html.counter - 1
+      const style = this.props.html[id].style
+      this.props.selectElement(id, style)
+
+      if (element !== 'div') {
+        this.props.togglePopUp(id, style)
+      }
     }
   }
 
@@ -239,6 +264,11 @@ const mapDispatch = dispatch => {
       dispatch(clear())
       dispatch(resetTemplateId())
     },
+    createElement(id, type) {
+      dispatch(createElement(id, type))
+    },
+    togglePopUp(id, style) {
+      dispatch(togglePopUp(id, style))
     undo(state) {
       dispatch(undo(state))
     },
