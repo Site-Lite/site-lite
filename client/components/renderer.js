@@ -68,13 +68,15 @@ class Renderer extends Component {
   }
 
   download() {
-    const top = '<html><head></head><body><div id="main"'
+    const top = '<html><head></head><body><div id="main">'
     const middle = document.getElementById('main').innerHTML
-    const bottom = '</div></body></html>'
+    const bottom =
+      '<div style="font-size:12px; font-family: Arial;">Built with sitelite</div></div></body></html>'
     const full = top + middle + bottom
     const link = document.createElement('a')
+    const name = this.props.templateName.replace(' ', '_')
 
-    link.setAttribute('download', 'fileName.html')
+    link.setAttribute('download', `${name}.html`)
     link.setAttribute(
       'href',
       'data:text/html;charset=utf-8,' + encodeURIComponent(full)
@@ -121,6 +123,7 @@ class Renderer extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div id="editor">
         <div
@@ -237,6 +240,7 @@ const mapState = state => {
     user: state.user,
     editor: state.editor,
     templateID: state.template.templateID,
+    templateName: state.template.templateName,
     past: state.undo.past,
     future: state.undo.future
   }
