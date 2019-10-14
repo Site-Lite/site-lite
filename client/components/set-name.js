@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {toggleName} from '../store/editor'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 import {addedTemplate} from '../store/template'
+import {toast} from 'react-toastify'
 
 class SetName extends Component {
   constructor() {
@@ -57,6 +58,7 @@ class SetName extends Component {
               this.setState({
                 name: ''
               })
+              toast.success('Template Saved!')
             }}
           >
             Submit

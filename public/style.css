@@ -17,7 +17,7 @@
 html,
 body,
 #app,
-#app > div {
+#app > div:first-child {
   height: 100%;
 }
 
@@ -1085,6 +1085,16 @@ input:checked + .slider:before {
 .swiper-container-rtl .swiper-button-prev,
 .swiper-container-rtl .swiper-button-next {
   filter: hue-rotate(235deg) brightness(1.38) saturate(0.833);
+}
+
+.Toastify__toast--success {
+  border-radius: 3px;
+  font-family: 'PT Sans', sans-serif;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  font-weight: 700;
+  font-size: 18px;
+  padding-left: 20px;
+  background-color: var(--sl-green);
 }
 
 @keyframes hero {

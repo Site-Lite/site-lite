@@ -22,6 +22,7 @@ import {
 import {MenuProvider} from 'react-contexify'
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 import {addedTemplate, resetTemplateId} from '../store/template'
+import {toast} from 'react-toastify'
 
 class Renderer extends Component {
   constructor() {
@@ -82,14 +83,8 @@ class Renderer extends Component {
         this.props.templateID,
         this.props.html
       )
+      toast.success('Template Saved!')
     } else {
-      // const templateName = prompt('Name your template')
-      // console.log('prompt', templateName)
-      // this.props.addNewTemplateId(
-      //   this.props.html,
-      //   this.props.user.id,
-      //   templateName
-      // )
       this.props.toggleName()
     }
   }
