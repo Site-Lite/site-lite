@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+
 import {FirebaseWrapper} from '../../server/firebase/firebase'
 import {setTemplateId} from '../store/template'
 
@@ -19,9 +20,27 @@ class Templates extends Component {
     )
   }
 
+  async getAllTemplates(uid, cb) {
+    await FirebaseWrapper.GetInstance().getAllTemplates(uid, templates =>
+      this.setState({templates})
+    )
+  }
+
+  async deleteTemplate(uid, tid) {
+    await FirebaseWrapper.GetInstance().deleteTemplate(uid, tid)
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        templates: prevState.templates.filter(temp => {
+          return temp.id !== tid
+        })
+      }
+    })
+  }
+
   render() {
-    console.log(this.props)
-    console.log(this.state)
+    // console.log('this is the this.props: ', this.props)
+    // console.log('this is the this.state: ', this.state)
     return (
       <div id="template-list">
         <h1>Templates</h1>
@@ -39,6 +58,14 @@ class Templates extends Component {
                   >
                     <button type="button">Open in Editor</button>
                   </Link>
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      this.deleteTemplate(this.props.user.id, template.id)
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
               )
             })

@@ -2,8 +2,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
+
 import {updateStyle} from '../store/editor'
 import {applyStyle} from '../store/renderer'
+import {addToPast} from '../store/undo'
+
 import {
   fontSizes,
   fontFamilies,
@@ -71,7 +74,8 @@ class StyleBar extends Component {
   applyStyle() {
     this.props.applyStyle(
       this.props.editor.selectedElement,
-      this.props.editor.selectedElementStyle
+      this.props.editor.selectedElementStyle,
+      this.props.html
     )
   }
 
@@ -666,8 +670,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    applyStyle(id, style) {
+    applyStyle(id, style, state) {
       dispatch(applyStyle(id, style))
+      dispatch(addToPast(state))
     },
     updateStyle(property, value) {
       dispatch(updateStyle(property, value))

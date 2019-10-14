@@ -2,20 +2,23 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
+
+import {togglePopUp, deselectElement, storeStyle} from '../store/editor'
+import {addToPast} from '../store/undo'
 import {
   createElement,
   removeElement,
   clear,
   applyStyle
 } from '../store/renderer'
-import {togglePopUp, deselectElement, storeStyle} from '../store/editor'
 
 class EditMenu extends Component {
   handleAdd(event, element) {
     if (event.target.tagName === 'DIV') {
       this.props.createElement(
         event.target.id === 'main' ? 'main' : Number(event.target.id),
-        element
+        element,
+        this.props.html
       )
       setTimeout(() => {
         const lastChildId = this.props.html[event.target.id].children[
@@ -40,6 +43,7 @@ class EditMenu extends Component {
           ? 'main'
           : Number(event.target.parentNode.id),
         Number(event.target.id)
+
       )
     }
   }
@@ -172,12 +176,14 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    createElement(id, type) {
+    createElement(id, type, state) {
       dispatch(createElement(id, type))
+      dispatch(addToPast(state))
     },
-    removeElement(id, elementId) {
+    removeElement(id, elementId, state) {
       dispatch(deselectElement())
       dispatch(removeElement(id, elementId))
+      dispatch(addToPast(state))
     },
     togglePopUp(id, style, content) {
       dispatch(togglePopUp(id, style, content))
