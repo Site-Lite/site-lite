@@ -39,7 +39,6 @@ class Renderer extends Component {
 
   async addTemplate(state, uid) {
     await FirebaseWrapper.GetInstance().addTemplate(state, uid)
-    // console.log(this.props.user)
   }
 
   async updateTemplate(uid, tid, state) {
@@ -122,7 +121,6 @@ class Renderer extends Component {
           id="editor-panel"
           className={this.props.editor.editModeEnabled ? 'edit-mode ' : ''}
         >
-          {/* <div> */}
           <div id="settings-bar">
             <div>
               <span>Edit Mode</span>
@@ -173,18 +171,6 @@ class Renderer extends Component {
               </Link>
             </div>
           </div>
-          {/* <div id="add-bar">
-            <div>
-                <span onClick={() => this.handleAdd('div')}>Add container</span>
-              </div>
-              <div>
-                <span onClick={() => this.handleAdd('p')}>Add text</span>
-              </div>
-              <div>
-                <span onClick={() => this.handleAdd('img')}>Add image</span>
-              </div>
-          </div>
-          </div> */}
           <MenuProvider id="menu_id">
             <div
               id="main"
