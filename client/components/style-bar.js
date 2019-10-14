@@ -2,8 +2,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
+
 import {updateStyle, selectElement, togglePopUp} from '../store/editor'
 import {applyStyle, createElement} from '../store/renderer'
+import {addToPast} from '../store/undo'
+
 import {
   fontSizes,
   fontFamilies,
@@ -27,7 +30,7 @@ class StyleBar extends Component {
         border: false,
         spacing: false,
         formatting: false,
-        background: false
+        background: true
       },
       selectedStyle: {}
     }
@@ -71,7 +74,8 @@ class StyleBar extends Component {
   applyStyle() {
     this.props.applyStyle(
       this.props.editor.selectedElement,
-      this.props.editor.selectedElementStyle
+      this.props.editor.selectedElementStyle,
+      this.props.html
     )
   }
 
@@ -131,7 +135,7 @@ class StyleBar extends Component {
           <Collapse isOpen={this.state.accordion.size}>
             <div>
               <div>
-                <span>Flex Ratio</span>
+                <span>Fit Container</span>
                 <select
                   value={this.state.selectedStyle.flex}
                   onChange={event => {
@@ -621,6 +625,7 @@ class StyleBar extends Component {
                         )
                       : ''
                   }
+                  placeholder="URL"
                   onChange={event => {
                     console.log('test')
                     this.handleSelect(
@@ -710,8 +715,10 @@ const mapDispatch = dispatch => {
     selectElement(id, style) {
       dispatch(selectElement(id, style))
     },
-    applyStyle(id, style) {
+
+    applyStyle(id, style, state) {
       dispatch(applyStyle(id, style))
+      dispatch(addToPast(state))
     },
     updateStyle(property, value) {
       dispatch(updateStyle(property, value))

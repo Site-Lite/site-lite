@@ -2,24 +2,32 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {MenuProvider} from 'react-contexify'
+import {toast} from 'react-toastify'
+
 import {setState, clear, createElement} from '../store/renderer'
+import {addedTemplate, resetTemplateId} from '../store/template'
+import {undo, redo} from '../store/undo'
 import {
   selectElement,
   toggleEditMode,
   deselectElement,
-  togglePopUp
+  togglePopUp,   toggleName
 } from '../store/editor'
-import {Div, P, Img, PopUp, StyleBar, EditMenu} from '../components'
-import {MenuProvider} from 'react-contexify'
-import {FirebaseWrapper} from '../../server/firebase/firebase'
-import {addedTemplate, resetTemplateId} from '../store/template'
 
-const ConditionalWrapper = ({condition, children}) =>
-  condition ? (
-    <MenuProvider id="menu_id">{children}</MenuProvider>
-  ) : (
-    <div>{children}</div>
-  )
+import {
+  Div,
+  P,
+  Img,
+  PopUp,
+  StyleBar,
+  EditMenu,
+  Tutorial,
+  SetName
+} from '../components'
+
+import {FirebaseWrapper} from '../../server/firebase/firebase'
+
 
 class Renderer extends Component {
   constructor() {
@@ -44,6 +52,7 @@ class Renderer extends Component {
   async updateTemplate(uid, tid, state) {
     await FirebaseWrapper.GetInstance().updateTemplate(uid, tid, state)
   }
+
   toggleEditMode() {
     this.props.toggleStyler()
   }
@@ -52,7 +61,8 @@ class Renderer extends Component {
     if (event.target.id.length) {
       this.props.selectElement(
         event.target.id,
-        this.props.html[event.target.id].style
+        this.props.html[event.target.id].style,
+        this.props.html[event.target.id].content
       )
     }
   }
@@ -79,13 +89,9 @@ class Renderer extends Component {
         this.props.templateID,
         this.props.html
       )
+      toast.success('Template Saved!')
     } else {
-      const templateName = prompt('Name your template')
-      this.props.addNewTemplateId(
-        this.props.html,
-        this.props.user.id,
-        templateName
-      )
+      this.props.toggleName()
     }
   }
 
@@ -138,6 +144,30 @@ class Renderer extends Component {
               </div>
             </div>
             <div>
+              <div className="undo-redo">
+                <i
+                  className="fas fa-undo-alt"
+                  onClick={() => {
+                    if (this.props.past) {
+                      this.props.setState(
+                        this.props.past[this.props.past.length - 1]
+                      )
+                      this.props.undo(this.props.html)
+                    }
+                    // undo the last action
+                  }}
+                />
+                <i
+                  className="fas fa-redo-alt"
+                  onClick={() => {
+                    if (this.props.future) {
+                      this.props.setState(this.props.future[0])
+                      this.props.redo(this.props.html)
+                    }
+                    // redo the last action
+                  }}
+                />
+              </div>
               <Link
                 onClick={() => {
                   if (
@@ -192,6 +222,8 @@ class Renderer extends Component {
           </MenuProvider>
           <EditMenu />
           <PopUp />
+          <Tutorial />
+          <SetName />
         </div>
         <StyleBar />
       </div>
@@ -204,7 +236,9 @@ const mapState = state => {
     html: state.renderer,
     user: state.user,
     editor: state.editor,
-    templateID: state.template.templateID
+    templateID: state.template.templateID,
+    past: state.undo.past,
+    future: state.undo.future
   }
 }
 
@@ -213,8 +247,11 @@ const mapDispatch = dispatch => {
     toggleStyler() {
       dispatch(toggleEditMode())
     },
-    selectElement(id, style) {
-      dispatch(selectElement(id, style))
+    toggleName() {
+      dispatch(toggleName())
+    },
+    selectElement(id, style, content) {
+      dispatch(selectElement(id, style, content))
     },
     setState(state) {
       dispatch(setState(state))
@@ -232,6 +269,11 @@ const mapDispatch = dispatch => {
     },
     togglePopUp(id, style) {
       dispatch(togglePopUp(id, style))
+    undo(state) {
+      dispatch(undo(state))
+    },
+    redo(state) {
+      dispatch(redo(state))
     }
   }
 }

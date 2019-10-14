@@ -27,7 +27,7 @@ class Img extends Component {
           src={
             this.props.html[this.props.id].content
               ? this.props.html[this.props.id].content
-              : '/images/SiteLite.png'
+              : '/images/image.png'
           }
         />
       )
