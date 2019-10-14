@@ -55,14 +55,12 @@ export default function(state = initialState, action) {
             action.elementType === 'div'
               ? {
                   display: 'flex',
-                  flex: 1,
-                  'flex-direction': 'row',
+                  'flex-direction': 'column',
                   margin: '20px',
                   padding: '20px'
                 }
               : action.elementType === 'p'
                 ? {
-                    flex: 1,
                     'font-size': '16px',
                     'font-family': 'Arial',
                     'text-align': 'left',

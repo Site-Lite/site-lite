@@ -106,7 +106,7 @@ class StyleBar extends Component {
           <Collapse isOpen={this.state.accordion.size}>
             <div>
               <div>
-                <span>Flex Ratio</span>
+                <span>Fit Container</span>
                 <select
                   value={this.state.selectedStyle.flex}
                   onChange={event => {
