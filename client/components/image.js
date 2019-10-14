@@ -27,7 +27,7 @@ class Img extends Component {
           src={
             this.props.html[this.props.id].content
               ? this.props.html[this.props.id].content
-              : 'https://d36tnp772eyphs.cloudfront.net/blogs/1/2011/05/New-York-City-skyline-cityscape-destinations-300x200.jpg'
+              : '/images/image.png'
           }
         />
       )

@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+
 import {FirebaseWrapper} from '../../server/firebase/firebase'
-import {setTemplateId} from '../store/template'
+import {setTemplateId, setTemplateName} from '../store/template'
+import {deselectElement, togglePopUpOff} from '../store/editor'
 
 class Templates extends Component {
   constructor() {
@@ -19,26 +21,66 @@ class Templates extends Component {
     )
   }
 
+  // async getAllTemplates(uid, cb) {
+  //   await FirebaseWrapper.GetInstance().getAllTemplates(uid, templates =>
+  //     this.setState({templates})
+  //   )
+  // }
+
+  async deleteTemplate(uid, tid) {
+    await FirebaseWrapper.GetInstance().deleteTemplate(uid, tid)
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        templates: prevState.templates.filter(temp => {
+          return temp.id !== tid
+        })
+      }
+    })
+  }
+
   render() {
-    console.log(this.props)
-    console.log(this.state)
+    // console.log('this is the this.props: ', this.props)
+    // console.log('this is the this.state: ', this.state)
     return (
-      <div>
-        {this.state.templates &&
-          this.state.templates.map(template => {
-            return (
-              <div key={template.id}>
-                <Link
-                  to="/editor"
-                  onClick={() => {
-                    this.props.setTemplateId(template.id)
-                  }}
-                >
-                  {template.name}
-                </Link>
-              </div>
-            )
-          })}
+      <div id="template-list">
+        <h1>Templates</h1>
+        <div>
+          {Object.keys(this.state.templates).length ? (
+            this.state.templates.map(template => {
+              return (
+                <div id="template" key={template.id}>
+                  <span>{template.name}</span>
+                  <div>
+                    <Link
+                      to="/editor"
+                      onClick={() => {
+                        this.props.togglePopUpOff()
+                        this.props.deselectElement()
+                        this.props.setTemplateId(template.id)
+                        this.props.setTemplateName(template.name)
+                      }}
+                    >
+                      <button type="button">Open in Editor</button>
+                    </Link>
+                    <button
+                      type="submit"
+                      onClick={() => {
+                        this.deleteTemplate(this.props.user.id, template.id)
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              )
+            })
+          ) : (
+            <div id="no-template">
+              <span>You do not have any saved templates!</span>
+            </div>
+          )}
+        </div>
       </div>
     )
   }
@@ -51,6 +93,15 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   setTemplateId(tid) {
     dispatch(setTemplateId(tid))
+  },
+  deselectElement() {
+    dispatch(deselectElement())
+  },
+  togglePopUpOff() {
+    dispatch(togglePopUpOff())
+  },
+  setTemplateName(name) {
+    dispatch(setTemplateName(name))
   }
 })
 

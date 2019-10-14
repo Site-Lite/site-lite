@@ -2,8 +2,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
-import {updateStyle} from '../store/editor'
-import {applyStyle} from '../store/renderer'
+
+import {updateStyle, selectElement, togglePopUp} from '../store/editor'
+import {applyStyle, createElement} from '../store/renderer'
+import {addToPast} from '../store/undo'
+
 import {
   fontSizes,
   fontFamilies,
@@ -27,7 +30,7 @@ class StyleBar extends Component {
         border: false,
         spacing: false,
         formatting: false,
-        background: false
+        background: true
       },
       selectedStyle: {}
     }
@@ -38,7 +41,6 @@ class StyleBar extends Component {
       this.props.editor.selectedElementStyle !==
       prevProps.editor.selectedElementStyle
     ) {
-      console.log(this.state.selectedStyle)
       this.setState(prevState => {
         return {
           ...prevState,
@@ -72,7 +74,8 @@ class StyleBar extends Component {
   applyStyle() {
     this.props.applyStyle(
       this.props.editor.selectedElement,
-      this.props.editor.selectedElementStyle
+      this.props.editor.selectedElementStyle,
+      this.props.html
     )
   }
 
@@ -107,7 +110,7 @@ class StyleBar extends Component {
           <Collapse isOpen={this.state.accordion.size}>
             <div>
               <div>
-                <span>Flex Ratio</span>
+                <span>Fit Container</span>
                 <select
                   value={this.state.selectedStyle.flex}
                   onChange={event => {
@@ -597,6 +600,7 @@ class StyleBar extends Component {
                         )
                       : ''
                   }
+                  placeholder="URL"
                   onChange={event => {
                     console.log('test')
                     this.handleSelect(
@@ -666,11 +670,23 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    applyStyle(id, style) {
+    togglePopUp(id, style) {
+      dispatch(togglePopUp(id, style))
+    },
+    selectElement(id, style) {
+      dispatch(selectElement(id, style))
+    },
+
+    applyStyle(id, style, state) {
       dispatch(applyStyle(id, style))
+      dispatch(addToPast(state))
     },
     updateStyle(property, value) {
       dispatch(updateStyle(property, value))
+    },
+    createElement(id, type, state) {
+      dispatch(createElement(id, type))
+      dispatch(addToPast(state))
     }
   }
 }

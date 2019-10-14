@@ -9,45 +9,64 @@ class PopUp extends Component {
     this.state = {
       content: ''
     }
-    this.renderSwitch = this.renderSwitch.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
-  handleChange(evt) {
-    this.setState({content: evt.target.value})
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.editor.selectedElementContent !==
+      prevProps.editor.selectedElementContent
+    ) {
+      this.setState({
+        content: this.props.editor.selectedElementContent
+      })
+    }
   }
-  handleKey(evt) {
-    if (evt.key === 'Enter') {
+
+  handleChange(event) {
+    this.setState({content: event.target.value})
+  }
+  handleKey(event) {
+    if (event.key === 'Enter') {
       this.props.setContent(
         this.props.editor.selectedElement,
         this.state.content
       )
     }
   }
+
+  handleClick() {
+    this.props.setContent(this.props.editor.selectedElement, this.state.content)
+    this.setState({content: ''})
+  }
+
   renderSwitch(parameter) {
     switch (parameter) {
       case 'img':
         return (
           <div>
-            <span>Edit Image URL</span>
+            <span>Edit Image</span>
             <input
               name="content"
               value={this.state.content}
               type="text"
-              placeholder="URL"
-              onChange={this.handleChange}
+              placeholder="Enter image URL"
+              onChange={event => {
+                this.handleChange(event)
+              }}
             />
           </div>
         )
       case 'p':
         return (
           <div>
-            <span>Edit Text</span>
+            <span>Edit Paragraph</span>
             <textarea
               name="content"
               value={this.state.content}
               type="text"
-              placeholder="Text"
-              onChange={this.handleChange}
+              placeholder="Write something"
+              onChange={event => {
+                this.handleChange(event)
+              }}
             />
           </div>
         )
@@ -67,18 +86,20 @@ class PopUp extends Component {
         }}
       >
         <div>
-          {this.renderSwitch(
-            this.props.html[this.props.editor.selectedElement].type
-          )}
+          {this.props.html[this.props.editor.selectedElement].type
+            ? this.renderSwitch(
+                this.props.html[this.props.editor.selectedElement].type
+              )
+            : null}
           <button
             type="submit"
             value="Submit"
             onClick={() => {
-              this.props.setContent(
-                this.props.editor.selectedElement,
-                this.state.content
-              )
+              this.handleClick()
               this.props.togglePopUpOff()
+              this.setState({
+                content: ''
+              })
             }}
           >
             Submit
