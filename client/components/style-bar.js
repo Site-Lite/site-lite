@@ -81,7 +81,7 @@ class StyleBar extends Component {
 
   handleChange(event) {
     this.setState({input: event.target.value})
-    this.props.updateStyle('font-size', event.target.value + 'px')
+    this.props.updateStyle('fontSize', event.target.value + 'px')
   }
 
   render() {
@@ -199,15 +199,16 @@ class StyleBar extends Component {
                   <span>Bold</span>
                   <div className="checkbox">
                     <input
+                      onChange={() => {
+                        /**/
+                      }}
                       type="checkbox"
                       onClick={event => {
                         event.target.checked
-                          ? this.handleSelect('font-weight', 'bold')
-                          : this.handleSelect('font-weight', 'normal')
+                          ? this.handleSelect('fontWeight', 'bold')
+                          : this.handleSelect('fontWeight', 'normal')
                       }}
-                      checked={
-                        this.state.selectedStyle['font-weight'] === 'bold'
-                      }
+                      checked={this.state.selectedStyle.fontWeight === 'bold'}
                     />
                     <div className="check" />
                   </div>
@@ -216,15 +217,16 @@ class StyleBar extends Component {
                   <span>Italic</span>
                   <div className="checkbox">
                     <input
+                      onChange={() => {
+                        /**/
+                      }}
                       type="checkbox"
                       onClick={event => {
                         event.target.checked
-                          ? this.handleSelect('font-style', 'italic')
-                          : this.handleSelect('font-style', 'normal')
+                          ? this.handleSelect('fontStyle', 'italic')
+                          : this.handleSelect('fontStyle', 'normal')
                       }}
-                      checked={
-                        this.state.selectedStyle['font-style'] === 'italic'
-                      }
+                      checked={this.state.selectedStyle.fontStyle === 'italic'}
                     />
                     <div className="check" />
                   </div>
@@ -233,15 +235,17 @@ class StyleBar extends Component {
                   <span>Underline</span>
                   <div className="checkbox">
                     <input
+                      onChange={() => {
+                        /**/
+                      }}
                       type="checkbox"
                       onClick={event => {
                         event.target.checked
-                          ? this.handleSelect('text-decoration', 'underline')
-                          : this.handleSelect('text-decoration', 'none')
+                          ? this.handleSelect('textDecoration', 'underline')
+                          : this.handleSelect('textDecoration', 'none')
                       }}
                       checked={
-                        this.state.selectedStyle['text-decoration'] ===
-                        'underline'
+                        this.state.selectedStyle.textDecoration === 'underline'
                       }
                     />
                     <div className="check" />
@@ -251,9 +255,9 @@ class StyleBar extends Component {
               <div>
                 <span>Font</span>
                 <select
-                  value={this.state.selectedStyle['font-family']}
+                  value={this.state.selectedStyle.fontFamily}
                   onChange={event => {
-                    this.handleSelect('font-family', event.target.value)
+                    this.handleSelect('fontFamily', event.target.value)
                   }}
                 >
                   {fontFamilies.map(font => {
@@ -268,9 +272,9 @@ class StyleBar extends Component {
               <div>
                 <span>Size</span>
                 <select
-                  value={this.state.selectedStyle['font-size']}
+                  value={this.state.selectedStyle.fontSize}
                   onChange={event => {
-                    this.handleSelect('font-size', event.target.value)
+                    this.handleSelect('fontSize', event.target.value)
                   }}
                 >
                   {fontSizes.map(size => {
@@ -285,9 +289,9 @@ class StyleBar extends Component {
               <div>
                 <span>Align</span>
                 <select
-                  value={this.state.selectedStyle['text-align']}
+                  value={this.state.selectedStyle.textAlign}
                   onChange={event => {
-                    this.handleSelect('text-align', event.target.value)
+                    this.handleSelect('textAlign', event.target.value)
                   }}
                 >
                   {textAlign.map(align => {
@@ -337,9 +341,9 @@ class StyleBar extends Component {
               <div>
                 <span>Width</span>
                 <select
-                  value={this.state.selectedStyle['border-width']}
+                  value={this.state.selectedStyle.borderWidth}
                   onChange={event => {
-                    this.handleSelect('border-width', event.target.value)
+                    this.handleSelect('borderWidth', event.target.value)
                   }}
                 >
                   {borderWidth.map(width => {
@@ -354,9 +358,9 @@ class StyleBar extends Component {
               <div>
                 <span>Style</span>
                 <select
-                  value={this.state.selectedStyle['border-style']}
+                  value={this.state.selectedStyle.borderStyle}
                   onChange={event => {
-                    this.handleSelect('border-style', event.target.value)
+                    this.handleSelect('borderStyle', event.target.value)
                   }}
                 >
                   {borderStyle.map(style => {
@@ -372,18 +376,18 @@ class StyleBar extends Component {
                 <span>Color</span>
                 <input
                   type="color"
-                  value={this.state.selectedStyle['border-color'] || '#ffffff'}
+                  value={this.state.selectedStyle.borderColor || '#ffffff'}
                   onChange={event => {
-                    this.handleSelect('border-color', event.target.value)
+                    this.handleSelect('borderColor', event.target.value)
                   }}
                 />
               </div>
               <div>
                 <span>Corner Radius</span>
                 <select
-                  value={this.state.selectedStyle['border-radius']}
+                  value={this.state.selectedStyle.borderRadius}
                   onChange={event => {
-                    this.handleSelect('border-radius', event.target.value)
+                    this.handleSelect('borderRadius', event.target.value)
                   }}
                 >
                   {borderWidth.map(radius => {
@@ -491,9 +495,9 @@ class StyleBar extends Component {
               <div>
                 <span>Flow Direction</span>
                 <select
-                  value={this.state.selectedStyle['flex-direction']}
+                  value={this.state.selectedStyle.flexDirection}
                   onChange={event => {
-                    this.handleSelect('flex-direction', event.target.value)
+                    this.handleSelect('flexDirection', event.target.value)
                   }}
                 >
                   <option value="row">row</option>
@@ -505,13 +509,16 @@ class StyleBar extends Component {
                   <span>Wrap</span>
                   <div className="checkbox">
                     <input
+                      onChange={() => {
+                        /**/
+                      }}
                       type="checkbox"
                       onClick={event => {
                         event.target.checked
-                          ? this.handleSelect('flex-wrap', 'wrap')
-                          : this.handleSelect('flex-wrap', 'nowrap')
+                          ? this.handleSelect('flexWrap', 'wrap')
+                          : this.handleSelect('flexWrap', 'nowrap')
                       }}
-                      checked={this.state.selectedStyle['flex-wrap'] === 'wrap'}
+                      checked={this.state.selectedStyle.flexWrap === 'wrap'}
                     />
                     <div className="check" />
                   </div>
@@ -520,14 +527,17 @@ class StyleBar extends Component {
                   <span>Center X</span>
                   <div className="checkbox">
                     <input
+                      onChange={() => {
+                        /**/
+                      }}
                       type="checkbox"
                       onClick={event => {
                         event.target.checked
-                          ? this.handleSelect('justify-content', 'center')
-                          : this.handleSelect('justify-content', 'initial')
+                          ? this.handleSelect('justifyContent', 'center')
+                          : this.handleSelect('justifyContent', 'initial')
                       }}
                       checked={
-                        this.state.selectedStyle['justify-content'] === 'center'
+                        this.state.selectedStyle.justifyContent === 'center'
                       }
                     />
                     <div className="check" />
@@ -537,15 +547,16 @@ class StyleBar extends Component {
                   <span>Center Y</span>
                   <div className="checkbox">
                     <input
+                      onChange={() => {
+                        /**/
+                      }}
                       type="checkbox"
                       onClick={event => {
                         event.target.checked
-                          ? this.handleSelect('align-items', 'center')
-                          : this.handleSelect('align-items', 'initial')
+                          ? this.handleSelect('alignItems', 'center')
+                          : this.handleSelect('alignItems', 'initial')
                       }}
-                      checked={
-                        this.state.selectedStyle['align-items'] === 'center'
-                      }
+                      checked={this.state.selectedStyle.alignItems === 'center'}
                     />
                     <div className="check" />
                   </div>
@@ -580,11 +591,9 @@ class StyleBar extends Component {
                 <span>Color</span>
                 <input
                   type="color"
-                  value={
-                    this.state.selectedStyle['background-color'] || '#ffffff'
-                  }
+                  value={this.state.selectedStyle.backgroundColor || '#ffffff'}
                   onChange={event => {
-                    this.handleSelect('background-color', event.target.value)
+                    this.handleSelect('backgroundColor', event.target.value)
                   }}
                 />
               </div>
@@ -593,18 +602,14 @@ class StyleBar extends Component {
                 <input
                   type="text"
                   value={
-                    this.state.selectedStyle['background-image']
-                      ? this.state.selectedStyle['background-image'].slice(
-                          4,
-                          -1
-                        )
+                    this.state.selectedStyle.backgroundImage
+                      ? this.state.selectedStyle.backgroundImage.slice(4, -1)
                       : ''
                   }
                   placeholder="URL"
                   onChange={event => {
-                    console.log('test')
                     this.handleSelect(
-                      'background-image',
+                      'backgroundImage',
                       `url(${event.target.value})`
                     )
                   }}
@@ -613,9 +618,9 @@ class StyleBar extends Component {
               <div>
                 <span>Image Repeat</span>
                 <select
-                  value={this.state.selectedStyle['background-repeat']}
+                  value={this.state.selectedStyle.backgroundRepeat}
                   onChange={event => {
-                    this.handleSelect('background-repeat', event.target.value)
+                    this.handleSelect('backgroundRepeat', event.target.value)
                   }}
                 >
                   {backgroundRepeat.map(option => {
@@ -630,9 +635,9 @@ class StyleBar extends Component {
               <div>
                 <span>Image Size</span>
                 <select
-                  value={this.state.selectedStyle['background-size']}
+                  value={this.state.selectedStyle.backgroundSize}
                   onChange={event => {
-                    this.handleSelect('background-size', event.target.value)
+                    this.handleSelect('backgroundSize', event.target.value)
                   }}
                 >
                   {backgroundSize.map(option => {

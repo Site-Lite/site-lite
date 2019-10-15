@@ -113,15 +113,13 @@ export class FirebaseWrapper {
         name: name
       })
 
-      const templates = []
-      await this._firestore
+      const temps = await this._firestore
         .collection(`/Users/${uid}/Templates`)
         .get()
-        .then(function(snapshot) {
-          snapshot.forEach(function(doc) {
-            templates.push(doc.id)
-          })
-        })
+
+      const templates = temps.docs.map(doc => {
+        return doc.id
+      })
 
       await this._firestore
         .collection(`/Users`)
@@ -182,15 +180,13 @@ export class FirebaseWrapper {
         .doc(tid)
         .delete()
 
-      const templates = []
-      await this._firestore
+      const temps = await this._firestore
         .collection(`/Users/${uid}/Templates`)
         .get()
-        .then(function(snapshot) {
-          snapshot.forEach(function(doc) {
-            templates.push(doc.id)
-          })
-        })
+
+      const templates = temps.docs.map(doc => {
+        return doc.id
+      })
 
       await this._firestore
         .collection(`/Users`)

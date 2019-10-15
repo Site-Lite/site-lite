@@ -1,19 +1,19 @@
 /* eslint-disable no-alert */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {MenuProvider} from 'react-contexify'
 import {toast} from 'react-toastify'
 
 import {setState, clear, createElement} from '../store/renderer'
 import {addedTemplate, resetTemplateId} from '../store/template'
-import {undo, redo} from '../store/undo'
+import {undo, redo, addToPast, clearUndo} from '../store/undo'
 import {
   selectElement,
   toggleEditMode,
   deselectElement,
   togglePopUp,
-  toggleName
+  toggleName,
+  toggleTutorial
 } from '../store/editor'
 
 import {
@@ -85,15 +85,19 @@ class Renderer extends Component {
   }
 
   nameTemplate() {
-    if (this.props.templateID) {
-      this.updateTemplate(
-        this.props.user.id,
-        this.props.templateID,
-        this.props.html
-      )
-      toast.success('Template Saved!')
+    if (this.props.user.id) {
+      if (this.props.templateID) {
+        this.updateTemplate(
+          this.props.user.id,
+          this.props.templateID,
+          this.props.html
+        )
+        toast.success('Template Saved!')
+      } else {
+        this.props.toggleName()
+      }
     } else {
-      this.props.toggleName()
+      alert('Please log in to save your template')
     }
   }
 
@@ -109,7 +113,8 @@ class Renderer extends Component {
         this.props.editor.selectedElement === 'main'
           ? 'main'
           : Number(this.props.editor.selectedElement),
-        element
+        element,
+        this.props.html
       )
 
       const id = this.props.html.counter - 1
@@ -123,7 +128,8 @@ class Renderer extends Component {
   }
 
   render() {
-    console.log(this.props)
+    // console.log('props', this.props)
+    // console.log('state', this.state)
     return (
       <div id="editor">
         <div
@@ -143,6 +149,9 @@ class Renderer extends Component {
                   <input
                     type="checkbox"
                     checked={this.props.editor.editModeEnabled}
+                    onChange={() => {
+                      /**/
+                    }}
                   />
                   <div className="slider" />
                 </div>
@@ -189,7 +198,8 @@ class Renderer extends Component {
               </div>
             </div>
             <div>
-              <Link
+              <a
+                href="#"
                 onClick={() => {
                   if (
                     window.confirm(
@@ -208,9 +218,12 @@ class Renderer extends Component {
                 }
               >
                 New Template
-              </Link>
-              <Link onClick={() => this.nameTemplate()}>Save Template</Link>
-              <Link
+              </a>
+              <a href="#" onClick={() => this.nameTemplate()}>
+                Save Template
+              </a>
+              <a
+                href="#"
                 onClick={() => this.download()}
                 className={
                   this.props.editor.editModeEnabled
@@ -219,7 +232,7 @@ class Renderer extends Component {
                 }
               >
                 Download
-              </Link>
+              </a>
             </div>
           </div>
           <MenuProvider id="menu_id">
@@ -245,6 +258,14 @@ class Renderer extends Component {
           <PopUp />
           <Tutorial />
           <SetName />
+          <div
+            id="help-button"
+            onClick={() => {
+              this.props.toggleTutorial()
+            }}
+          >
+            <i className="fas fa-question-circle" />
+          </div>
         </div>
         <StyleBar />
       </div>
@@ -285,12 +306,17 @@ const mapDispatch = dispatch => {
       dispatch(deselectElement())
       dispatch(clear())
       dispatch(resetTemplateId())
+      dispatch(clearUndo())
     },
-    createElement(id, type) {
+    createElement(id, type, state) {
       dispatch(createElement(id, type))
+      dispatch(addToPast(state))
     },
     togglePopUp(id, style) {
       dispatch(togglePopUp(id, style))
+    },
+    toggleTutorial() {
+      dispatch(toggleTutorial())
     },
     undo(state) {
       dispatch(deselectElement())
