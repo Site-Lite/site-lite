@@ -4,6 +4,7 @@
 const UNDO = 'UNDO'
 const REDO = 'REDO'
 const ADD_TO_PAST = 'ADD_TO_PAST'
+const CLEAR_UNDO = 'CLEAR_UNDO'
 
 ///////////////
 // ACTION CREATORS
@@ -19,6 +20,9 @@ export const redo = state => ({
 export const addToPast = state => ({
   type: ADD_TO_PAST,
   state
+})
+export const clearUndo = () => ({
+  type: CLEAR_UNDO
 })
 
 ///////////////
@@ -61,6 +65,8 @@ export default function(state = initialState, action) {
         ...state,
         past: [...state.past, action.state]
       }
+    case CLEAR_UNDO:
+      return initialState
 
     default:
       return {...state}
