@@ -45,8 +45,8 @@ class Templates extends Component {
   }
 
   render() {
-    console.log('this is the this.props: ', this.props)
-    console.log('this is the this.state: ', this.state)
+    // console.log('this is the this.props: ', this.props)
+    // console.log('this is the this.state: ', this.state)
     return (
       <div id="template-list">
         <h1>Templates</h1>

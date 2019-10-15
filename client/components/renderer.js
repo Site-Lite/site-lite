@@ -41,7 +41,6 @@ class Renderer extends Component {
         this.props.user.id,
         this.props.templateID
       )
-      console.log(state)
       this.props.setState(state)
     }
   }
@@ -124,7 +123,7 @@ class Renderer extends Component {
   }
 
   render() {
-    console.log('props', this.props)
+    // console.log('props', this.props)
     // console.log('state', this.state)
     return (
       <div id="editor">
