@@ -142,6 +142,9 @@ class Renderer extends Component {
                   <input
                     type="checkbox"
                     checked={this.props.editor.editModeEnabled}
+                    onChange={() => {
+                      /**/
+                    }}
                   />
                   <div className="slider" />
                 </div>
@@ -188,7 +191,8 @@ class Renderer extends Component {
               </div>
             </div>
             <div>
-              <Link
+              <a
+                href="#"
                 onClick={() => {
                   if (
                     window.confirm(
@@ -207,9 +211,12 @@ class Renderer extends Component {
                 }
               >
                 New Template
-              </Link>
-              <Link onClick={() => this.nameTemplate()}>Save Template</Link>
-              <Link
+              </a>
+              <a href="#" onClick={() => this.nameTemplate()}>
+                Save Template
+              </a>
+              <a
+                href="#"
                 onClick={() => this.download()}
                 className={
                   this.props.editor.editModeEnabled
@@ -218,7 +225,7 @@ class Renderer extends Component {
                 }
               >
                 Download
-              </Link>
+              </a>
             </div>
           </div>
           <MenuProvider id="menu_id">
