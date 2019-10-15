@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
 
 import {togglePopUp, deselectElement, storeStyle} from '../store/editor'
-import {addToPast} from '../store/undo'
+import {addToPast, clearUndo} from '../store/undo'
 import {
   createElement,
   removeElement,
@@ -43,7 +43,6 @@ class EditMenu extends Component {
           ? 'main'
           : Number(event.target.parentNode.id),
         Number(event.target.id)
-
       )
     }
   }
@@ -191,6 +190,7 @@ const mapDispatch = dispatch => {
     clear() {
       dispatch(deselectElement())
       dispatch(clear())
+      dispatch(clearUndo())
     },
     storeStyle(style) {
       dispatch(storeStyle(style))

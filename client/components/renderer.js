@@ -7,7 +7,7 @@ import {toast} from 'react-toastify'
 
 import {setState, clear, createElement} from '../store/renderer'
 import {addedTemplate, resetTemplateId} from '../store/template'
-import {undo, redo} from '../store/undo'
+import {undo, redo, addToPast, clearUndo} from '../store/undo'
 import {
   selectElement,
   toggleEditMode,
@@ -109,7 +109,8 @@ class Renderer extends Component {
         this.props.editor.selectedElement === 'main'
           ? 'main'
           : Number(this.props.editor.selectedElement),
-        element
+        element,
+        this.props.html
       )
 
       const id = this.props.html.counter - 1
@@ -291,9 +292,11 @@ const mapDispatch = dispatch => {
       dispatch(deselectElement())
       dispatch(clear())
       dispatch(resetTemplateId())
+      dispatch(clearUndo())
     },
-    createElement(id, type) {
+    createElement(id, type, state) {
       dispatch(createElement(id, type))
+      dispatch(addToPast(state))
     },
     togglePopUp(id, style) {
       dispatch(togglePopUp(id, style))
