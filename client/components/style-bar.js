@@ -608,7 +608,6 @@ class StyleBar extends Component {
                   }
                   placeholder="URL"
                   onChange={event => {
-                    console.log('test')
                     this.handleSelect(
                       'backgroundImage',
                       `url(${event.target.value})`

@@ -3,7 +3,11 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import {FirebaseWrapper} from '../../server/firebase/firebase'
-import {setTemplateId, setTemplateName} from '../store/template'
+import {
+  setTemplateId,
+  setTemplateName,
+  resetTemplateId
+} from '../store/template'
 import {deselectElement, togglePopUpOff} from '../store/editor'
 
 class Templates extends Component {
@@ -37,6 +41,7 @@ class Templates extends Component {
         })
       }
     })
+    this.props.resetTemplateId()
   }
 
   render() {
@@ -102,6 +107,9 @@ const mapDispatch = dispatch => ({
   },
   setTemplateName(name) {
     dispatch(setTemplateName(name))
+  },
+  resetTemplateId() {
+    dispatch(resetTemplateId())
   }
 })
 
