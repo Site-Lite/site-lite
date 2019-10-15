@@ -14,10 +14,10 @@ Sitelite is a fullstack web application that allows users to make stylish webpag
     -[Firestore](#Firestore)
     -[Firebase Hosting](#Firebase-Hosting)
 - [Team Members](#Team-Members)
- - [Victor Cheng](#Victor-Cheng)
- - [Rijin Lee](#Rijin-Lee)
- - [Allen Guo](#Allen-Guo)
- - [Michael Cheung](#Michael_Cheung)
+   - [Victor Cheng](#Victor-Cheng)
+   - [Rijin Lee](#Rijin-Lee)
+   - [Allen Guo](#Allen-Guo)
+   - [Michael Cheung](#Michael_Cheung)
 
 ## Tech Stack
 
