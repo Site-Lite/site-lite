@@ -85,15 +85,19 @@ class Renderer extends Component {
   }
 
   nameTemplate() {
-    if (this.props.templateID) {
-      this.updateTemplate(
-        this.props.user.id,
-        this.props.templateID,
-        this.props.html
-      )
-      toast.success('Template Saved!')
+    if (this.props.user.id) {
+      if (this.props.templateID) {
+        this.updateTemplate(
+          this.props.user.id,
+          this.props.templateID,
+          this.props.html
+        )
+        toast.success('Template Saved!')
+      } else {
+        this.props.toggleName()
+      }
     } else {
-      this.props.toggleName()
+      alert('Please log in to save your template')
     }
   }
 
