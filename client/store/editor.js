@@ -12,7 +12,7 @@ const STORE_STYLE = 'STORE_STYLE'
 const initialState = {
   editModeEnabled: true,
   popUpEnabled: false,
-  tutorialEnabled: false,
+  tutorialEnabled: true,
   nameEnabled: false,
   selectedElement: 'main',
   selectedElementStyle: {},

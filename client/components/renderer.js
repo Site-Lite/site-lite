@@ -1,7 +1,6 @@
 /* eslint-disable no-alert */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {MenuProvider} from 'react-contexify'
 import {toast} from 'react-toastify'
 
@@ -13,7 +12,8 @@ import {
   toggleEditMode,
   deselectElement,
   togglePopUp,
-  toggleName
+  toggleName,
+  toggleTutorial
 } from '../store/editor'
 
 import {
@@ -254,6 +254,14 @@ class Renderer extends Component {
           <PopUp />
           <Tutorial />
           <SetName />
+          <div
+            id="help-button"
+            onClick={() => {
+              this.props.toggleTutorial()
+            }}
+          >
+            <i className="fas fa-question-circle" />
+          </div>
         </div>
         <StyleBar />
       </div>
@@ -302,6 +310,9 @@ const mapDispatch = dispatch => {
     },
     togglePopUp(id, style) {
       dispatch(togglePopUp(id, style))
+    },
+    toggleTutorial() {
+      dispatch(toggleTutorial())
     },
     undo(state) {
       dispatch(deselectElement())
