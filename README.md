@@ -13,7 +13,7 @@ Sitelite is a fullstack web application that allows users to make stylish webpag
   - [Firebase](#Firebase)
     -[Firestore](#Firestore)
     -[Firebase Hosting](#Firebase-Hosting)
-- [Team Members](#Team-Members)
+- [Dev Team](#Dev-Team)
    - [Victor Cheng](#Victor-Cheng)
    - [Rijin Lee](#Rijin-Lee)
    - [Allen Guo](#Allen-Guo)
@@ -42,7 +42,7 @@ Sitelite is a fullstack web application that allows users to make stylish webpag
 - Firebase Hosting is production-grade web content hosting for developers.
 - Firebase Hosting allows single command deployment of web applications and serve both static and dynamic content to global content delivery network(CDN)
 
-## Members
+## Dev Team
 
 ### Victor Cheng
 
