@@ -7,7 +7,6 @@ Sitelite is a fullstack web application that allows users to make stylish webpag
 ## Table of Contents
 
 - [SiteLite](#SiteLite)
-- [Table of Contents](#Table-of-Contents)
 - [Tech Stack](#Tech-Stack)
   - [React](#React)
   - [Redux](#Redux)
