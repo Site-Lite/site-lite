@@ -296,6 +296,7 @@ form label {
 }
 
 #logo {
+  z-index: 1;
   font-size: 33px;
   user-select: none;
 }
@@ -337,6 +338,7 @@ form label {
 
 #nav-editor-button {
   margin-right: 20px;
+  z-index: 1;
 }
 
 #nav-editor {
@@ -588,6 +590,7 @@ form label {
   align-items: center;
   position: relative;
   flex-direction: column;
+  z-index: 2;
 }
 
 #auth-bg #logo {
@@ -713,13 +716,29 @@ form label {
 }
 
 #template-list {
+  border-top: 65px solid #282e31;
+  margin-top: -65px;
   height: calc(100% - 65px);
   padding: 0 20%;
   overflow-y: auto;
 }
 
+#template-list > div:first-child {
+  margin: 40px 0 5px 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+#template-list > div:first-child span {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.2);
+  font-weight: 700;
+}
+
 #template-list h1 {
   font-size: 32px;
+  margin: 0;
 }
 
 #template-list #no-template {
