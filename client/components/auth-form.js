@@ -29,7 +29,6 @@ class AuthForm extends Component {
 
   render() {
     const {name, displayName, error} = this.props
-
     return (
       <div id="auth-bg">
         <Link to="/" id="logo">
@@ -51,14 +50,8 @@ class AuthForm extends Component {
               <i className="fas fa-key input-icon" />
               <input name="password" type="password" placeholder="Password" />
             </div>
-            {/* {error &&
-          error.response && <div id="form-error"> {error.response.data} </div>} */}
-
-            <div
-              className={`error-warning ${error && error.response && 'active'}`}
-            >
-              <i className="fas fa-exclamation-triangle" />
-              <span>{error && error.response && `${error.response.data}`}</span>
+            <div className={`error-warning ${error && 'active'}`}>
+              <span>{error && `${error}`}</span>
             </div>
 
             <div>
@@ -103,7 +96,7 @@ const mapLogin = state => {
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.user.error
+    error: state.user.message
   }
 }
 
@@ -111,7 +104,7 @@ const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error
+    error: state.user.message
   }
 }
 
@@ -131,6 +124,5 @@ export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
  */
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  error: PropTypes.object
+  displayName: PropTypes.string.isRequired
 }
