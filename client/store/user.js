@@ -7,6 +7,7 @@ import {FirebaseWrapper} from '../../server/firebase/firebase'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const RETURN_ERROR = 'RETURN_ERROR'
 
 /**
  * INITIAL STATE
@@ -17,6 +18,7 @@ const defaultUser = {}
  * ACTION CREATORS
  */
 const getUser = (user, uid) => ({type: GET_USER, user, uid})
+const returnError = error => ({type: RETURN_ERROR, error})
 const removeUser = () => ({type: REMOVE_USER})
 
 /**
@@ -45,10 +47,17 @@ export const auth = (email, password, method) => {
         password,
         method
       )
-      dispatch(getUser(result.user, result.id))
-      history.push('/')
-    } catch (err) {
-      console.error(err)
+      if (result.message) {
+        dispatch(returnError(result))
+        setTimeout(() => {
+          dispatch(returnError({}))
+        }, 5000)
+      } else {
+        dispatch(getUser(result.user, result.id))
+        history.push('/')
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 }
@@ -58,8 +67,8 @@ export const logout = () => {
     try {
       FirebaseWrapper.GetInstance().signOut()
       dispatch(removeUser())
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      console.error(error)
     }
   }
 }
@@ -73,6 +82,8 @@ export default function(state = defaultUser, action) {
       return {email: action.user, id: action.uid}
     case REMOVE_USER:
       return defaultUser
+    case RETURN_ERROR:
+      return action.error
     default:
       return state
   }

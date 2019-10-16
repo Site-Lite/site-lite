@@ -97,7 +97,7 @@ class Renderer extends Component {
         this.props.toggleName()
       }
     } else {
-      alert('Please log in to save your template')
+      alert('Please log in to save your template!')
     }
   }
 
@@ -164,7 +164,11 @@ class Renderer extends Component {
                 }
               >
                 <i
-                  className="fas fa-reply"
+                  className={
+                    this.props.past.length
+                      ? 'fas fa-reply'
+                      : 'fas fa-reply disabled'
+                  }
                   onClick={() => {
                     if (this.props.past.length) {
                       this.props.setState(
@@ -176,7 +180,11 @@ class Renderer extends Component {
                   }}
                 />
                 <i
-                  className="fas fa-share"
+                  className={
+                    this.props.future.length
+                      ? 'fas fa-share'
+                      : 'fas fa-share disabled'
+                  }
                   onClick={() => {
                     if (this.props.future.length) {
                       this.props.setState(this.props.future[0])
