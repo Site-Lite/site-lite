@@ -540,7 +540,18 @@ form label {
   display: flex;
   border-left: 1px solid rgba(0, 0, 0, 0.025);
   padding: 0 20px;
+  justify-content: space-between;
   background-color: #ffffff;
+}
+
+#style-bar-header i {
+  color: rgba(255, 213, 91, 0.5);
+  cursor: pointer;
+  transition: color 0.4s ease;
+}
+
+#style-bar-header i:hover {
+  color: #ffd55b;
 }
 
 #style-bar #style-bar-header span {
@@ -679,6 +690,107 @@ form label {
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
+}
+
+#app-main.darkmode,
+#app-main.darkmode #auth-bg,
+#app-main.darkmode #editor,
+#app-main.darkmode #home-2 {
+  background-color: #2e3033;
+}
+
+#app-main.darkmode #settings-bar,
+#app-main.darkmode #style-bar-header,
+#app-main.darkmode #auth-form,
+#app-main.darkmode #hero-img > div,
+#app-main.darkmode #footer,
+#app-main.darkmode .popup > div,
+#app-main.darkmode .set-name > div,
+#app-main.darkmode .popup textarea,
+#app-main.darkmode .popup input,
+#app-main.darkmode .set-name input,
+#app-main.darkmode .tutorial .swiper-container {
+  background-color: #3d4044;
+}
+
+#app-main.darkmode .style-section {
+  border-top: 1px solid #35383c;
+  background-color: #3d4044;
+}
+
+#app-main.darkmode #style-bar {
+  background-color: #34363a;
+}
+
+#app-main.darkmode #style-bar-content {
+  border-left: 1px solid rgb(53, 56, 60);
+}
+
+#app-main.darkmode #auth-form .google-auth {
+  background-color: #53575d;
+  border: 1px solid #3d4044;
+}
+
+#app-main.darkmode #hero #bottom-border > div {
+  border-right: 100vw solid #2e3033;
+}
+
+#app-main.darkmode #footer {
+  border-top: 1px solid #4e5156;
+}
+
+#app-main.darkmode #hero-img > div div {
+  background-color: rgba(78, 78, 78, 0.3);
+}
+
+#app-main.darkmode #hero-img > div span {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+#app-main.darkmode #hero-text {
+  color: #2e3033;
+}
+
+#app-main.darkmode #main div.edit-mode,
+#app-main.darkmode #main p.edit-mode,
+#app-main.darkmode #main img.edit-mode {
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #44484c;
+}
+
+#app-main.darkmode #main span {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+#app-main.darkmode .popup > div span,
+#app-main.darkmode .set-name > div span {
+  border-bottom: 1px solid #222426;
+  background-color: #282e31;
+}
+
+#app-main.darkmode .popup input,
+#app-main.darkmode .popup textarea,
+#app-main.darkmode .set-name input {
+  color: #b7bcbf;
+}
+
+#app-main.darkmode #template-list > div:first-child span,
+#app-main.darkmode #template-list #no-template {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+#app-main.darkmode #template-list #no-template {
+  border-top: 1px solid #424242;
+}
+
+#app-main.darkmode #template {
+  border: 1px solid #424242;
+  border-width: 1px 0;
+}
+
+#app-main.darkmode #template > div > button {
+  background-color: #434446;
 }
 
 #settings-bar > div,
@@ -1113,7 +1225,7 @@ input:checked + .slider:before {
 }
 
 .undo-redo i.disabled {
-  color: #dbdedf;
+  color: hsla(202, 6%, 73%, 0.5);
   pointer-events: none;
 }
 

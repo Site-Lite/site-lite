@@ -3,7 +3,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Collapse from '@kunukn/react-collapse'
 
-import {updateStyle, selectElement, togglePopUp} from '../store/editor'
+import {
+  updateStyle,
+  selectElement,
+  togglePopUp,
+  toggleDarkMode
+} from '../store/editor'
 import {applyStyle, createElement} from '../store/renderer'
 import {addToPast} from '../store/undo'
 
@@ -92,6 +97,12 @@ class StyleBar extends Component {
       >
         <div id="style-bar-header">
           <span>Styles</span>
+          <i
+            className="fas fa-adjust"
+            onClick={() => {
+              this.props.toggleDarkMode()
+            }}
+          />
         </div>
         <div id="style-bar-content">
           <div
@@ -675,6 +686,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
+    toggleDarkMode() {
+      dispatch(toggleDarkMode())
+    },
     togglePopUp(id, style) {
       dispatch(togglePopUp(id, style))
     },
