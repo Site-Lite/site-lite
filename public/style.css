@@ -1112,6 +1112,11 @@ input:checked + .slider:before {
   transition: color 0.4s ease;
 }
 
+.undo-redo i.disabled {
+  color: #dbdedf;
+  pointer-events: none;
+}
+
 .undo-redo i:hover {
   color: var(--sl-green);
 }
@@ -1169,10 +1174,12 @@ input:checked + .slider:before {
   justify-content: space-around;
   margin: 0 10px;
   opacity: 0;
+  pointer-events: none;
   transition: all 0.4s ease;
 }
 
 #add-section.edit-mode {
+  pointer-events: initial;
   opacity: 1;
 }
 
