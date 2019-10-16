@@ -10,7 +10,7 @@ import {
   toggleDarkMode
 } from '../store/editor'
 import {applyStyle, createElement} from '../store/renderer'
-import {addToPast} from '../store/undo'
+import {addToPast, clearFuture} from '../store/undo'
 
 import {
   fontSizes,
@@ -699,6 +699,7 @@ const mapDispatch = dispatch => {
     applyStyle(id, style, state) {
       dispatch(applyStyle(id, style))
       dispatch(addToPast(state))
+      dispatch(clearFuture())
     },
     updateStyle(property, value) {
       dispatch(updateStyle(property, value))
@@ -706,6 +707,7 @@ const mapDispatch = dispatch => {
     createElement(id, type, state) {
       dispatch(createElement(id, type))
       dispatch(addToPast(state))
+      dispatch(clearFuture())
     }
   }
 }

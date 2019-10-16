@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Menu, Item, Separator, Submenu, animation} from 'react-contexify'
 
 import {togglePopUp, deselectElement, storeStyle} from '../store/editor'
-import {addToPast, clearUndo} from '../store/undo'
+import {addToPast, clearUndo, clearFuture} from '../store/undo'
 import {
   createElement,
   removeElement,
@@ -62,7 +62,11 @@ class EditMenu extends Component {
   handlePasteStyle(event) {
     if (Object.keys(this.props.editor.storedStyle).length) {
       console.log('you hit this')
-      this.props.applyStyle(event.target.id, this.props.editor.storedStyle)
+      this.props.applyStyle(
+        event.target.id,
+        this.props.editor.storedStyle,
+        this.props.html
+      )
     }
   }
 
@@ -178,11 +182,13 @@ const mapDispatch = dispatch => {
     createElement(id, type, state) {
       dispatch(createElement(id, type))
       dispatch(addToPast(state))
+      dispatch(clearFuture())
     },
     removeElement(id, elementId, state) {
       dispatch(deselectElement())
       dispatch(removeElement(id, elementId))
       dispatch(addToPast(state))
+      dispatch(clearFuture())
     },
     togglePopUp(id, style, content) {
       dispatch(togglePopUp(id, style, content))
@@ -195,8 +201,10 @@ const mapDispatch = dispatch => {
     storeStyle(style) {
       dispatch(storeStyle(style))
     },
-    applyStyle(id, style) {
+    applyStyle(id, style, state) {
       dispatch(applyStyle(id, style))
+      dispatch(addToPast(state))
+      dispatch(clearFuture())
     }
   }
 }
