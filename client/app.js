@@ -12,7 +12,10 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div id="app-main" className={this.props.editor.darkmode && 'darkmode'}>
+      <div
+        id="app-main"
+        className={this.props.editor.darkmode ? 'darkmode' : 'lightmode'}
+      >
         <Navbar />
         <Routes />
       </div>
