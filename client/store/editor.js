@@ -2,6 +2,7 @@
 const TOGGLE_EDIT_MODE = 'TOGGLE_EDIT_MODE'
 const TOGGLE_POP_UP = 'TOGGLE_POP_UP'
 const TOGGLE_POP_UP_OFF = 'TOGGLE_POP_UP_OFF'
+const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE'
 const TOGGLE_TUTORIAL = 'TOGGLE_TUTORIAL'
 const TOGGLE_NAME = 'TOGGLE_NAME'
 const SELECT_ELEMENT = 'SELECT_ELEMENT'
@@ -10,6 +11,7 @@ const DESELECT_ELEMENT = 'DESELECT_ELEMENT'
 const STORE_STYLE = 'STORE_STYLE'
 
 const initialState = {
+  darkmode: false,
   editModeEnabled: true,
   popUpEnabled: false,
   tutorialEnabled: true,
@@ -21,6 +23,7 @@ const initialState = {
 }
 
 export const toggleEditMode = () => ({type: TOGGLE_EDIT_MODE})
+export const toggleDarkMode = () => ({type: TOGGLE_DARK_MODE})
 export const togglePopUp = (id, style, content) => ({
   type: TOGGLE_POP_UP,
   id,
@@ -100,6 +103,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         storedStyle: action.style
+      }
+    case TOGGLE_DARK_MODE:
+      return {
+        ...state,
+        darkmode: !state.darkmode
       }
     default:
       return state

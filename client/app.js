@@ -1,5 +1,6 @@
 import React from 'react'
 import {Navbar} from './components'
+import {connect} from 'react-redux'
 import Routes from './routes'
 import {FirebaseWrapper} from '../server/firebase/firebase'
 
@@ -11,7 +12,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div id="app-main" className={this.props.editor.darkmode && 'darkmode'}>
         <Navbar />
         <Routes />
       </div>
@@ -19,4 +20,10 @@ class App extends React.Component {
   }
 }
 
-export default App
+const mapState = state => {
+  return {
+    editor: state.editor
+  }
+}
+
+export default connect(mapState)(App)
