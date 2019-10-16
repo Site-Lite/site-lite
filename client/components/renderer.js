@@ -6,7 +6,7 @@ import {toast} from 'react-toastify'
 
 import {setState, clear, createElement} from '../store/renderer'
 import {addedTemplate, resetTemplateId} from '../store/template'
-import {undo, redo, addToPast, clearUndo} from '../store/undo'
+import {undo, redo, addToPast, clearUndo, clearFuture} from '../store/undo'
 import {
   selectElement,
   toggleEditMode,
@@ -319,6 +319,7 @@ const mapDispatch = dispatch => {
     createElement(id, type, state) {
       dispatch(createElement(id, type))
       dispatch(addToPast(state))
+      dispatch(clearFuture())
     },
     togglePopUp(id, style) {
       dispatch(togglePopUp(id, style))
