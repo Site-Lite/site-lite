@@ -74,7 +74,9 @@ class Renderer extends Component {
       '<div style="font-size:12px; font-family: Arial;">Built with sitelite</div></div></body></html>'
     const full = top + middle + bottom
     const link = document.createElement('a')
-    const name = this.props.templateName.replace(' ', '_')
+    const name = this.props.templateName
+      ? this.props.templateName.replace(' ', '_')
+      : 'index'
 
     link.setAttribute('download', `${name}.html`)
     link.setAttribute(
