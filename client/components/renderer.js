@@ -71,7 +71,7 @@ class Renderer extends Component {
     const top = '<html><head></head><body style="margin: 0;"><div id="main">'
     const middle = document.getElementById('main').innerHTML
     const bottom =
-      '<div style="font-size:12px; font-family: Arial; height: 15px; margin-top: -15px">Built with sitelite</div></div></body></html>'
+      '<div style="font-size:12px; font-family: Arial; height: 15px; margin-top: -15px"><a href="https://site-lite.web.app">Built with sitelite</a></div></div></body></html>'
     const full = top + middle + bottom
     const link = document.createElement('a')
     const name = this.props.templateName
