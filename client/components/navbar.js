@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {resetTemplateId} from '../store/template'
 import {clear} from '../store/renderer'
+import {deselectElement} from '../store/editor'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div id="header">
@@ -77,6 +78,7 @@ const mapDispatch = dispatch => {
       dispatch(logout())
       dispatch(resetTemplateId())
       dispatch(clear())
+      dispatch(deselectElement())
     }
   }
 }
