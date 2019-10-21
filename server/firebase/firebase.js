@@ -20,9 +20,9 @@ export class FirebaseWrapper {
       this._firestore = firebase.firestore()
       this.initialized = true
       this.auth = firebase.auth()
-      console.log('It worked! :D')
+      // console.log('It worked! :D')
     } else {
-      console.log('already initialized!')
+      // console.log('already initialized!')
     }
   }
 
@@ -106,7 +106,7 @@ export class FirebaseWrapper {
       const ref = await this._firestore
         .collection(`/Users/${uid}/Templates`)
         .doc()
-      console.log('fb', name)
+      // console.log('fb', name)
       await ref.set({
         html: state,
         id: ref.id,
@@ -128,7 +128,8 @@ export class FirebaseWrapper {
 
       return ref.id
     } catch (error) {
-      console.log('something went wrong in database for addTemplate ', error)
+      console.error(error)
+      // console.log('something went wrong in database for addTemplate ', error)
     }
   }
 
@@ -141,7 +142,8 @@ export class FirebaseWrapper {
           html: state
         })
     } catch (error) {
-      console.log('something went wrong in database for updateTemplate ', error)
+      console.error(error)
+      // console.log('something went wrong in database for updateTemplate ', error)
     }
   }
 
@@ -155,7 +157,8 @@ export class FirebaseWrapper {
 
       return template.data().html
     } catch (error) {
-      console.log('something went wrong in database for getTemplate ', error)
+      console.error(error)
+      // console.log('something went wrong in database for getTemplate ', error)
     }
   }
 
@@ -193,7 +196,8 @@ export class FirebaseWrapper {
         .doc(uid)
         .update({templates: templates})
     } catch (error) {
-      console.log('something went wrong in database for deleteTemplate ', error)
+      console.error(error)
+      // console.log('something went wrong in database for deleteTemplate ', error)
     }
   }
 }
