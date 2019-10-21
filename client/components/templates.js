@@ -49,7 +49,10 @@ class Templates extends Component {
     // console.log('this is the this.state: ', this.state)
     return (
       <div id="template-list">
-        <h1>Templates</h1>
+        <div>
+          <h1>Templates</h1>
+          <span>{this.props.user.email}</span>
+        </div>
         <div>
           {Object.keys(this.state.templates).length ? (
             this.state.templates.map(template => {

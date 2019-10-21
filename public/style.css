@@ -296,6 +296,7 @@ form label {
 }
 
 #logo {
+  z-index: 1;
   font-size: 33px;
   user-select: none;
 }
@@ -337,6 +338,7 @@ form label {
 
 #nav-editor-button {
   margin-right: 20px;
+  z-index: 1;
 }
 
 #nav-editor {
@@ -538,7 +540,18 @@ form label {
   display: flex;
   border-left: 1px solid rgba(0, 0, 0, 0.025);
   padding: 0 20px;
+  justify-content: space-between;
   background-color: #ffffff;
+}
+
+#style-bar-header i {
+  color: rgba(255, 213, 91, 0.5);
+  cursor: pointer;
+  transition: color 0.4s ease;
+}
+
+#style-bar-header i:hover {
+  color: #ffd55b;
 }
 
 #style-bar #style-bar-header span {
@@ -581,7 +594,6 @@ form label {
 }
 
 #auth-bg {
-  height: 100%;
   margin-top: -65px;
   background-color: #eaeaea;
   display: flex;
@@ -589,12 +601,13 @@ form label {
   align-items: center;
   position: relative;
   flex-direction: column;
+  z-index: 2;
 }
 
 #auth-bg #logo {
   transform: scale(1.5);
   color: #798084;
-  margin-top: -11vw;
+  margin-top: 50px;
   margin-bottom: 40px;
 }
 
@@ -679,6 +692,107 @@ form label {
   padding: 0 30px;
 }
 
+#app-main.darkmode,
+#app-main.darkmode #auth-bg,
+#app-main.darkmode #editor,
+#app-main.darkmode #home-2 {
+  background-color: #2e3033;
+}
+
+#app-main.darkmode #settings-bar,
+#app-main.darkmode #style-bar-header,
+#app-main.darkmode #auth-form,
+#app-main.darkmode #hero-img > div,
+#app-main.darkmode #footer,
+#app-main.darkmode .popup > div,
+#app-main.darkmode .set-name > div,
+#app-main.darkmode .popup textarea,
+#app-main.darkmode .popup input,
+#app-main.darkmode .set-name input,
+#app-main.darkmode .tutorial .swiper-container {
+  background-color: #3d4044;
+}
+
+#app-main.darkmode .style-section {
+  border-top: 1px solid #35383c;
+  background-color: #3d4044;
+}
+
+#app-main.darkmode #style-bar {
+  background-color: #34363a;
+}
+
+#app-main.darkmode #style-bar-content {
+  border-left: 1px solid rgb(53, 56, 60);
+}
+
+#app-main.darkmode #auth-form .google-auth {
+  background-color: #53575d;
+  border: 1px solid #3d4044;
+}
+
+#app-main.darkmode #hero #bottom-border > div {
+  border-right: 100vw solid #2e3033;
+}
+
+#app-main.darkmode #footer {
+  border-top: 1px solid #4e5156;
+}
+
+#app-main.darkmode #hero-img > div div {
+  background-color: rgba(78, 78, 78, 0.3);
+}
+
+#app-main.darkmode #hero-img > div span {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+#app-main.darkmode #hero-text {
+  color: #2e3033;
+}
+
+#app-main.darkmode #main div.edit-mode,
+#app-main.darkmode #main p.edit-mode,
+#app-main.darkmode #main img.edit-mode {
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #44484c;
+}
+
+#app-main.darkmode #main span {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+#app-main.darkmode .popup > div span,
+#app-main.darkmode .set-name > div span {
+  border-bottom: 1px solid #222426;
+  background-color: #282e31;
+}
+
+#app-main.darkmode .popup input,
+#app-main.darkmode .popup textarea,
+#app-main.darkmode .set-name input {
+  color: #b7bcbf;
+}
+
+#app-main.darkmode #template-list > div:first-child span,
+#app-main.darkmode #template-list #no-template {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+#app-main.darkmode #template-list #no-template {
+  border-top: 1px solid #424242;
+}
+
+#app-main.darkmode #template {
+  border: 1px solid #424242;
+  border-width: 1px 0;
+}
+
+#app-main.darkmode #template > div > button {
+  background-color: #434446;
+}
+
 #settings-bar > div,
 #settings-bar > div > div {
   display: flex;
@@ -714,13 +828,29 @@ form label {
 }
 
 #template-list {
+  border-top: 65px solid #282e31;
+  margin-top: -65px;
   height: calc(100% - 65px);
   padding: 0 20%;
   overflow-y: auto;
 }
 
+#template-list > div:first-child {
+  margin: 40px 0 5px 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+#template-list > div:first-child span {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.2);
+  font-weight: 700;
+}
+
 #template-list h1 {
   font-size: 32px;
+  margin: 0;
 }
 
 #template-list #no-template {
@@ -822,12 +952,17 @@ input:checked + .slider:before {
 
 .error-warning {
   text-align: center;
+  font-size: 13px;
   opacity: 0;
+  height: 25px;
+  display: flex;
+  align-items: center;
   transition: all 0.5s ease;
 }
 
 .error-warning.active {
   opacity: 1;
+  animation: fade 0.4s linear 4s forwards;
 }
 .collapse-css-transition {
   transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -1089,6 +1224,11 @@ input:checked + .slider:before {
   transition: color 0.4s ease;
 }
 
+.undo-redo i.disabled {
+  color: hsla(202, 6%, 73%, 0.5);
+  pointer-events: none;
+}
+
 .undo-redo i:hover {
   color: var(--sl-green);
 }
@@ -1146,10 +1286,12 @@ input:checked + .slider:before {
   justify-content: space-around;
   margin: 0 10px;
   opacity: 0;
+  pointer-events: none;
   transition: all 0.4s ease;
 }
 
 #add-section.edit-mode {
+  pointer-events: initial;
   opacity: 1;
 }
 
@@ -1211,6 +1353,15 @@ input:checked + .slider:before {
     transform: translateX(-1.8vw) translateY(-1.5vw) scale(0.99);
     box-shadow: inset 0 0 1vw rgba(255, 255, 255, 0.15),
       2vw 2vw 2vw rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 

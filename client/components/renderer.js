@@ -6,7 +6,7 @@ import {toast} from 'react-toastify'
 
 import {setState, clear, createElement} from '../store/renderer'
 import {addedTemplate, resetTemplateId} from '../store/template'
-import {undo, redo, addToPast, clearUndo} from '../store/undo'
+import {undo, redo, addToPast, clearUndo, clearFuture} from '../store/undo'
 import {
   selectElement,
   toggleEditMode,
@@ -68,13 +68,15 @@ class Renderer extends Component {
   }
 
   download() {
-    const top = '<html><head></head><body><div id="main">'
+    const top = '<html><head></head><body style="margin: 0;"><div id="main">'
     const middle = document.getElementById('main').innerHTML
     const bottom =
-      '<div style="font-size:12px; font-family: Arial;">Built with sitelite</div></div></body></html>'
+      '<div style="font-size:12px; font-family: Arial; height: 15px; margin-top: -15px"><a style="text-decoration: none;" href="https://site-lite.web.app">Built with sitelite</a></div></div></body></html>'
     const full = top + middle + bottom
     const link = document.createElement('a')
-    const name = this.props.templateName.replace(' ', '_')
+    const name = this.props.templateName
+      ? this.props.templateName.replace(' ', '_')
+      : 'index'
 
     link.setAttribute('download', `${name}.html`)
     link.setAttribute(
@@ -97,7 +99,7 @@ class Renderer extends Component {
         this.props.toggleName()
       }
     } else {
-      alert('Please log in to save your template')
+      alert('Please log in to save your template!')
     }
   }
 
@@ -164,7 +166,11 @@ class Renderer extends Component {
                 }
               >
                 <i
-                  className="fas fa-reply"
+                  className={
+                    this.props.past.length
+                      ? 'fas fa-reply'
+                      : 'fas fa-reply disabled'
+                  }
                   onClick={() => {
                     if (this.props.past.length) {
                       this.props.setState(
@@ -176,7 +182,11 @@ class Renderer extends Component {
                   }}
                 />
                 <i
-                  className="fas fa-share"
+                  className={
+                    this.props.future.length
+                      ? 'fas fa-share'
+                      : 'fas fa-share disabled'
+                  }
                   onClick={() => {
                     if (this.props.future.length) {
                       this.props.setState(this.props.future[0])
@@ -311,6 +321,7 @@ const mapDispatch = dispatch => {
     createElement(id, type, state) {
       dispatch(createElement(id, type))
       dispatch(addToPast(state))
+      dispatch(clearFuture())
     },
     togglePopUp(id, style) {
       dispatch(togglePopUp(id, style))

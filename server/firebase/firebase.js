@@ -48,8 +48,8 @@ export class FirebaseWrapper {
         })
 
       return uid
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -66,8 +66,8 @@ export class FirebaseWrapper {
           id: results.user.uid,
           templates: results.user.templates
         }
-      } catch (err) {
-        console.error(err)
+      } catch (error) {
+        return error
       }
     } else {
       try {
@@ -79,8 +79,8 @@ export class FirebaseWrapper {
           const uid = await this.createUser(email, results.user.uid)
           return {user: results.user.email, id: uid}
         }
-      } catch (err) {
-        console.error(err)
+      } catch (error) {
+        return error
       }
     }
   }
@@ -92,8 +92,8 @@ export class FirebaseWrapper {
           return {user: user.email, id: user.uid}
         }
       })
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      console.error(error)
     }
   }
 
