@@ -13,6 +13,8 @@ Sitelite is a fullstack web application that allows users to make stylish webpag
 ## Table of Contents
 
 - [SiteLite](#SiteLite)
+- [Homepage](#Homepage)
+- [Editor](#Editor)
 - [Tech Stack](#Tech-Stack)
   - [React](#React)
   - [Redux](#Redux)
@@ -23,7 +25,7 @@ Sitelite is a fullstack web application that allows users to make stylish webpag
    - [Victor Cheng](#Victor-Cheng)
    - [Rijin Lee](#Rijin-Lee)
    - [Allen Guo](#Allen-Guo)
-   - [Michael Cheung](#Michael_Cheung)
+   - [Michael Cheung](#Michael-Cheung)
 
 ## Tech Stack
 
