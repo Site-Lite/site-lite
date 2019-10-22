@@ -24,20 +24,6 @@ const removeUser = () => ({type: REMOVE_USER})
 /**
  * THUNK CREATORS
  */
-// not needed anymore?
-// export const me = () => {
-//   return dispatch => {
-//     try {
-//       // const result = await FirebaseWrapper.GetInstance().isLoggedIn()
-//       FirebaseWrapper.GetInstance().auth.onAuthStateChanged(user => {
-//         console.log('user', user.email)
-//         dispatch(getUser(user.email, user.uid))
-//       })
-//     } catch (err) {
-//       console.error(err)
-//     }
-//   }
-// }
 
 export const auth = (email, password, method) => {
   return async dispatch => {

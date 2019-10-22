@@ -68,13 +68,15 @@ class Renderer extends Component {
   }
 
   download() {
-    const top = '<html><head></head><body><div id="main">'
+    const top = '<html><head></head><body style="margin: 0;"><div id="main">'
     const middle = document.getElementById('main').innerHTML
     const bottom =
-      '<div style="font-size:12px; font-family: Arial;">Built with sitelite</div></div></body></html>'
+      '<div style="font-size:12px; font-family: Arial; height: 15px; margin-top: -15px"><a style="text-decoration: none;" href="https://site-lite.web.app">Built with sitelite</a></div></div></body></html>'
     const full = top + middle + bottom
     const link = document.createElement('a')
-    const name = this.props.templateName.replace(' ', '_')
+    const name = this.props.templateName
+      ? this.props.templateName.replace(' ', '_')
+      : 'index'
 
     link.setAttribute('download', `${name}.html`)
     link.setAttribute(
@@ -128,8 +130,6 @@ class Renderer extends Component {
   }
 
   render() {
-    // console.log('props', this.props)
-    // console.log('state', this.state)
     return (
       <div id="editor">
         <div
