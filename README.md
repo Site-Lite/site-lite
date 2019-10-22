@@ -4,6 +4,12 @@ Visit [SiteLite](https://site-lite.firebaseapp.com/)!
 
 Sitelite is a fullstack web application that allows users to make stylish webpages without needing to touch any lines of code. Users can design, style, save and download their own webpage templates. Guests can start designing and download without signing up. Join and build with SiteLite today!
 
+## Homepage
+![Home Page](https://raw.githubusercontent.com/SmurfySurfers/site-lite/dev/public/images/screenshots/home.png)
+
+## Editor
+![Editor](https://raw.githubusercontent.com/SmurfySurfers/site-lite/dev/public/images/screenshots/editor.png)
+
 ## Table of Contents
 
 - [SiteLite](#SiteLite)
