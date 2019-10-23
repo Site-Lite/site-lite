@@ -123,7 +123,7 @@ class StyleBar extends Component {
               <div>
                 <span>Fit Container</span>
                 <select
-                  value={this.state.selectedStyle.flex}
+                  value={this.state.selectedStyle.flex || '0 auto'}
                   onChange={event => {
                     this.handleSelect('flex', event.target.value)
                   }}
@@ -140,7 +140,7 @@ class StyleBar extends Component {
               <div>
                 <span>Width</span>
                 <select
-                  value={this.state.selectedStyle.width}
+                  value={this.state.selectedStyle.width || 'auto'}
                   onChange={event => {
                     this.handleSelect('width', event.target.value)
                   }}
@@ -157,7 +157,7 @@ class StyleBar extends Component {
               <div>
                 <span>Height</span>
                 <select
-                  value={this.state.selectedStyle.height}
+                  value={this.state.selectedStyle.height || 'auto'}
                   onChange={event => {
                     this.handleSelect('height', event.target.value)
                   }}
@@ -352,7 +352,7 @@ class StyleBar extends Component {
               <div>
                 <span>Width</span>
                 <select
-                  value={this.state.selectedStyle.borderWidth}
+                  value={this.state.selectedStyle.borderWidth || 0}
                   onChange={event => {
                     this.handleSelect('borderWidth', event.target.value)
                   }}
@@ -369,7 +369,7 @@ class StyleBar extends Component {
               <div>
                 <span>Style</span>
                 <select
-                  value={this.state.selectedStyle.borderStyle}
+                  value={this.state.selectedStyle.borderStyle || 'none'}
                   onChange={event => {
                     this.handleSelect('borderStyle', event.target.value)
                   }}
@@ -396,7 +396,7 @@ class StyleBar extends Component {
               <div>
                 <span>Corner Radius</span>
                 <select
-                  value={this.state.selectedStyle.borderRadius}
+                  value={this.state.selectedStyle.borderRadius || 0}
                   onChange={event => {
                     this.handleSelect('borderRadius', event.target.value)
                   }}
@@ -629,7 +629,7 @@ class StyleBar extends Component {
               <div>
                 <span>Image Repeat</span>
                 <select
-                  value={this.state.selectedStyle.backgroundRepeat}
+                  value={this.state.selectedStyle.backgroundRepeat || 'repeat'}
                   onChange={event => {
                     this.handleSelect('backgroundRepeat', event.target.value)
                   }}
@@ -646,7 +646,7 @@ class StyleBar extends Component {
               <div>
                 <span>Image Size</span>
                 <select
-                  value={this.state.selectedStyle.backgroundSize}
+                  value={this.state.selectedStyle.backgroundSize || 'auto'}
                   onChange={event => {
                     this.handleSelect('backgroundSize', event.target.value)
                   }}

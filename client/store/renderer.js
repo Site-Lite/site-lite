@@ -58,14 +58,6 @@ export default function(state = initialState, action) {
                   flexDirection: 'column',
                   margin: '20px',
                   padding: '20px',
-                  flex: 0,
-                  width: 'auto',
-                  height: 'auto',
-                  borderWidth: '1px',
-                  borderStyle: 'solid',
-                  borderRadius: '3px',
-                  backgroundSize: 'auto',
-                  backgroundRepeat: 'repeat',
                   flexWrap: 'nowrap',
                   justifyContent: 'initial',
                   alignItems: 'initial'
@@ -77,27 +69,11 @@ export default function(state = initialState, action) {
                     textAlign: 'left',
                     color: '#7f868b',
                     margin: '20px',
-                    padding: '20px',
-                    flex: 0,
-                    width: 'auto',
-                    height: 'auto',
-                    borderWidth: '1px',
-                    borderStyle: 'solid',
-                    borderRadius: '3px',
-                    backgroundSize: 'auto',
-                    backgroundRepeat: 'repeat'
+                    padding: '20px'
                   }
                 : {
                     padding: '0px',
-                    margin: '20px',
-                    flex: 0,
-                    width: 'auto',
-                    height: 'auto',
-                    borderWidth: '1px',
-                    borderStyle: 'solid',
-                    borderRadius: '3px',
-                    backgroundSize: 'auto',
-                    backgroundRepeat: 'repeat'
+                    margin: '20px'
                   },
           children: []
         }

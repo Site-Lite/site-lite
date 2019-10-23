@@ -1192,7 +1192,6 @@ input:checked + .slider:before {
 }
 
 .tutorial .swiper-slide img {
-  background: url(/images/tags-bg.png) center/175px repeat whitesmoke;
   width: 450px;
   height: 300px;
 }
